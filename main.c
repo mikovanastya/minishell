@@ -14,31 +14,7 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	t_shell shell;
+	char	*input;
 
-
-	init_env(env, &shell);
-	//builtin_cd(env, &shell);
-	// builtin_env(&shell);
-	//printf("%s\n", get_env_value(&shell, "OLDPWD"));
-	//printf("%d\n", del_env(&shell, "OLDPWD"));
-	// del_env(&shell, "OLDPWD");
-	// if (strcmp(argv[1], "pwd") == 0)
-	// 	builtin_pwd();
-	if (strcmp(argv[1], "cd") == 0)
-		builtin_cd(&argv[1], &shell);
-	// set_env(&shell, "USER", "m,kk");
-	// printf("%s\n", get_env_value(&shell, "USER"));
-	// set_env(&shell, "USdER", "123123123");
-	// printf("%s\n", get_env_value(&shell, "USdER"));
+	parse_str(input);
 }
-// int	main(int argc, char **argv)
-// {
-// 	if (strcmp(argv[1], "cd") == 0)
-// 		builtin_cd(&argv[1], 1);
-// }
-
-/*s\n
-
-1 скопировать весь env в новый созданный envp
-*/
