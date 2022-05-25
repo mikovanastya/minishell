@@ -22,9 +22,9 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
-//#include <sys/cdefs.h>
-# include <readline/readline.h>
-# include "string.h" // !! УДАЛИТЬ !!!*
+#include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 typedef struct s_shell
 {	
@@ -52,6 +52,10 @@ int		check_n_flag(char *argv, int *flag);
 int		builtin_env(t_shell *shell);
 int		builtin_cd(char **args, t_shell *shell);
 int		builtin_pwd(void);
-//int	builtin_cd(char **arg, t_shell *shell);
+/*
+** PARSER:
+*/
+
+int		read_str(char *rez);
 
 #endif

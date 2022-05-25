@@ -11,31 +11,35 @@
 /* ************************************************************************** */
 
 #include "../minishell.h"
-/*  -1 Если не удалось выделить память
-	-2 Если Слишком длинный список агрументов: больше размера char *. precmd:2:
-			argument list too long: /bin/syslog.py  
-*/
-int parse_str(char *rez)
+
+int	go_on(char *str)
+{
+	while (*str && *str != '\\' && *str != '\'' &&*str != '"')
+		str++;
+	if (!(*str))
+		return (0);
+	else
+		return (1);
+}
+int	read_str(char *rez)
 {
 	char	*inpt;
-	int		i;
-	int		was_quote;
+	int		may_continue;
 	char	quoute;
 
-	was_quote = 0;
-	i = 0;
+	may_continue = 1;
 	rez = (char *)malloc(sizeof(char *) * 8);
 	if (!rez)
 		return (-1);
 	ft_bzero(rez, sizeof(char *) * sizeof(char));
-	while ( i < 3 )
+	while (may_continue == 1)
 	{
 		inpt = readline("Enter text: "); //readline выделяет память под возвращаемую строку
 		add_history(inpt);
 		if (!ft_strlcat(rez, inpt, sizeof(char *) * sizeof(char)))
 			return (-2);
+		may_continue = go_on(inpt);
 		free(inpt);
-		++i;
 	}
 	printf("result %s %d", rez, sizeof(char));
 	return (0);

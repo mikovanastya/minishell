@@ -24,6 +24,7 @@ SRCS = 	main.c\
 		builtins/pwd.c\
 		builtins/unset.c\
 		builtins/builtins.c\
+		parser/parser.c
 		
 HEADER = minishell.h
 
@@ -31,29 +32,36 @@ CC		=	cc
 
 FLAGS = 
 
-RM			=	rm -f
+RM			=	@rm -f
 
 OBJ 	= $(SRCS:.c=.o)
 
+LIB	= libft.a
+
 all : $(NAME) 
 
-$(NAME) : $(OBJ) 
-	$(CC) $(FLAGS) $(OBJ) libft/libft.a  -o $(NAME)
+$(NAME) : $(OBJ) $(LIB)
+	$(CC) -lreadline $(FLAGS) $(OBJ) libft/libft.a  -o $(NAME)
 
 %.o: %.c $(HEADER) Makefile
 	$(CC) $(FLAGS) -c $< -o $@
+
+$(LIB):
+	@gcc -c -Wall -Werror -Wextra libft/*.c -I libft/libft.h
+	@ar -q libft/$(LIB) *.o
 
 libft :
 	make -C libft
 
 clean :
 	make -C libft clean
-	$(RM) $(OBJ)
+	$(RM) *.o
 
 fclean : clean
+	$(RM) $(OBJ)
 	$(RM) $(NAME)
 	$(RM) libft/libft.a
-
+	$(RM) -rf libft/$(LIB)
 
 re : fclean all
 
