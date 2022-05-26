@@ -15,6 +15,9 @@
 int	main(int argc, char **argv, char **env)
 {
 	char	*input;
-
-	read_str(input);
+	
+	g_shell.console_name = "minishell> ";
+	read_str(&input);
+	printf("%s\n", input);
+	free(input);
 }

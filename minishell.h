@@ -29,9 +29,12 @@
 typedef struct s_shell
 {	
 	char	**envp;
-	int	len;
+	int		len;
+	char	*console_name;
+	int		quote;	
 }	t_shell;
 
+t_shell	g_shell;
 /*
 **	ENV:
 */
@@ -56,6 +59,11 @@ int		builtin_pwd(void);
 ** PARSER:
 */
 
-int		read_str(char *rez);
+void	free_memory(char *inpt, char *help, char *rez);
+int		read_str(char **str);
+int		resize_rez(char **inpt, char **rez);
+int		init_rez(char **inpt, char **rez);
+int		in_cycle(char **inpt, int *may_continue, char **rez);
+int		go_on(char *str);
 
 #endif
