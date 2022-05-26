@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../includes/minishell.h"
 
 void	quote_actions(char c)
 {
@@ -54,12 +54,22 @@ int	go_on(char *str)
 		return (1);
 }
 
+void	free_memory(char *inpt, char *help, char *rez)
+{
+	if (help)
+		free(help);
+	if (inpt)
+		free(inpt);
+	if (rez)
+		free(rez);
+}
+
 int	read_str(char **str)
 {
 	char	*inpt;
 	int		may_continue;
-	char	*help;
 	char	*rez;
+	int		cycle_rez;
 
 	may_continue = 1;
 	rez = NULL;
@@ -67,37 +77,9 @@ int	read_str(char **str)
 	{
 		inpt = readline(g_shell.console_name);
 		add_history(inpt);
-		if (!rez)
-		{
-			rez = (char *)malloc(sizeof(char *) * (ft_strlen(inpt) + 1));
-			if (!rez)
-				return (-1);
-			ft_bzero(rez, ft_strlen(inpt));
-		}
-		else
-		{
-			if (help)
-				free(help);
-			help = (char *)malloc(sizeof(char *) * (ft_strlen(rez) + 1));
-			ft_bzero(help, ft_strlen(rez) + 1);
-			rez[ft_strlen(rez)] = '\0';
-			if (ft_strlcpy(help, rez, ft_strlen(rez) + 1) < 0)
-				return (-2);
-			free(rez);
-			rez = (char *)malloc(sizeof(char *) * (ft_strlen(inpt)
-						+ ft_strlen(help) + 1));
-			if (!rez)
-				return (-1);
-			ft_bzero(rez, ft_strlen(inpt) + ft_strlen(help));
-			if (ft_strlcpy(rez, help, ft_strlen(help) + 1) < 0)
-				return (-2);
-		}
-		may_continue = go_on(inpt);
-		if (ft_strlcat(rez, inpt, ft_strlen(inpt) + ft_strlen(rez) + 1) < 0)
-			return (-2);
+		cycle_rez = in_cycle(&rez, &inpt, &may_continue);
 		free(inpt);
 	}
-	printf("!!! result %s \n", rez);
 	*str = rez;
 	return (0);
 }
