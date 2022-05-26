@@ -54,11 +54,12 @@ int	go_on(char *str)
 		return (1);
 }
 
-int	read_str(char *rez)
+int	read_str(char **str)
 {
 	char	*inpt;
 	int		may_continue;
 	char	*help;
+	char	*rez;
 
 	may_continue = 1;
 	rez = NULL;
@@ -97,5 +98,6 @@ int	read_str(char *rez)
 		free(inpt);
 	}
 	printf("!!! result %s \n", rez);
+	*str = rez;
 	return (0);
 }
