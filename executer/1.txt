@@ -1,0 +1,105 @@
+struct s_cmd
+{
+	char *cmd_name
+	char **args
+
+	int fd[2]; // пайп 
+	
+	t_cmd *next;
+	t_cmd *prev;
+}
+
+
+
+cat file | grep "ea" ; echo -n "aa" bb
+
+
+cmd1
+name = cat 
+->
+name = bin/cat
+args = ["file"]
+
+
+cmd2
+
+name = usr/bin/grep
+args = "ea"
+
+cmd 3
+name = bin/echo
+args = ["-n", "aa", "bb"]
+
+
+main 
+
+t_cmd cmd1;
+cmd1.cmd_name = ft_strdup("bin/cat")
+
+
+./a.out echo -n mops lol
+
+echo -n mops lol
+
+https://www.big-meter.com/opensource/en/60d00460ec41d21e72706e3b.html
+
+
+cd path
+
+dir envp
+
+envp.h
+
+init (инициализация)
+
+get (gолучить)
+add (добавить)
+reset (редактирова)
+unset (удалить)
+
+char **envp
+["HOMEBREW_TEMP=/tmp/rtwitch/Homebrew/Temp", "SHELL=/bin/zsh"]
+
+Я хочу получить значения поля USER
+char *get(char *parameter)
+
+Я хочу добавить свое поле MY_PAR значением value
+ add
+char *add(char *prmtrs,char *value)
+
+SHELL
+SHEL
+
+101 102 106 107  
+S	h	=	/
+
+
+SHELL  /bin/zsh
+
+
+cd /usr/bin 
+
+
+export "  z1  " z2=22 123 z3 = z4=44
+
+
+1. Проверка на функции которым не нужен форк ( сд, ансет, экспорт с параметрами)
+	Если она, то запускаем
+27 Начало пайпекса
+	Создание фд[2]
+	форк
+	Дочка исполняет функцию
+	Родитель ждет
+		Закрываем ненужные фд 
+
+	
+
+cmd->args[0] = ft_strdup("cd")
+cmd->args[1] = ft_strdup("/usr/bin")
+
+
+cmd->args[0] = ft_strdup("cat")
+cmd->arhs[1] = ft_strdup("1.txt")
+|
+cmd2->args[0]= ft_strdup("grep")
+cmd2->args[0]= ft_strdup("\t")

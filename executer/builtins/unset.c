@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/09 16:02:02 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/05/24 15:01:13 by rtwitch          ###   ########.fr       */
+/*   Created: 2022/05/24 18:10:37 by rtwitch           #+#    #+#             */
+/*   Updated: 2022/05/27 17:20:06 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../minishell.h"
 
-size_t	ft_strlen(const char *str)
+int	builtin_unset(char **args, t_shell *shell)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	if (!str)
-		return (0);
-	while (str[i] != '\0')
+	if (!args || !args[0])
 	{
+		printf ("unset: not enough arguments");
+		return (1);
+	}
+	while (args[i])
+	{
+		if (check_name(args[i]))
+		{
+			printf ("unset: invalid parameter name");
+			return (1);
+		}
+		if (env_prmtrs_exist(shell, args[i]))
+			del_env(shell, args[i]);
 		i++;
 	}
-	return (i);
+	return (0);
 }

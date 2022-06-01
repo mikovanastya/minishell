@@ -6,39 +6,35 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:01:07 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/05/17 19:59:28 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/05/31 15:36:42 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdlib.h>
+#include <stdio.h> 
+#include <readline/readline.h> 
+#include <readline/history.h>
+#include <readline/readline.h>
+
+
 
 int	main(int argc, char **argv, char **env)
 {
-	t_shell shell;
+	t_shell	shell;
+	t_cmd	cmd;
 
-
+	using_history();
+	while(1)
+	{
+		init_env(env, &shell);
+		char *str = readline("minishell🦚 "); 
+		add_history(str);
+		printf("read this string ->|%s|<-\n", str);
+		pipex(&shell);
+		free (str);
+	}
 	init_env(env, &shell);
-	//builtin_cd(env, &shell);
-	// builtin_env(&shell);
-	//printf("%s\n", get_env_value(&shell, "OLDPWD"));
-	//printf("%d\n", del_env(&shell, "OLDPWD"));
-	// del_env(&shell, "OLDPWD");
-	// if (strcmp(argv[1], "pwd") == 0)
-	// 	builtin_pwd();
-	if (strcmp(argv[1], "cd") == 0)
-		builtin_cd(&argv[1], &shell);
-	// set_env(&shell, "USER", "m,kk");
-	// printf("%s\n", get_env_value(&shell, "USER"));
-	// set_env(&shell, "USdER", "123123123");
-	// printf("%s\n", get_env_value(&shell, "USdER"));
+
+
 }
-// int	main(int argc, char **argv)
-// {
-// 	if (strcmp(argv[1], "cd") == 0)
-// 		builtin_cd(&argv[1], 1);
-// }
-
-/*s\n
-
-1 скопировать весь env в новый созданный envp
-*/

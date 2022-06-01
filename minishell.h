@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:02:04 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/05/17 16:29:51 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/05/31 20:18:10 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,35 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
-//#include <sys/cdefs.h>
+# include <stdio.h>
 # include <readline/readline.h>
+# include <readline/history.h>
 # include "string.h" // !! УДАЛИТЬ !!!*
 
-typedef struct s_shell
-{	
+typedef struct s_cmd	t_cmd;
+
+typedef struct s_shell{	
 	char	**envp;
-	int	len;
-}	t_shell;
+	char	**export;
+	char	**argv;//
+	int		len;
+	char	*console_name;
+	int		quote;	
+	t_cmd	**cmd_start;
+}t_shell;
+
+struct	s_cmd
+{
+	pid_t		pid;
+	int			fd[2];
+	int			exit_status;
+	char		**argv;//аргументы, которые нам подаются
+	struct s_cmd *prev;
+	struct s_cmd *next;
+	
+};
+
+t_shell	g_shell;
 
 /*
 **	ENV:
@@ -52,6 +72,38 @@ int		check_n_flag(char *argv, int *flag);
 int		builtin_env(t_shell *shell);
 int		builtin_cd(char **args, t_shell *shell);
 int		builtin_pwd(void);
-//int	builtin_cd(char **arg, t_shell *shell);
+int		check_name(char *name);
+int		size_mass(char **envp);
+int		max(int a, int b);
+int		builtin_export(char **args, t_shell *shell);
+int		export_prmtrs(t_shell *shell, char *str);
+int		builtin_unset(char **args, t_shell *shell);
+int		ft_sym_export(char *str);
+
+void	ft_free(char **mass);
+void	sort_tmp_env(char	**tmp, int len);
+void	no_args(char **envp, t_shell *shell);
+
+char	**new_envp(char **envp, t_shell *shell);
+char	**after_quotes(char **tmpmass, t_shell *shell);
+char	**before_quotes(char **tmpmass,	t_shell *shell);
+
+
+int		builtins(char **argv, t_shell *shell);
+int		create_pipe(t_shell *shell, t_cmd *cmd);
+int		nofork(char *cmd);
+void	pipex(t_shell *shell);
+void 	execute_execve(t_cmd *cmd, t_shell *shell);
+
+/*
+** PARSER:
+*/
+
+void	free_memory(char *inpt, char *help, char *rez);
+int		read_str(char **str);
+int		resize_rez(char **inpt, char **rez);
+int		init_rez(char **inpt, char **rez);
+int		in_cycle(char **inpt, int *may_continue, char **rez);
+int		go_on(char *str);
 
 #endif

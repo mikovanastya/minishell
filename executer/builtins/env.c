@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/09 16:02:02 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/05/24 15:01:13 by rtwitch          ###   ########.fr       */
+/*   Created: 2022/05/12 14:28:10 by rtwitch           #+#    #+#             */
+/*   Updated: 2022/05/27 15:08:54 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../minishell.h"
 
-size_t	ft_strlen(const char *str)
+int	builtin_env(t_shell *shell)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	if (!str)
-		return (0);
-	while (str[i] != '\0')
-	{
-		i++;
-	}
-	return (i);
+	while (shell->envp[i])
+		printf("%s\n", shell->envp[i++]);
+	return (0);
 }
