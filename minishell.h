@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:02:04 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/05/31 20:18:10 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/01 16:07:36 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int		create_pipe(t_shell *shell, t_cmd *cmd);
 int		nofork(char *cmd);
 void	pipex(t_shell *shell);
 void 	execute_execve(t_cmd *cmd, t_shell *shell);
+void	handler_signal(int signal);
 
 /*
 ** PARSER:

@@ -6,7 +6,7 @@
 #    By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/16 14:07:19 by rtwitch           #+#    #+#              #
-#    Updated: 2022/05/31 14:51:13 by rtwitch          ###   ########.fr        #
+#    Updated: 2022/06/01 16:21:44 by rtwitch          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,9 @@ SRCS = 	main.c\
 		executer/builtins/pwd.c\
 		executer/builtins/unset.c\
 		executer/builtins/builtins.c\
+		executer/pipe/create_pipe.c\
 		executer/pipe/pipex.c\
+		executer/pipe/signal.c\
 		#parser/read_lines.c\
 		#parser/read_lines_1.c
 
@@ -38,32 +40,38 @@ RL_LIB      =   ~/.brew/opt/readline/lib
 
 CC		=	cc
 
-FLAGS = #-lreadline
+FLAGS = 
 
-RM			=	rm -f
+RM			=	@rm -f
 
 OBJ 	= $(SRCS:.c=.o)
 
+LIB	= libft.a
+
 all : $(NAME) 
 
-$(NAME) : $(OBJ) 
-#$(CC) $(FLAGS) $(OBJ) libft/libft.a  -o $(NAME)
-	$(CC) $(FLAGS) -lreadline -L $(RL_LIB) -I $(RL_INCLUDE) $(OBJ) libft/libft.a -o $(NAME)
+$(NAME) : $(OBJ) $(LIB)
+	$(CC) -lreadline $(FLAGS) $(OBJ) libft/libft.a  -o $(NAME)
 
 %.o: %.c $(HEADER) Makefile
 	$(CC) $(FLAGS) -c $< -o $@
+
+$(LIB):
+	@gcc -c -Wall -Werror -Wextra libft/*.c -I libft/libft.h
+	@ar -q libft/$(LIB) *.o
 
 libft :
 	make -C libft
 
 clean :
 	make -C libft clean
-	$(RM) $(OBJ)
+	$(RM) *.o
 
 fclean : clean
+	$(RM) $(OBJ)
 	$(RM) $(NAME)
 	$(RM) libft/libft.a
-
+	$(RM) -rf libft/$(LIB)
 
 re : fclean all
 

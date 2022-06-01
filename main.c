@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:01:07 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/05/31 15:36:42 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/01 16:12:04 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ int	main(int argc, char **argv, char **env)
 		add_history(str);
 		printf("read this string ->|%s|<-\n", str);
 		pipex(&shell);
+		signal(SIGINT, handler_signal);
+		signal(SIGQUIT, handler_signal);
 		free (str);
 	}
 	init_env(env, &shell);
-
-
 }
