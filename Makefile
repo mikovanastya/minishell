@@ -24,7 +24,10 @@ SRCS = 	main.c\
 		builtins/pwd.c\
 		builtins/unset.c\
 		builtins/builtins.c\
-		parser/parser.c
+		parser/read_lines.c\
+		parser/read_lines_1.c\
+		parser/substitute_envp.c\
+		parser/substitute_envp_1.c
 		
 HEADER = minishell.h
 
