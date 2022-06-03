@@ -6,11 +6,17 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 18:34:52 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/05/31 20:19:19 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/03 15:41:20 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+void	sig_signal(void)
+{
+	signal(SIGINT, SIG_IGN);//игнорируем сигнал
+	signal(SIGQUIT, SIG_IGN);
+}
 
 int	create_pipe(t_shell *shell, t_cmd *cmd)
 {
@@ -18,12 +24,17 @@ int	create_pipe(t_shell *shell, t_cmd *cmd)
 	{
 		if (pipe(cmd->fd) == -1)//проверяем вывод
 			printf("error"); //exit ulimit -f
+		printf("fd [%d][%d]\n", cmd->fd[0], cmd->fd[1]);
 	}
 	cmd->pid = fork();// создаем дочерний процесс
+	// ft_putnbr_fd(cmd->pid, 1);
 	if (cmd->pid < 0)// если пид меньше нуля, значит процесс не создался
 		return (1);//exit printf
+	// if (cmd->pid)
+		// sig_signal(); 
 	if (cmd->pid == 0)
 	{
+		write(1, "Docha\n", 6);
 		if (cmd->next)
 		{
 			if (dup2(cmd->fd[1], 1) < 0 )//скопировать один fd в другой
@@ -31,17 +42,18 @@ int	create_pipe(t_shell *shell, t_cmd *cmd)
 		}
 		if (cmd->prev)
 		{
-			if (dup2(cmd->fd[0], 0) < 0 )//скопировать один fd в другой
+			if (dup2(cmd->prev->fd[0], 0) < 0 )//скопировать один fd в другой
 				return (1);// если не создался все плохо если не скопировался
 		}
 		execute_execve(cmd, shell);
-		//выполнение функций cmd 
-		builtins(cmd->argv, shell);//временно
+		//выполнение функций cmd
+		// builtins(cmd->argv, shell);//временно
 		exit(0);
 	}
 	else
 	{
-		waitpid(cmd->pid, cmd->exit_status, 0);
+		waitpid(cmd->pid, &cmd->exit_status, 0);
+		write(1, "Mama\n", 5);
 		if (cmd->prev || cmd->next)
 			close(cmd->fd[1]);
 		if (!cmd->next)

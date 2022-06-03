@@ -6,7 +6,7 @@
 #    By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/16 14:07:19 by rtwitch           #+#    #+#              #
-#    Updated: 2022/06/01 16:21:44 by rtwitch          ###   ########.fr        #
+#    Updated: 2022/06/03 16:05:03 by rtwitch          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ SRCS = 	main.c\
 		#parser/read_lines.c\
 		#parser/read_lines_1.c
 
-		
+
 HEADER = minishell.h
 
 RL_INCLUDE  =   ~/.brew/opt/readline/include

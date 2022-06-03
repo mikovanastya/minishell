@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:17:01 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/05/31 20:19:39 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/03 16:37:26 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,16 @@ int	ft_free_str(char **s)
 	}
 	*s = NULL;
 	return (0);
+}
+
+int	get_count_cmd(char ***cmd)
+{
+	int	count;
+
+	count = 0;
+	while (cmd[count])
+		count++;
+	return (count);
 }
 
 int	execute_execve_without_path(t_cmd *cmd,
@@ -40,13 +50,40 @@ int	execute_execve_without_path(t_cmd *cmd,
 	return (0);
 }
 
-void execute_execve(t_cmd *cmd, t_shell *shell)
+void	*ft_free_str_arr(char ***arr)
+{
+	int	i;
+
+	if (arr == NULL || *arr == NULL)
+		return (NULL);
+	i = 0;
+	if ((*arr) != NULL)
+	{
+		while ((*arr)[i] != NULL)
+		{
+			if ((*arr)[i] != NULL)
+			{
+				free((*arr)[i]);
+				(*arr)[i] = NULL;
+			}
+			i++;
+		}
+		if (*arr != NULL)
+			free(*arr);
+		*arr = NULL;
+	}
+	return (NULL);
+}
+
+int execute_execve(t_cmd *cmd, t_shell *shell)
 {
 	char	**env;
 	char	*paths;
 	char	**path_arr;
 
 	paths = get_env_value(shell, "PATH");
+	path_arr = ft_split(paths, ':');
+	printf ("[%d][%d]_%s_%s_\n", cmd->fd[0], cmd->fd[1], cmd->argv[0], cmd->argv[1]);
 	if ((ft_strlen(cmd->argv[0]) > 2)
 		&& (cmd->argv[0][0] == '/' || cmd->argv[0][0] == '.'))
 	{
@@ -78,20 +115,20 @@ int	nofork(char *cmd)// эти команды не могут выполнять
 	return (0);
 }
 
-int	start_cmd_fork(t_cmd *cmd, t_shell *shell)
+int	start_cmd_fork(t_cmd *cmd, t_shell *shell)// выполнение некоторых команд
 {
 	int	status;//статус выхода 
 
 	if (!cmd->argv)
 		return (1);
 	status = 0;
-	if (ft_strncmp(cmd->argv, "cd", ft_strlen("cd")) == 0)
-		status =builtin_cd(cmd->argv, shell);
-	else if (ft_strncmp(cmd->argv, "unset", ft_strlen("unset")) == 0)
+	if (ft_strncmp(*cmd->argv, "cd", ft_strlen("cd")) == 0)
+		status = builtin_cd(cmd->argv, shell);
+	else if (ft_strncmp(*cmd->argv, "unset", ft_strlen("unset")) == 0)
 		status = builtin_unset(cmd->argv, shell);
-	else if (ft_strncmp(cmd->argv, "export", ft_strlen("export")) == 0)
+	else if (ft_strncmp(*cmd->argv, "export", ft_strlen("export")) == 0)
 		status = builtin_export(cmd->argv, shell);//
-	set_env(shell, "_", cmd->argv);// я пока хз, но так нужно;
+	set_env(shell, "_", *cmd->argv);// я пока хз, но так нужно;
 	set_env(shell, "?", ft_itoa(status));// статус выхода самого последнего пайпа, вроде так, хз
 	return (status);
 }
@@ -100,18 +137,21 @@ void	pipex(t_shell *shell)
 {
 	t_cmd	*cmd;
 
-	if (shell->len == 1 && nofork(shell->argv[0]))
+	cmd = *shell->cmd_start;
+	if (nofork(cmd->argv[0]))
 	{
-		start_cmd_fork(shell->argv[0], shell->envp);
-		return (0);
+		printf("NOFORK");
+		start_cmd_fork(cmd, shell);
+		return ;
 	}
 	else
 	{
+		printf ("pipex\n");
 		while (cmd)
 		{
+			// printf("%s\n", cmd->argv[0]);
 			create_pipe(shell, cmd);
 			cmd = cmd->next;
 		}
 	}
-	return (0);
 }

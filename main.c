@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:01:07 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/01 16:12:04 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/03 16:35:11 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,42 @@
 int	main(int argc, char **argv, char **env)
 {
 	t_shell	shell;
-	t_cmd	cmd;
+	t_cmd	*cmd1;
+	t_cmd	*cmd2;
 
-	using_history();
-	while(1)
-	{
-		init_env(env, &shell);
-		char *str = readline("minishell🦚 "); 
-		add_history(str);
-		printf("read this string ->|%s|<-\n", str);
-		pipex(&shell);
-		signal(SIGINT, handler_signal);
-		signal(SIGQUIT, handler_signal);
-		free (str);
-	}
 	init_env(env, &shell);
+	cmd1 = malloc(sizeof(t_cmd));
+	shell.cmd_start = &cmd1;
+	cmd1->argv = malloc(sizeof(char *) * 3);
+	cmd1->argv[0] = ft_strdup("cat");
+	cmd1->argv[1] = ft_strdup("executer/1.txt");
+	cmd1->argv[2] = NULL;
+	cmd2 = malloc(sizeof(t_cmd));
+	shell.cmd_start = &cmd1;
+	cmd2->argv = malloc(sizeof(char *) * 3);
+	cmd2->argv[0] = ft_strdup("grep");
+	cmd2->argv[1] = ft_strdup("\t");
+	cmd2->argv[2] = NULL;
+	cmd1->next = cmd2;
+	cmd2->prev = cmd1;
+	printf("%s\n", (*shell.cmd_start)->argv[0]);
+	printf("%s\n", (*shell.cmd_start)->argv[1]);
+	printf("%s\n", (*shell.cmd_start)->next->argv[0]);
+	printf("%s\n", (*shell.cmd_start)->next->argv[1]);
+	printf("END OF PARSING\n\n");
+	pipex(&shell);
+
+	// signal(SIGINT, handler_signal);
+	// signal(SIGQUIT, handler_signal);
+	// using_history();
+	// while(1)
+	// {
+	// 	init_env(env, &shell);
+	// 	char *str = readline("minishell🦚 "); 
+	// 	add_history(str);
+	// 	printf("read this string ->|%s|<-\n", str);
+	// 	printf("HERE\n");
+	// 	free (str);
+	// }
+	
 }
