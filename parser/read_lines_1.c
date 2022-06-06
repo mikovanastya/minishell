@@ -14,6 +14,8 @@
 
 int	change_help_and_rez(char **help, char **rez, char **inpt)
 {
+	if (!*rez)
+		free(*rez);
 	*rez = ((char *)malloc(sizeof(char *) * (ft_strlen(*inpt)
 					+ ft_strlen(*help) + 1)));
 	if (!*rez)
@@ -55,6 +57,8 @@ int	resize_rez(char **rez, char **inpt)
 
 int	init_rez(char **rez, char **inpt)
 {
+	if (!*rez)
+		free(*rez);
 	*rez = (char *)malloc(sizeof(char *) * (ft_strlen(*inpt) + 1));
 	if (!*rez)
 	{

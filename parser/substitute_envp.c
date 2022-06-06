@@ -73,7 +73,6 @@ char	*find_var(char *what_to_find)
 		rez = ft_strdup(g_shell.envp[i] + j + 1);
 		if (!rez)
 			return (0);
-		printf("repl %s\n", rez);
 		return (rez);
 	}
 	return (0);

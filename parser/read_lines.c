@@ -68,19 +68,15 @@ int	read_str(char **str)
 {
 	char	*inpt;
 	int		may_continue;
-	//char	*rez;
 	int		cycle_rez;
 
 	may_continue = 1;
-	//rez = NULL;
 	while (may_continue == 1)
 	{
 		inpt = readline(g_shell.console_name);
 		add_history(inpt);
 		cycle_rez = in_cycle(str, &inpt, &may_continue);
 		free(inpt);
-		//replace("   $USER skdggk", 3);
 	}
-	//*str = rez;
 	return (0);
 }
