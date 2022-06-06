@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../minishell.h"
 /*тут читаем строку и склеиваем в одну огромнную*/
 void	quote_actions(char c)
 {
@@ -79,6 +79,7 @@ int	read_str(char **str)
 		add_history(inpt);
 		cycle_rez = in_cycle(&rez, &inpt, &may_continue);
 		free(inpt);
+		//replace("   $USER skdggk", 3);
 	}
 	*str = rez;
 	return (0);

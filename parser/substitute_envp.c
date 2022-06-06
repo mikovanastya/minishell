@@ -16,7 +16,7 @@
 
 int	is_space(char c)
 {
-	if ((c => 10 && c <= 13) || c == 32)
+	if ((c >= 10 && c <= 13) || c == 32)
 		return (1);
 	return (0);
 }
@@ -57,6 +57,7 @@ char	*find_var(char *what_to_find)
 
 	found = 0;
 	i = 0;
+	printf("what to find %s\n", what_to_find);
 	while (g_shell.envp[i] && found == 0)
 	{
 		j = 0;
@@ -72,13 +73,14 @@ char	*find_var(char *what_to_find)
 		rez = ft_strdup(g_shell.envp[i] + j + 1);
 		if (!rez)
 			return (0);
+		printf("repl %s\n", rez);
+		return (rez);
 	}
-	return (rez);
+	return (0);
 }
 
 int	substitute_envp(char *input, char **envp)
 {
-	char	*var;
 	int		i;
 
 	i = 0;
@@ -92,10 +94,10 @@ int	substitute_envp(char *input, char **envp)
 			while (*(input + i) && *(input + i) != '\'')
 				i++;
 		}
-		while (*(input + i) && (is_space(*(input + i)))
+		while (*(input + i) && is_space(*(input + i)))
 			i++;
 		if (*(input + i) == '$')
-			replace(input + i);
+			replace(input, i);
 		if (*(input + i))
 			i++;
 	}

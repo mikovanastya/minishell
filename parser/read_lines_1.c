@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../minishell.h"
 
 int	change_help_and_rez(char **help0, char **rez, char **inpt)
 {
@@ -34,9 +34,9 @@ int	change_help_and_rez(char **help0, char **rez, char **inpt)
 		return (-2);
 	}
 	free(rez_f);
-	rez = *rez_f;
-	inpt = *inpt_f;
-	help0 = *help;
+	*rez = rez_f;
+	*inpt = inpt_f;
+	*help0 = help;
 	return (1);
 }
 
