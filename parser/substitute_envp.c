@@ -63,7 +63,7 @@ char	*find_var(char *what_to_find)
 		j = 0;
 		while (g_shell.envp[i][j] == what_to_find[j])
 			j++;
-		if (g_shell.envp[i][j] == '=')
+		if (g_shell.envp[i][j] == '=' && !what_to_find[j])
 			found = 1;
 		i++;
 	}

@@ -12,109 +12,82 @@
 
 #include "../minishell.h"
 
-int	change_help_and_rez(char **help0, char **rez, char **inpt)
+int	change_help_and_rez(char **help, char **rez, char **inpt)
 {
-	char	*help;
-	char	*rez_f;
-	char	*inpt_f;
-
-	rez_f = *rez;
-	inpt_f = *inpt;
-	help = *help0;
-	rez_f = ((char *)malloc(sizeof(char *) * (ft_strlen(inpt_f)
-					+ ft_strlen(help) + 1)));
-	if (!rez_f)
+	*rez = ((char *)malloc(sizeof(char *) * (ft_strlen(*inpt)
+					+ ft_strlen(*help) + 1)));
+	if (!*rez)
 	{
-		free_memory(inpt_f, help, rez_f);
+		free_memory(*inpt, *help, *rez);
 		return (-1);
 	}
-	if (ft_strlcpy(rez_f, help, ft_strlen(help) + 1) < 0)
+	if (ft_strlcpy(*rez, *help, ft_strlen(*help) + 1) < 0)
 	{
-		free_memory(inpt_f, help, rez_f);
+		free_memory(*inpt, *help, *rez);
 		return (-2);
 	}
-	free(rez_f);
-	*rez = rez_f;
-	*inpt = inpt_f;
-	*help0 = help;
 	return (1);
 }
 
 int	resize_rez(char **rez, char **inpt)
 {
 	char	*help;
-	char	*rez_f;
-	char	*inpt_f;
 	int		from_func;
 
-	rez_f = *rez;
-	inpt_f = *inpt;
-	help = (char *)malloc(sizeof(char *) * (ft_strlen(rez_f) + 1));
+	help = (char *)malloc(sizeof(char *) * (ft_strlen(*rez) + 1));
 	if (!help)
 	{
-		free_memory(inpt_f, help, rez_f);
+		free_memory(*inpt, help, *rez);
 		return (-1);
 	}
-	rez_f[ft_strlen(rez_f)] = '\0';
-	if (ft_strlcpy(help, rez_f, ft_strlen(rez_f) + 1) < 0)
+	(*rez)[ft_strlen(*rez)] = '\0';
+	if (ft_strlcpy(help, *rez, ft_strlen(*rez) + 1) < 0)
 	{
-		free_memory(inpt_f, help, rez_f);
+		free_memory(*inpt, help, *rez);
 		return (-2);
 	}
-	from_func = change_help_and_rez(&help, &rez_f, &inpt_f);
+	from_func = change_help_and_rez(&help, rez, inpt);
 	if (from_func != 1)
 		return (from_func);
-	*rez = rez_f;
 	free(help);
 	return (1);
 }
 
 int	init_rez(char **rez, char **inpt)
 {
-	char	*rez_f;
-	char	*inpt_f;
-
-	rez_f = *rez;
-	inpt_f = *inpt;
-	rez_f = (char *)malloc(sizeof(char *) * (ft_strlen(inpt_f) + 1));
-	if (!rez_f)
+	*rez = (char *)malloc(sizeof(char *) * (ft_strlen(*inpt) + 1));
+	if (!*rez)
 	{
-		if (inpt_f)
-			free(inpt_f);
-		if (rez_f)
-			free(rez_f);
+		if (*inpt)
+			free(*inpt);
+		if (*rez)
+			free(*rez);
 		return (-1);
 	}
-	ft_bzero(rez_f, ft_strlen(inpt_f));
-	*rez = rez_f;
+	ft_bzero(*rez, ft_strlen(*inpt));
 	return (1);
 }
 
 int	in_cycle(char **rez, char **inpt, int *may_continue)
 {
-	char	*rez_f;
-	char	*inpt_f;
 	int		resize;
 
-	rez_f = *rez;
-	inpt_f = *inpt;
-	if (!rez_f)
+	if (!*rez)
 	{
-		if (init_rez(&rez_f, &inpt_f) == -1)
+		if (init_rez(rez, inpt) == -1)
 			return (-1);
 	}
 	else
 	{
-		resize = resize_rez(&rez_f, &inpt_f);
+		resize = resize_rez(rez, inpt);
 		if (!resize)
 			return (resize);
 	}
-	*may_continue = go_on(inpt_f);
-	if (ft_strlcat(rez_f, inpt_f, ft_strlen(inpt_f) + ft_strlen(rez_f) + 1) < 0)
+	*may_continue = go_on(*inpt);
+	if (ft_strlcat(*rez, *inpt, ft_strlen(*inpt) + ft_strlen(*rez) + 1) < 0)
 	{
-		free_memory(inpt_f, inpt_f, rez_f);
+		free_memory(*inpt, *inpt, *rez);
 		return (-2);
 	}
-	*rez = rez_f;
 	return (1);
 }

@@ -44,8 +44,11 @@ int	repl_more(char *to_change, char *repl, int i, int a)
 	// to_change = ft_strdup(t);
 	repl_equal(to_change, repl, i);
 	//free(t);
-	printf("tut %s %s %d\n", to_change, repl, i);
 	return(0);
+}
+int	delete_var()
+{
+	return (0);
 }
 /*возвращает на сколько надо двинуться вперед*/
 int	replace(char *to_change, int i)
@@ -66,8 +69,13 @@ int	replace(char *to_change, int i)
 	var_name = (char *)malloc(sizeof(char) * (a + 1));
 	ft_memmove(var_name, to_change + i + 1, a - 1);
 	repl = find_var(var_name);
-	printf("repl %s %s\n", repl, var_name);
-	if (a == (int)ft_strlen(repl))
+	printf("repl %s", repl);
+	if (repl == 0)
+	{
+		delete_var();
+		rez = i + 1;
+	}
+	else if (a == (int)ft_strlen(repl))
 	{
 		repl_equal(to_change, repl, i);
 		rez = i + ft_strlen(repl);
@@ -75,7 +83,6 @@ int	replace(char *to_change, int i)
 	else if (a > (int)ft_strlen(repl))
 	{
 	 	repl_more(to_change, repl, i, a);
-		printf("hehe %s\n", to_change);
 		rez = i + ft_strlen(repl);
 	}
 	free(repl);
