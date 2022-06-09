@@ -13,27 +13,28 @@
 NAME = minishell
 
 SRCS = 	main.c\
-		env/init_env.c\
-		env/get_env.c\
-		env/set_env.c\
-		env/del_env.c\
-		builtins/cd.c\
+		parser/read_lines.c\
+		parser/read_lines_1.c\
+		parser/substitute_envp.c\
+		parser/substitute_envp_1.c\
+		utils/utils.c\
+#		builtins/cd.c\
 		builtins/echo.c\
 		builtins/env.c\
 		builtins/export.c\
 		builtins/pwd.c\
 		builtins/unset.c\
 		builtins/builtins.c\
-		parser/read_lines.c\
-		parser/read_lines_1.c\
-		parser/substitute_envp.c\
-		parser/substitute_envp_1.c
+		env/init_env.c\
+		env/get_env.c\
+		env/set_env.c\
+		env/del_env.c\
 		
 HEADER = minishell.h
 
 CC		=	cc
 
-FLAGS = 
+FLAGS = -Wall -Werror -Wextra -g
 
 RM			=	@rm -f
 
@@ -50,7 +51,7 @@ $(NAME) : $(OBJ) $(LIB)
 	$(CC) $(FLAGS) -c $< -o $@
 
 $(LIB):
-	@gcc -c -Wall -Werror -Wextra libft/*.c -I libft/libft.h
+	@gcc -c $(FLAGS) libft/*.c -I libft/libft.h
 	@ar -q libft/$(LIB) *.o
 
 libft :

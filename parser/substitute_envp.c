@@ -96,7 +96,7 @@ int	substitute_envp(char *input, char **envp)
 		while (*(input + i) && is_space(*(input + i)))
 			i++;
 		if (*(input + i) == '$')
-			replace(input, i);
+			replace(&input, i);
 		if (*(input + i))
 			i++;
 	}

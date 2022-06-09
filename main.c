@@ -12,15 +12,29 @@
 
 #include "minishell.h"
 
+// t_shell	g_shell;
+
 int	main(int argc, char **argv, char **envp)
 {	
 	char	*input;
 
-	// if (argc != 1)
-	// 	ft_error(argv[0], EINVAL);
+	(void)argv;
+	(void)argc;
+	(void)envp;
+	//input = NULL;
+	if (argc != 1)
+	 	ft_error(argv[0], EINVAL);
 	g_shell.console_name = "minishell> ";
-	read_str(&input);
-	//printf("%s\n", input);
-	substitute_envp(input, envp);
-	free(input);
+	g_shell.quote = 0;
+	g_shell.len = 0;
+	while (1)
+	{
+		read_str(&input);
+		substitute_envp(input, envp);
+		printf("\n answ %s\n", input);
+		if (*input || input)
+			ft_bzero(input, ft_strlen(input));
+	}
+	// if (input)
+	
 }

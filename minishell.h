@@ -28,6 +28,7 @@
 
 typedef struct s_shell
 {	
+	pid_t	pid;
 	char	**envp;
 	int		len;
 	char	*console_name;
@@ -38,23 +39,23 @@ t_shell	g_shell;
 /*
 **	ENV:
 */
-void	init_env(char **prmtrs, t_shell *shell);
-char	*get_env_value(t_shell *shell, char *prmtrs);
-int		env_prmtrs_exist(t_shell *shell, char *prmtrs);
-int		new_env(t_shell *shell, char *str, char **tmp);
-void	rewrite_env_prmtrs(t_shell *shell, char *prmtrs, char *join);
-int		set_env(t_shell *shell, char *prmtrs, char *value);
-void	del_new_env(t_shell *shell, char **tmp, char *prmtrs);
-int		del_env(t_shell *shell, char *prmtrs);
-/*
-**	BUILTINS:
-*/
+// void	init_env(char **prmtrs, t_shell *shell);
+// char	*get_env_value(t_shell *shell, char *prmtrs);
+// int		env_prmtrs_exist(t_shell *shell, char *prmtrs);
+// int		new_env(t_shell *shell, char *str, char **tmp);
+// void	rewrite_env_prmtrs(t_shell *shell, char *prmtrs, char *join);
+// int		set_env(t_shell *shell, char *prmtrs, char *value);
+// void	del_new_env(t_shell *shell, char **tmp, char *prmtrs);
+// int		del_env(t_shell *shell, char *prmtrs);
+// /*
+// **	BUILTINS:
+// */
 
-int		builtin_echo(char **argv, int fd);
-int		check_n_flag(char *argv, int *flag);
-int		builtin_env(t_shell *shell);
-int		builtin_cd(char **args, t_shell *shell);
-int		builtin_pwd(void);
+// int		builtin_echo(char **argv, int fd);
+// int		check_n_flag(char *argv, int *flag);
+// int		builtin_env(t_shell *shell);
+// int		builtin_cd(char **args, t_shell *shell);
+// int		builtin_pwd(void);
 /*
 ** PARSER:
 */
@@ -63,7 +64,18 @@ void	free_memory(char *inpt, char *help, char *rez);
 int		read_str(char **str);
 int		resize_rez(char **inpt, char **rez);
 int		init_rez(char **inpt, char **rez);
-int		in_cycle(char **inpt, int *may_continue, char **rez);
+int     in_cycle(char **rez, char **inpt, int *may_continue);
 int		go_on(char *str);
+int		substitute_envp(char *input, char **envp);
+int		is_space(char c);
+int		replace(char **to_change, int i);
+char	*find_var(char *what_to_find);
+int		set_envp(char **envp);
+
+/*
+** STUFF:
+*/
+
+void	ft_error(char *argv, int exit_code);
 
 #endif
