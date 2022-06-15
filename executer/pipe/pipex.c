@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:17:01 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/03 16:37:26 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/15 18:05:58 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,4 +154,14 @@ void	pipex(t_shell *shell)
 			cmd = cmd->next;
 		}
 	}
+}
+
+void	set_last_status(t_shell *shell, t_cmd *cmd, int status)
+{
+	// printf("__%d___", status);
+	if (WIFEXITED(status))
+		set_env(shell, "?", ft_itoa(WEXITSTATUS(status)));
+	else if (WIFSIGNALED(status))
+		set_env(shell, "?", ft_itoa(WTERMSIG(status) + 128));
+	set_env(shell, "_", cmd->argv[0]);// argv[0] ?????
 }

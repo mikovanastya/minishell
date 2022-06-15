@@ -6,17 +6,17 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 18:34:52 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/03 15:41:20 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/15 18:07:51 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	sig_signal(void)
-{
-	signal(SIGINT, SIG_IGN);//игнорируем сигнал
-	signal(SIGQUIT, SIG_IGN);
-}
+// void	sig_signal(void)
+// {
+// 	signal(SIGINT, SIG_IGN);//игнорируем сигнал
+// 	signal(SIGQUIT, SIG_IGN);
+// }
 
 int	create_pipe(t_shell *shell, t_cmd *cmd)
 {
@@ -54,6 +54,7 @@ int	create_pipe(t_shell *shell, t_cmd *cmd)
 	{
 		waitpid(cmd->pid, &cmd->exit_status, 0);
 		write(1, "Mama\n", 5);
+		set_last_status(shell, cmd, cmd->exit_status);
 		if (cmd->prev || cmd->next)
 			close(cmd->fd[1]);
 		if (!cmd->next)

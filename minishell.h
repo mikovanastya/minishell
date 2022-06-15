@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:02:04 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/01 18:19:37 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/15 18:04:49 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ struct	s_cmd
 	pid_t		pid;
 	int			fd[2];
 	int			exit_status;
+
 	char		**argv;//аргументы, которые нам подаются
 	struct s_cmd *prev;
 	struct s_cmd *next;
@@ -96,7 +97,12 @@ void	pipex(t_shell *shell);
 int 	execute_execve(t_cmd *cmd, t_shell *shell);
 void	handler_signal(int signal);
 int     start_cmd_fork(t_cmd *cmd, t_shell *shell);
-
+int	redir_heredoc(char *iter, int fd, t_cmd *cmd, t_shell *shell);
+void	heredoc(char *iter, int *fd, t_cmd *cmd, t_shell *shell);
+int	check_heredoc(char **redir, int stdin_fd, t_cmd *cmd, t_shell *shell);
+int	make_heredocs(t_cmd *cmd, t_shell *shell);
+int	redir_heredoc(char *iter, int fd, t_cmd *cmd, t_shell *shell);
+void	set_last_status(t_shell *shell, t_cmd *cmd, int status);
 /*
 ** PARSER:
 */

@@ -6,7 +6,7 @@
 #    By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/16 14:07:19 by rtwitch           #+#    #+#              #
-#    Updated: 2022/06/03 16:05:03 by rtwitch          ###   ########.fr        #
+#    Updated: 2022/06/15 14:53:57 by rtwitch          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS = 	main.c\
 		executer/pipe/create_pipe.c\
 		executer/pipe/pipex.c\
 		executer/pipe/signal.c\
+		executer/pipe/heredoc.c\
 		#parser/read_lines.c\
 		#parser/read_lines_1.c
 
