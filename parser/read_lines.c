@@ -35,32 +35,40 @@ int	quote_actions(char c)
 	return (1);
 }
 
+int	decision_about_quotes(char **str, int *go_to_next_str)
+{
+	while (**str)
+	{
+		if ((**str == '\'' || **str == '"' || **str == '|'))
+			if (quote_actions(**str) == -1)
+				return (-1);
+		if (g_shell.quote == '|' && **str != '|'
+			&&!is_space(**str) && **str && **str != '\n')
+			g_shell.pipe = 0;
+		if (**str == '\\')
+		{
+			if (!*(*str + 1))
+				*go_to_next_str = 1;
+			while (*(*str + 1))
+			{
+				**str = *(*str + 1);
+				(*str)++;
+			}
+			**str = '\0';
+		}
+		(*str)++;
+	}
+	return (0);
+}
+
 int	go_on(char *str)
 {
 	int	go_to_next_str;
 
 	go_to_next_str = 0;
-	while (*str)
-	{
-		if ((*str == '\'' || *str == '"' || *str == '|'))
-			if (quote_actions(*str) == -1)
-				return (-1);
-		if (g_shell.quote == '|' && *str != '|' && !is_space(*str) && *str && *str != '\n')
-			g_shell.pipe = 0;
-		if (*str == '\\')
-		{
-			if (!*(str + 1))
-				go_to_next_str = 1;
-			while (*(str + 1))
-			{
-				*str = *(str + 1);
-				str++;
-			}
-			*str = '\0';
-		}
-		str++;
-	}
-	if ((g_shell.quote == '|' && go_to_next_str == 0) && g_shell.pipe == 0)
+	if (decision_about_quotes(&str, &go_to_next_str) == -1)
+		return (-1);
+	if (g_shell.quote == '|' && go_to_next_str == 0 && g_shell.pipe == 0)
 	{
 		g_shell.quote = '\0';
 		g_shell.console_name = "minishell> ";
@@ -70,16 +78,6 @@ int	go_on(char *str)
 		return (0);
 	else
 		return (1);
-}
-
-void	free_memory(char *inpt, char *help, char *rez)
-{
-	if (help)
-		free(help);
-	if (inpt)
-		free(inpt);
-	if (rez)
-		free(rez);
 }
 
 int	read_str(char **str)
