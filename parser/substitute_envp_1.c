@@ -73,36 +73,15 @@ int	repl_less(char **to_change, char *repl, int i, int a)
 	return (i + ft_strlen(repl));
 }
 
-/*возвращает на сколько надо двинуться вперед*/
-int	replace(char **to_change, int i)
+int	sub_envp(char **to_change, char **repl, int i, int a)
 {
-	char	*repl;
-	int		a;
-	char	*var_name;
-	int		rez;
-
-	rez = 0;
-	a = 1;
-	var_name = NULL;
-	if (*(*to_change + i + 1) == '$')
-		return (repl_less(to_change, ft_itoa(g_shell.pid), i, 2));
-	while (ft_isalpha(*(*to_change + i + a)) || *(*to_change + i + a) == '_'
-		|| (ft_isdigit(*(*to_change + i + a)) && *(*to_change + i + a) != 1))
-		a++;
-	var_name = (char *)malloc(sizeof(char) * (a + 1));
-	ft_memmove(var_name, *to_change + i + 1, a - 1);
-	repl = find_var(var_name);
-	if (repl == 0)
-		rez = delete_var(to_change, i, a);
-	else if (a == (int)ft_strlen(repl))
-		rez = repl_equal(to_change, repl, i);
-	else if (a > (int)ft_strlen(repl))
-		rez = repl_more(to_change, repl, i, a);
-	else if (a < (int)ft_strlen(repl))
-		rez = repl_less(to_change, repl, i, a);
-	if (repl)
-		free(repl);
-	if (var_name)
-		free(var_name);
-	return (rez);
+	if (*repl == 0)
+		return (delete_var(to_change, i, a));
+	else if (a == (int)ft_strlen(*repl))
+		return (repl_equal(to_change, *repl, i));
+	else if (a > (int)ft_strlen(*repl))
+		return (repl_more(to_change, *repl, i, a));
+	else if (a < (int)ft_strlen(*repl))
+		return (repl_less(to_change, *repl, i, a));
+	return (0);
 }

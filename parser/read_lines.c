@@ -12,9 +12,9 @@
 
 #include "../minishell.h"
 /*тут читаем строку и склеиваем в одну огромнную*/
-void	quote_actions(char c)
+int	quote_actions(char c)
 {
-	if (!g_shell.quote)
+	if (!g_shell.quote && (c == '\'' || c == '\"'))
 	{
 		g_shell.quote = c;
 		g_shell.console_name = "dquote> ";
@@ -23,7 +23,16 @@ void	quote_actions(char c)
 	{
 		g_shell.quote = '\0';
 		g_shell.console_name = "minishell> ";
+		if (c == '|')
+			return (-1);
 	}
+	else if (!g_shell.quote && c == '|')
+	{
+		g_shell.pipe = 1;
+		g_shell.quote = c;
+		g_shell.console_name = "pipe> ";
+	}
+	return (1);
 }
 
 int	go_on(char *str)
@@ -33,8 +42,11 @@ int	go_on(char *str)
 	go_to_next_str = 0;
 	while (*str)
 	{
-		if (*str == '\'' || *str == '"')
-			quote_actions(*str);
+		if ((*str == '\'' || *str == '"' || *str == '|'))
+			if (quote_actions(*str) == -1)
+				return (-1);
+		if (g_shell.quote == '|' && *str != '|' && !is_space(*str) && *str && *str != '\n')
+			g_shell.pipe = 0;
 		if (*str == '\\')
 		{
 			if (!*(str + 1))
@@ -47,6 +59,12 @@ int	go_on(char *str)
 			*str = '\0';
 		}
 		str++;
+	}
+	if ((g_shell.quote == '|' && go_to_next_str == 0) && g_shell.pipe == 0)
+	{
+		g_shell.quote = '\0';
+		g_shell.console_name = "minishell> ";
+		g_shell.pipe = 0;
 	}
 	if (!(*str) && !g_shell.quote && go_to_next_str == 0)
 		return (0);
@@ -78,5 +96,5 @@ int	read_str(char **str)
 		cycle_rez = in_cycle(str, &inpt, &may_continue);
 		free(inpt);
 	}
-	return (0);
+	return (may_continue);
 }

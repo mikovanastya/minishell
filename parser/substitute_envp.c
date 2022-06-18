@@ -38,7 +38,7 @@ int	set_envp(char **envp)
 	i = 0;
 	g_shell.envp = (char **)malloc(sizeof(char *) * (arr_len(envp) + 1));
 	if (!g_shell.envp)
-		return(-1);
+		return (-1);
 	while (envp[i])
 	{
 		g_shell.envp[i] = ft_strdup(envp[i]);
@@ -50,14 +50,12 @@ int	set_envp(char **envp)
 
 char	*find_var(char *what_to_find)
 {
-	char	*rez;
 	int		i;
 	int		j;
 	int		found;
 
 	found = 0;
 	i = 0;
-	printf("what to find %s\n", what_to_find);
 	while (g_shell.envp[i] && found == 0)
 	{
 		j = 0;
@@ -69,12 +67,7 @@ char	*find_var(char *what_to_find)
 	}
 	i--;
 	if (found == 1)
-	{
-		rez = ft_strdup(g_shell.envp[i] + j + 1);
-		if (!rez)
-			return (0);
-		return (rez);
-	}
+		return (ft_strdup(g_shell.envp[i] + j + 1));
 	return (0);
 }
 
@@ -100,5 +93,5 @@ int	substitute_envp(char *input, char **envp)
 		if (*(input + i))
 			i++;
 	}
-	return(0);
+	return (0);
 }
