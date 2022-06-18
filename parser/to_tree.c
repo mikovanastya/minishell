@@ -13,11 +13,11 @@
 #include "../minishell.h"
 
 // &
-// |
-// >
-// >>
-// <
-// <<
+// | +
+// > 1
+// >> 2
+// < 3
+// << 4
 
 // int	service_symbol(char **str)
 // {

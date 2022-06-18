@@ -12,6 +12,7 @@
 
 #include "../minishell.h"
 /*тут читаем строку и склеиваем в одну огромнную*/
+
 int	quote_actions(char c)
 {
 	if (!g_shell.quote && (c == '\'' || c == '\"'))
@@ -39,6 +40,8 @@ int	decision_about_quotes(char **str, int *go_to_next_str)
 {
 	while (**str)
 	{
+		if (is_arrow(*str))
+			g_shell.arrow = is_arrow(*str);
 		if ((**str == '\'' || **str == '"' || **str == '|'))
 			if (quote_actions(**str) == -1)
 				return (-1);
