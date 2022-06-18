@@ -60,21 +60,16 @@ int	repl_less(char **to_change, char *repl, int i, int a)
 	int		j;
 
 	b = ft_strlen(repl);
-	// t = ft_strdup(*to_change);
-	// // free(*to_change);
-	// // *to_change = (char *)malloc(sizeof(char *) * (ft_strlen(t) + b - a + 1));
-	// ft_strlcpy(*to_change, t, ft_strlen(t));
-	ft_memset(*to_change + ft_strlen(t), 'g', ft_strlen(t) + b - a + 1);
+	t = ft_strdup(*to_change);
 	j = ft_strlen(t) + b - a;
 	while (j - (b - a) > i)
 	{
-		printf("from %c to %c\n", *to_change[j - b], *to_change[j]);
-		*to_change[j - b] = *to_change[j];
+		(*to_change)[j - b] = (*to_change)[j];
 		j--;
 	}
 	repl_equal(to_change, repl, i);
 	*(*to_change + ft_strlen(t) + b - a) = '\0';
-	//printf("to_change %s\n", *to_change);
+	free(t);
 	return (0);
 }
 
@@ -90,7 +85,11 @@ int	replace(char **to_change, int i)
 	a = 0;
 	a++;
 	var_name = NULL;
-	// if (*(to_change + i) == '$') //тут надо сделать замену $$ на pid
+	if (*(*to_change + i + 1) == '$')
+	{
+		repl_less(to_change, ft_itoa(g_shell.pid), i, a);
+		return (i + ft_strlen(ft_itoa(g_shell.pid)));
+	}
 	while (ft_isalpha(*(*to_change + i + a)) || *(*to_change + i + a) == '_' || (ft_isdigit(*(*to_change + i + a)) && *(*to_change + i + a) != 1))
 		a++;
 	var_name = (char *)malloc(sizeof(char) * (a + 1));
