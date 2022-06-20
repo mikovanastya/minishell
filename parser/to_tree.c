@@ -31,14 +31,28 @@ int	count_elements(char **str)
 
 	n = 1;
 	i = 0;
+	g_shell.quote = 0;
 	while (*(*str + i))
 	{
+		printf("str[%d] = %c\n", i, *(*str + i));
+		if ((*(*str + i) == '\'' || *(*str + i) == '\"') && !g_shell.quote)
+		{
+			g_shell.quote = *(*str + i);
+			n++;
+			i++;
+			while (*(*str + i) != g_shell.quote && *(*str + i))
+				i++;
+			i++;
+			g_shell.quote = 0;
+		}
 		while (is_space(*(*str + i)))
 			i++;
 		if (*(*str + i))
 			n++;
-		while (!is_space(*(*str + i)) && *(*str + i))
+		printf("%d %d %d %d\n", !is_space(*(*str + i)), *(*str + i), !is_arrow(*str + i), not_allowed(*(*str + i)));
+		while (!is_space(*(*str + i)) && *(*str + i) && !is_arrow(*str + i) && !not_allowed(*(*str + i)))
 			i++;
+		i++;
 	}
 	return (n);
 }
