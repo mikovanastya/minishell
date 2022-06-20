@@ -80,18 +80,25 @@ int	substitute_envp(char *input, char **envp)
 		return (-1);
 	while (*(input + i))
 	{
-		if (*(input + i) == '\'')
-		{
-			i++;
-			while (*(input + i) && *(input + i) != '\'')
-				i++;
-		}
 		while (*(input + i) && is_space(*(input + i)))
 			i++;
-		if (*(input + i) == '$')
+		if ((*(input + i) == '\'' || *(input + i) == '\"') && !g_shell.quote)
+		{
+			g_shell.quote = *(input + i);
+			i++;
+			if (*(input + i - 1) == '\'' && g_shell.quote != '\"')
+			{
+				i++;
+				while (*(input + i) && *(input + i) != '\'')
+					i++;
+			}
+		}
+		if (*(input + i) == '$' && g_shell.quote != '\'') 
 			replace(&input, i);
 		if (*(input + i))
 			i++;
+		if ((*(input + i) == '\'' || *(input + i) == '\"') && g_shell.quote == *(input + i))
+			g_shell.quote = 0;
 	}
 	return (0);
 }

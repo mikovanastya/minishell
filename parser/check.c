@@ -35,7 +35,7 @@ int	double_check_inpt(char *inpt)
 			if (!*inpt || is_arrow(inpt) || not_allowed(*inpt))
 			{
 				if (!*inpt)
-					printf("parse error near `\n'\n");
+					printf("parse error near `\\n'\n");
 				else
 					printf("parse error near `%c'\n", *inpt);
 				return (-1);
@@ -44,4 +44,33 @@ int	double_check_inpt(char *inpt)
 		inpt++;
 	}
 	return (1);
+}
+
+int	delete_quote(char **inpt)
+{
+	int	i;
+
+	g_shell.quote = 0;
+	i = 0;
+	while (*(*inpt + i))
+	{
+		if (g_shell.quote)
+		{
+			while (*(*inpt + i) != g_shell.quote)
+			{
+				*(*inpt + i - 1) = *(*inpt + i);
+				i++;
+			}
+			while (*(*inpt + i + 1))
+			{
+				*(*inpt + i - 1) = *(*inpt + i + 1);
+				i++;
+			}
+			*(*inpt + i - 1) = '\0';
+		}
+		if ((*(*inpt + i) == '\'' || *(*inpt + i) == '\"') && !g_shell.quote)
+			g_shell.quote = *(*inpt + i);
+		i++;
+	}
+	return (0);
 }
