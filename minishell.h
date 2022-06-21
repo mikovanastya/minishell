@@ -79,11 +79,12 @@ int		repl_more(char **to_change, char *repl, int i, int a);
 int		delete_var(char **to_change, int i, int a);
 int		repl_less(char **to_change, char *repl, int i, int a);
 int		sub_envp(char **to_change, char **repl, int i, int a);
-int		put_str_to_tree(char **str);
+char	**put_str_to_tree(char **str);
 int		double_check_inpt(char *inpt);
 int		is_arrow(char *str);
 int		delete_quote(char **inpt);
 int		not_allowed(char c);
+char	**get_str(char **envp);
 
 /*
 ** STUFF:

@@ -13,35 +13,16 @@
 #include "minishell.h"
 
 int	main(int argc, char **argv, char **envp)
-{	
-	char	*input;
-	int		i;
+{
+	char	**rez;
 
-	i = 0;
 	if (argc != 1)
 	 	ft_error(argv[0], EINVAL);
-	g_shell.console_name = "minishell> ";
-	g_shell.quote = 0;
-	g_shell.len = 0;
-	g_shell.pid = getpid();
-	g_shell.pipe = 0;
-	g_shell.arrow = '\0';
-	while (i < 3)
+	rez = get_str(envp);
+	printf("rez:\n");
+	while (*rez)
 	{
-		g_shell.quote = 0;
-		if (read_str(&input) == 0)
-		{
-			substitute_envp(input, envp);
-			double_check_inpt(input); // if -1 error
-			printf("\n answ %s\n", input);
-			//delete_quote(&input); // if -1 error
-			//printf("\n answ with no qoutes %s\n", input);
-			put_str_to_tree(&input);
-		}
-		else
-			printf("parse error near `|'\n");
-		if (*input || input)
-				ft_bzero(input, ft_strlen(input));
-		i++;
+		printf("%s\n", *rez);
+		rez++;
 	}
 }

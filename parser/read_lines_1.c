@@ -76,7 +76,7 @@ int	in_cycle(char **rez, char **inpt, int *may_continue)
 {
 	int		resize;
 
-	if (!*rez)
+	if (!*rez || !**rez)
 	{
 		if (init_rez(rez, inpt) == -1)
 			return (-1);

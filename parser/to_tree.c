@@ -48,7 +48,6 @@ int	count_elements(char **str)
 			i++;
 		if (*(*str + i))
 			n++;
-		printf("%d %d %d %d\n", !is_space(*(*str + i)), *(*str + i), !is_arrow(*str + i), not_allowed(*(*str + i)));
 		while (!is_space(*(*str + i)) && *(*str + i) && !is_arrow(*str + i) && !not_allowed(*(*str + i)))
 			i++;
 		i++;
@@ -75,10 +74,9 @@ int	count_until_spaces(char	*str)
 		i++;
 	}
 	i++;
-	printf("word len %d\n", i);
 	return (i + 1);
 }
-int	put_str_to_tree(char **str)
+char	**put_str_to_tree(char **str)
 {
 	char	**rez;
 	int		num;
@@ -123,8 +121,36 @@ int	put_str_to_tree(char **str)
 			k++;
 		}
 		rez[i][j] = '\0';
-		printf("rez %s\n", rez[i]);
 		i++;
 	}
-	return (0);
+	return (rez);
+}
+
+char	**get_str(char **envp)
+{
+	char	*input;
+	int		i;
+	char	**rez;
+
+	rez  = NULL;
+	i = 0;
+	input = NULL;
+	g_shell.console_name = "minishell> ";
+	g_shell.len = 0;
+	g_shell.pid = getpid();
+	g_shell.pipe = 0;
+	g_shell.arrow = '\0';
+	g_shell.quote = 0;
+	if (read_str(&input) == 0)
+	{
+		substitute_envp(input, envp);
+		double_check_inpt(input); // if -1 error
+		//printf("\n answ %s\n", input);
+		rez = put_str_to_tree(&input);
+	}
+	else
+		printf("parse error near `|'\n");
+	if (*input || input)
+		ft_bzero(input, ft_strlen(input));
+	return (rez);
 }
