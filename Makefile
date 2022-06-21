@@ -17,6 +17,9 @@ SRCS = 	main.c\
 		parser/read_lines_1.c\
 		parser/substitute_envp.c\
 		parser/substitute_envp_1.c\
+		parser/substitute_envp_2.c\
+		parser/to_tree.c\
+		parser/check.c\
 		utils/utils.c\
 #		builtins/cd.c\
 		builtins/echo.c\

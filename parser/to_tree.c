@@ -34,7 +34,6 @@ int	count_elements(char **str)
 	g_shell.quote = 0;
 	while (*(*str + i))
 	{
-		printf("str[%d] = %c\n", i, *(*str + i));
 		if ((*(*str + i) == '\'' || *(*str + i) == '\"') && !g_shell.quote)
 		{
 			g_shell.quote = *(*str + i);
@@ -57,11 +56,75 @@ int	count_elements(char **str)
 	return (n);
 }
 
+int	count_until_spaces(char	*str)
+{
+	int	i;
+
+	i = 0;
+	g_shell.quote = 0;
+	while (str[i] != ' ' && str[i])
+	{
+		if ((str[i] == '\"' || str[i] == '\'') && !g_shell.quote)
+		{
+			g_shell.quote = str[i];
+			i++;
+			while (str[i] != g_shell.quote && str[i])
+				i++;
+			g_shell.quote = 0;
+		}
+		i++;
+	}
+	i++;
+	printf("word len %d\n", i);
+	return (i + 1);
+}
 int	put_str_to_tree(char **str)
 {
-	int	num;
+	char	**rez;
+	int		num;
+	int		i;
+	int		j;
+	int		k;
 
 	num = count_elements(str);
-	printf("num %d\n", num);
+	rez = (char **)malloc(sizeof(char *) * num);
+	if (!rez)
+		return (0);
+	rez[num - 1] = NULL;
+	i = 0;
+	k = 0;
+	g_shell.quote = 0;
+	while (i < num - 1)
+	{
+		while (is_space(*(*str + k)))
+			k++;
+		rez[i] = (char *)malloc(sizeof(char) * count_until_spaces(*str + k));
+		j = 0;
+		while (*(*str + k) != ' ' && *(*str + k))
+		{
+			if ((*(*str + k) == '\"' || *(*str + k) == '\'') && !g_shell.quote)
+			{
+				g_shell.quote = *(*str + k);
+				k++;
+				while (*(*str + k) != g_shell.quote && *(*str + k))
+				{
+					rez[i][j] = *(*str + k);
+					j++;
+					k++;
+				}
+				g_shell.quote = 0;
+			}
+			else
+			{
+				rez[i][j] = *(*str + k);
+				j++;
+			}
+			
+			k++;
+		}
+		rez[i][j] = '\0';
+		printf("rez %s\n", rez[i]);
+		i++;
+	}
 	return (0);
 }

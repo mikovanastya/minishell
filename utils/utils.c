@@ -19,3 +19,26 @@ void	ft_error(char *argv, int exit_code)
     (void)(exit_code);
 	exit(EXIT_FAILURE);
 }
+
+void	free_memory(char *inpt, char *help, char *rez)
+{
+	if (help)
+		free(help);
+	if (inpt)
+		free(inpt);
+	if (rez)
+		free(rez);
+}
+
+int	is_arrow(char *str)
+{
+	if (*str == '>' && *(str + 1) == '>')
+		return (2);
+	if (*str == '>')
+		return (1);
+	if (*str == '<' && *(str + 1) == '<')
+		return (4);
+	if (*str == '<')
+		return (3);
+	return (0);
+}

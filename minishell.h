@@ -32,7 +32,10 @@ typedef struct s_shell
 	char	**envp;
 	int		len;
 	char	*console_name;
-	int		quote;	
+	int		quote;
+	char	**argv;
+	int		pipe;
+	int		arrow;
 }	t_shell;
 
 t_shell	g_shell;
@@ -64,18 +67,29 @@ void	free_memory(char *inpt, char *help, char *rez);
 int		read_str(char **str);
 int		resize_rez(char **inpt, char **rez);
 int		init_rez(char **inpt, char **rez);
-int     in_cycle(char **rez, char **inpt, int *may_continue);
+int		in_cycle(char **rez, char **inpt, int *may_continue);
 int		go_on(char *str);
 int		substitute_envp(char *input, char **envp);
 int		is_space(char c);
 int		replace(char **to_change, int i);
 char	*find_var(char *what_to_find);
 int		set_envp(char **envp);
+int		repl_equal(char **to_change, char *repl, int i);
+int		repl_more(char **to_change, char *repl, int i, int a);
+int		delete_var(char **to_change, int i, int a);
+int		repl_less(char **to_change, char *repl, int i, int a);
+int		sub_envp(char **to_change, char **repl, int i, int a);
+int		put_str_to_tree(char **str);
+int		double_check_inpt(char *inpt);
+int		is_arrow(char *str);
+int		delete_quote(char **inpt);
+int		not_allowed(char c);
 
 /*
 ** STUFF:
 */
 
 void	ft_error(char *argv, int exit_code);
+void	free_memory(char *inpt, char *help, char *rez);
 
 #endif
