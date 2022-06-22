@@ -137,7 +137,7 @@ int		is_arrow(char *str);
 int		delete_quote(char **inpt);
 int		not_allowed(char c);
 char	**get_str(char **envp);
-
+void	free_array(char **arr);
 /*
 ** STUFF:
 */

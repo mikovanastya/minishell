@@ -38,6 +38,7 @@ SRCS = 	main.c\
 		parser/substitute_envp_2.c\
 		parser/to_tree.c\
 		parser/check.c\
+		parser/free_memory.c\
 		utils/utils.c\
 
 
