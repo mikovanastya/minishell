@@ -145,11 +145,10 @@ char	**get_str(char **envp)
 	{
 		substitute_envp(input, envp);
 		double_check_inpt(input); // if -1 error
-		//printf("\n answ %s\n", input);
 		rez = put_str_to_tree(&input);
 	}
 	else
-		printf("parse error near `|'\n");
+		printf("syntax error near unexpected token `|'\n");
 	if (*input || input)
 		ft_bzero(input, ft_strlen(input));
 	return (rez);
