@@ -6,7 +6,7 @@
 #    By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/16 14:07:19 by rtwitch           #+#    #+#              #
-#    Updated: 2022/06/20 16:47:02 by rtwitch          ###   ########.fr        #
+#    Updated: 2022/06/22 14:07:44 by rtwitch          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,12 +28,17 @@ SRCS = 	main.c\
 		executer/builtins/builtins.c\
 		executer/pipe/create_pipe.c\
 		executer/pipe/pipex.c\
-		executer/pipe/signal.c\
+		executer/signal/signal.c\
 		executer/pipe/heredoc.c\
 		executer/pipe/redirect.c\
-		
-		#parser/read_lines.c\
-		#parser/read_lines_1.c
+		parser/read_lines.c\
+		parser/read_lines_1.c\
+		parser/substitute_envp.c\
+		parser/substitute_envp_1.c\
+		parser/substitute_envp_2.c\
+		parser/to_tree.c\
+		parser/check.c\
+		utils/utils.c\
 
 
 HEADER = minishell.h

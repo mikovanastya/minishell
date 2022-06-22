@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 18:34:52 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/20 18:40:39 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/22 14:15:04 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,6 @@ int	create_pipe(t_shell *shell, t_cmd *cmd)
 	if (cmd->pid == 0)
 	{
 		write(1, "Docha\n", 6);
-		// if (cmd->prev != NULL)
-		// 	dup2(cmd->prev->fd[0], STDIN_FILENO);
-		// if (cmd->next != NULL)
-		// 	dup2(cmd->fd[1], STDOUT_FILENO);
 		if (cmd->next)
 		{
 			if (dup2(cmd->fd[1], 1) < 0 )//скопировать один fd в другой
@@ -52,7 +48,7 @@ int	create_pipe(t_shell *shell, t_cmd *cmd)
 		check_redirection(cmd, 0);
 		execute_execve(cmd, shell);
 		//выполнение функций cmd
-		//builtins(cmd->argv, shell);//временно
+		builtins(cmd->argv, shell);//временно
 		exit(0);
 	}
 	else

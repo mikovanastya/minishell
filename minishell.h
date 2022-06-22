@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:02:04 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/20 16:55:35 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/22 14:03:45 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,15 @@
 typedef struct s_cmd	t_cmd;
 
 typedef struct s_shell{	
+	pid_t	pid;
 	char	**envp;
 	char	**export;
 	char	**argv;//
 	int		len;
 	char	*console_name;
 	int		quote;	
+	int		arrow;
+	int		pipe;
 	t_cmd	**cmd_start;
 }t_shell;
 
@@ -116,9 +119,30 @@ void	free_memory(char *inpt, char *help, char *rez);
 int		read_str(char **str);
 int		resize_rez(char **inpt, char **rez);
 int		init_rez(char **inpt, char **rez);
-int		in_cycle(char **inpt, int *may_continue, char **rez);
+int		in_cycle(char **rez, char **inpt, int *may_continue);
 int		go_on(char *str);
+int		substitute_envp(char *input, char **envp);
+int		is_space(char c);
+int		replace(char **to_change, int i);
+char	*find_var(char *what_to_find);
+int		set_envp(char **envp);
+int		repl_equal(char **to_change, char *repl, int i);
+int		repl_more(char **to_change, char *repl, int i, int a);
+int		delete_var(char **to_change, int i, int a);
+int		repl_less(char **to_change, char *repl, int i, int a);
+int		sub_envp(char **to_change, char **repl, int i, int a);
+char	**put_str_to_tree(char **str);
+int		double_check_inpt(char *inpt);
+int		is_arrow(char *str);
+int		delete_quote(char **inpt);
+int		not_allowed(char c);
+char	**get_str(char **envp);
 
+/*
+** STUFF:
+*/
 
-static void	check_args(int argc, char **argv);
+void	ft_error(char *argv, int exit_code);
+void	free_memory(char *inpt, char *help, char *rez);
+
 #endif
