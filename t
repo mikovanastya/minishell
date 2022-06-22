@@ -1,4 +1,0 @@
-Docha
-Mama
-Docha
-Mama

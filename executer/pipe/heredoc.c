@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:49:46 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/15 15:49:59 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/20 17:14:49 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,6 @@ int	make_heredocs(t_cmd *cmd, t_shell *shell)
 	return (0);
 }
 
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	int	i;
-
-	i = 0;
-	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
-		i++;
-	return (s1[i] - s2[i]);
-}
 
 int	check_heredoc(char **redir, int stdin_fd, t_cmd *cmd, t_shell *shell)
 {

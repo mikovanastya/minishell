@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/09 13:16:32 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/05/28 15:45:30 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/20 17:06:01 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		ft_tolower(int c);
 int		ft_memcmp(const void *dest, const void *src, size_t n);
 int		ft_strncmp(const char *str1, const char *str2, size_t n);
 int		ft_atoi(const char *str);
-
+int		ft_strcmp(const char *s1, const char *s2);
 
 void	ft_bzero(void *s, size_t n);
 void	*ft_memset(void *b, int c, size_t len);

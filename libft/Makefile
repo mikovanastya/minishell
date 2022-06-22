@@ -6,7 +6,7 @@
 #    By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/08 17:54:12 by rtwitch           #+#    #+#              #
-#    Updated: 2022/05/28 15:45:22 by rtwitch          ###   ########.fr        #
+#    Updated: 2022/06/20 17:05:36 by rtwitch          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SRCS =	ft_bzero.c\
 		ft_itoa.c\
 		ft_striteri.c\
 		ft_strmapi.c\
+		ft_strcmp.c\
 		ft_split.c
 
 OBJ = $(SRCS:.c=.o)
