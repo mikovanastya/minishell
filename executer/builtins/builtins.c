@@ -6,21 +6,19 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:56:12 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/05/28 16:23:59 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/22 15:19:35 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-
 
 int	builtins(char **argv, t_shell *shell)
 {
 	int	i;
 
 	i = 1;
-	// if (!ft_strncmp(argv[0], "exit", ft_strlen(argv[0])))
-	// 	i = 1;
+	if (!ft_strncmp(argv[0], "exit", ft_strlen(argv[0])))
+		i = 1;
 	if (!ft_strncmp(argv[0], "echo", ft_strlen(argv[0])))
 		builtin_echo(argv, 1);
 	else if	(!ft_strncmp(argv[0], "pwd", ft_strlen(argv[0])))

@@ -1,0 +1,27 @@
+qwertyuiop[
+	asdasf
+	asdasd
+
+]
+asdasdzx
+
+zxc
+1
+	sada
+2
+
+
+cmd1
+
+cmd.argv[0] = "cat"
+cmd.argv[1] = "1.txt"
+cmd.next = cmd2
+
+
+cmd2
+
+cmd.argv[0] = "wc"
+cmd.argv[1] = "-l"
+cmd.prev = cmd1
+cmd.mext = 0
+cmd.fd >> file

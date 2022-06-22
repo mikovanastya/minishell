@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:17:01 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/20 17:53:33 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/22 16:13:28 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ int execute_execve(t_cmd *cmd, t_shell *shell)
 	char	*paths;
 	char	**path_arr;
 
+	//printf ("[%d][%d]_%s_%s_\n", cmd->fd[0], cmd->fd[1], cmd->argv[0], cmd->argv[1]);
 	paths = get_env_value(shell, "PATH");
 	path_arr = ft_split(paths, ':');
-	printf ("[%d][%d]_%s_%s_\n", cmd->fd[0], cmd->fd[1], cmd->argv[0], cmd->argv[1]);
 	if ((ft_strlen(cmd->argv[0]) > 2)
 		&& (cmd->argv[0][0] == '/' || cmd->argv[0][0] == '.'))
 	{
@@ -96,7 +96,7 @@ int execute_execve(t_cmd *cmd, t_shell *shell)
 	}
 	ft_free_str(&paths);
 	ft_free_str_arr(&path_arr);
-	printf("my_shell: %s: command not found\n", cmd->argv[0]);
+	printf("minishell: %s: command not found\n", cmd->argv[0]);
 	cmd->exit_status = 127;
 	exit(cmd->exit_status);
 	return (0);
@@ -140,16 +140,16 @@ void	pipex(t_shell *shell)
 	cmd = *shell->cmd_start;
 	if (nofork(cmd->argv[0]))
 	{
-		printf("NOFORK");
+		//printf("NOFORK");
 		start_cmd_fork(cmd, shell);
 		return ;
 	}
 	else
 	{
-		printf ("pipex\n");
+		//printf ("pipex\n");
 		while (cmd)
 		{
-			// printf("%s\n", cmd->argv[0]);
+			//printf("%s\n", cmd->argv[0]);
 			create_pipe(shell, cmd);
 			cmd = cmd->next;
 		}

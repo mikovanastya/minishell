@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:14:15 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/05/27 15:08:39 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/22 16:15:18 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	set_env(t_shell *shell, char *prmtrs, char *value)// обЪединяет п
 	char	*result_2nd_join;
 
 	
-	printf("%s  -  %s\n", prmtrs, value);
+	//printf("%s  -  %s\n", prmtrs, value);
 	result_1st_join = ft_strjoin(prmtrs, "=");
 	result_2nd_join = ft_strjoin(result_1st_join, value);
 	if (env_prmtrs_exist(shell, prmtrs))//проверяем существует ли такой prmtrs
