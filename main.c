@@ -48,6 +48,7 @@ int	main(int argc, char **argv, char **env)
 		i++;
 	}
 	pipex(&shell);
+	free_array(cmd->argv);
 	return (0);
 }
 

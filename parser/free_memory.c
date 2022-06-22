@@ -10,4 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../minishell.h"
 
+void	free_array(char **arr)
+{
+	if (!arr)
+		return ;
+	while (*arr)
+	{
+		free(*arr);
+		arr++;
+	}
+	// if (arr)
+	// 	free(arr);
+}
