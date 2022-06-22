@@ -32,11 +32,17 @@ int	main(int argc, char **argv, char **env)
 {
 	char	**rez;
 	t_shell	shell;
+	t_cmd	*cmd;
 
 	if (argc != 1)
 	 	ft_error(argv[0], EINVAL);
-	shell.argv = get_str(env);
-	rez = shell.argv;
+	//shell = (t_shell)malloc(sizeof(t_shell));
+	init_env(env, &shell);
+	cmd = malloc(sizeof(t_cmd));
+	//shell.cmd_start = malloc(100000);
+	shell.cmd_start = &cmd;
+	cmd->argv = get_str(env);
+	rez = cmd->argv;
 	printf("rez:\n");
 	while (*rez)
 	{
@@ -59,7 +65,7 @@ int	main(int argc, char **argv, char **env)
 	// t_cmd	*cmd2;
 
 	// check_args(argc, argv);
-	// init_env(env, &shell);
+
 	// cmd1 = malloc(sizeof(t_cmd));
 	// shell.cmd_start = &cmd1;
 	// cmd1->argv = malloc(sizeof(char *) * 2);

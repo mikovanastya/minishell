@@ -59,10 +59,10 @@ LIB	= libft.a
 all : $(NAME) 
 
 $(NAME) : $(OBJ) $(LIB)
-	$(CC) -lreadline $(FLAGS) $(OBJ) libft/libft.a  -o $(NAME)
+	$(CC) -g -lreadline $(FLAGS) $(OBJ) libft/libft.a  -o $(NAME)
 
 %.o: %.c $(HEADER) Makefile
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) -g $(FLAGS) -c $< -o $@
 
 $(LIB):
 	@gcc -c -Wall -Werror -Wextra libft/*.c -I libft/libft.h

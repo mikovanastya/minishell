@@ -48,7 +48,7 @@ int	create_pipe(t_shell *shell, t_cmd *cmd)
 		check_redirection(cmd, 0);
 		execute_execve(cmd, shell);
 		//выполнение функций cmd
-		builtins(cmd->argv, shell);//временно
+		//builtins(cmd->argv, shell);//временно
 		exit(0);
 	}
 	else

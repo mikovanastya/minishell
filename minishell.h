@@ -42,7 +42,7 @@ typedef struct s_shell{
 	int		quote;	
 	int		arrow;
 	int		pipe;
-	t_cmd	**cmd_start;
+	t_cmd	**cmd_start; // *
 }t_shell;
 
 struct	s_cmd
