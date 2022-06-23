@@ -12,18 +12,6 @@
 
 #include "../minishell.h"
 
-// &
-// | +
-// > 1
-// >> 2
-// < 3
-// << 4
-
-// int	service_symbol(char **str)
-// {
-
-// }
-
 int	count_elements(char **str)
 {
 	int	n;
@@ -48,7 +36,8 @@ int	count_elements(char **str)
 			i++;
 		if (*(*str + i))
 			n++;
-		while (!is_space(*(*str + i)) && *(*str + i) && !is_arrow(*str + i) && !not_allowed(*(*str + i)))
+		while (!is_space(*(*str + i)) && *(*str + i) && !is_arrow(*str + i)
+			&& !not_allowed(*(*str + i)))
 			i++;
 		i++;
 	}
@@ -76,6 +65,7 @@ int	count_until_spaces(char	*str)
 	i++;
 	return (i + 1);
 }
+
 char	**put_str_to_tree(char **str)
 {
 	char	**rez;
@@ -117,7 +107,6 @@ char	**put_str_to_tree(char **str)
 				rez[i][j] = *(*str + k);
 				j++;
 			}
-			
 			k++;
 		}
 		rez[i][j] = '\0';
@@ -141,6 +130,7 @@ char	**get_str(char **envp)
 	g_shell.pipe = 0;
 	g_shell.arrow = '\0';
 	g_shell.quote = 0;
+	// g_shell.line = 
 	if (read_str(&input) == 0)
 	{
 		substitute_envp(input, envp);
@@ -150,6 +140,7 @@ char	**get_str(char **envp)
 	else
 		printf("syntax error near unexpected token `|'\n");
 	if (*input || input)
-		ft_bzero(input, ft_strlen(input));
+		//ft_bzero(input, ft_strlen(input));
+		free(input);
 	return (rez);
 }

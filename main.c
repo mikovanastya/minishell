@@ -28,27 +28,42 @@ static void	check_args(int argc, char **argv)
 	}
 }
 
+void	ft_shell_error(char *argv, int exit_code, int exit_flag)
+{
+	ft_putstr_fd(argv, 2);
+//	g_shell.status = exit_code;
+	if (exit_flag == EXIT_FLAG)
+		exit (exit_code);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	char	**rez;
 	t_shell	shell;
 	t_cmd	*cmd;
+	int		j;
 
+	j = 0;
 	if (argc != 1)
 	 	ft_error(argv[0], EINVAL);
 	init_env(env, &shell);
-	cmd = malloc(sizeof(t_cmd));
-	//shell.cmd_start = malloc(100000);
-	shell.cmd_start = &cmd;
-	cmd->argv = get_str(env); // !!
-	int i = 0;
-	while (cmd->argv[i])
+	while(j < 3)
 	{
-		printf("Cmd %d:[%s]\n",i, cmd->argv[i]);
-		i++;
+		cmd = malloc(sizeof(t_cmd));
+	//shell.cmd_start = malloc(100000);
+		shell.cmd_start = &cmd;
+		cmd->argv = get_str(env); // !!
+		int i = 0;
+		while (cmd->argv[i])
+		{
+			printf("Cmd %d:[%s]\n",i, cmd->argv[i]);
+			i++;
+		}
+		pipex(&shell);
+		free_array(cmd->argv);
+		free(cmd);
+		j++;
 	}
-	pipex(&shell);
-	free_array(cmd->argv);
 	return (0);
 }
 
@@ -150,3 +165,6 @@ int	main(int argc, char **argv, char **env)
 	// 	printf("read this string ->|%s|<-\n", str);
 	// 	printf("HERE\n");
 	// 	free (str);
+
+
+..bg..bgt5..

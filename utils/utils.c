@@ -42,3 +42,10 @@ int	is_arrow(char *str)
 		return (3);
 	return (0);
 }
+
+int	is_space(char c)
+{
+	if ((c >= 10 && c <= 13) || c == 32)
+		return (1);
+	return (0);
+}

@@ -68,6 +68,8 @@ int	go_on(char *str)
 {
 	int	go_to_next_str;
 
+	// if (!str)
+	// 	return (0);
 	go_to_next_str = 0;
 	if (decision_about_quotes(&str, &go_to_next_str) == -1)
 		return (-1);
@@ -89,10 +91,13 @@ int	read_str(char **str)
 	int		may_continue;
 	int		cycle_rez;
 
+	inpt = NULL;
 	may_continue = 1;
 	while (may_continue == 1)
 	{
 		inpt = readline(g_shell.console_name);
+		if (!inpt)
+			ft_shell_error("minishell> exit\n", 1, EXIT_FLAG);
 		add_history(inpt);
 		cycle_rez = in_cycle(str, &inpt, &may_continue);
 		free(inpt);

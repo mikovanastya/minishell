@@ -30,6 +30,8 @@
 
 #include <fcntl.h>
 
+# define EXIT_FLAG 1
+
 typedef struct s_cmd	t_cmd;
 
 typedef struct s_shell{	
@@ -43,6 +45,7 @@ typedef struct s_shell{
 	int		arrow;
 	int		pipe;
 	t_cmd	**cmd_start; // *
+	char	**line;
 }t_shell;
 
 struct	s_cmd
@@ -138,6 +141,7 @@ int		delete_quote(char **inpt);
 int		not_allowed(char c);
 char	**get_str(char **envp);
 void	free_array(char **arr);
+void	ft_shell_error(char *argv, int exit_code, int exit_flag);
 /*
 ** STUFF:
 */
