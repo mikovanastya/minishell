@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   read_lines.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eward <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:45:31 by eward             #+#    #+#             */
-/*   Updated: 2022/05/18 17:45:32 by eward            ###   ########.fr       */
+/*   Updated: 2022/06/22 17:13:29 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	read_str(char **str)
 		inpt = readline(g_shell.console_name);
 		add_history(inpt);
 		cycle_rez = in_cycle(str, &inpt, &may_continue);
+		//pipex(&g_shell);// не тут мб 
 		free(inpt);
 	}
 	return (may_continue);

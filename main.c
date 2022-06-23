@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:01:07 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/22 15:57:14 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/23 16:04:59 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,23 @@ int	main(int argc, char **argv, char **env)
 
 	if (argc != 1)
 	 	ft_error(argv[0], EINVAL);
-	init_env(env, &shell);
-	cmd = malloc(sizeof(t_cmd));
-	//shell.cmd_start = malloc(100000);
-	shell.cmd_start = &cmd;
-	cmd->argv = get_str(env); // !!
-	int i = 0;
-	while (cmd->argv[i])
+	while (1)
 	{
-		printf("Cmd %d:[%s]\n",i, cmd->argv[i]);
-		i++;
+		init_env(env, &shell);
+		cmd = malloc(sizeof(t_cmd));
+		shell.cmd_start = &cmd;
+		cmd->argv = get_str(env); // !!
+		int i = 0;
+		while (cmd->argv[i])
+		{
+			printf("Cmd %d:[%s]\n",i, cmd->argv[i]);
+			i++;
+		}
+		signal(SIGINT, handler_signal);
+		signal(SIGQUIT, handler_signal);
+		pipex(&shell);
+		free_array(cmd->argv);
 	}
-	pipex(&shell);
-	free_array(cmd->argv);
 	return (0);
 }
 
@@ -89,8 +93,7 @@ int	main(int argc, char **argv, char **env)
 	// printf("__%s__\n", get_env_value(&shell, "privet"));
 	// cmd1->file = NULL;
 	// make_heredocs(cmd1, &shell);
-	// signal(SIGINT, handler_signal);
-	// signal(SIGQUIT, handler_signal);
+
 	// using_history();
 	// while(1)
 	// {

@@ -6,7 +6,7 @@
 #    By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/16 14:07:19 by rtwitch           #+#    #+#              #
-#    Updated: 2022/06/22 14:07:44 by rtwitch          ###   ########.fr        #
+#    Updated: 2022/06/23 17:10:06 by rtwitch          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,47 +44,66 @@ SRCS = 	main.c\
 
 HEADER = minishell.h
 
-RL_INCLUDE  =   ~/.brew/opt/readline/include
-RL_LIB      =   ~/.brew/opt/readline/lib
+#RL_INCLUDE  =   ~/.brew/opt/readline/include
+#RL_LIB      =   ~/.brew/opt/readline/lib
 
 CC		=	cc
 
 FLAGS = 
 
-RM			=	@rm -f
+RM			=	rm -f
 
 OBJ 	= $(SRCS:.c=.o)
 
 LIB	= libft.a
 
+
 all : $(NAME) 
 
-$(NAME) : $(OBJ) $(LIB)
-	$(CC) -g -lreadline $(FLAGS) $(OBJ) libft/libft.a  -o $(NAME)
+$(NAME) : $(OBJ) ./libft/*.c
+	make -C ./libft
+	$(CC) -g -lreadline $(FLAGS) $(OBJ) -L libft ./libft/libft.a  -o $(NAME)
 
-%.o: %.c $(HEADER) Makefile
+%.o: %.c  */*.h $(HEADER)
 	$(CC) -g $(FLAGS) -c $< -o $@
 
-$(LIB):
-	@gcc -c -Wall -Werror -Wextra libft/*.c -I libft/libft.h
-	@ar -q libft/$(LIB) *.o
+# $(LIB):
+# 	@gcc -c -Wall -Werror -Wextra libft/*.c -I libft/libft.h
+# 	@ar -q libft/$(LIB) *.o
 
-libft :
-	make -C libft
+# libft :
+# 	make -C libft
 
 clean :
-	make -C libft clean
-	$(RM) *.o
+	$(RM) $(OBJ)
+	make clean -C libft/
 
 fclean : clean
-	$(RM) $(OBJ)
 	$(RM) $(NAME)
-	$(RM) libft/libft.a
-	$(RM) -rf libft/$(LIB)
+	make fclean -C libft/
 
 re : fclean all
 
-run : all
-	./minishell
+.PHONY: all clean fclean re #libft
+# all : libft $(NAME)
+# 	stty -ctlecho
+# $(NAME) : $(OBJ) 
+# 	$(CC) $(FLAGS) $(OBJ) -o $(NAME)  -lreadline -L./libft -lft
 
-.PHONY: all clean fclean re libft
+# %.o: %.c $(HEADER) Makefile
+# 	$(CC) $(FLAGS) -c $< -o $@
+
+# libft :
+# 	make -C libft
+
+# clean :
+# 	make -C libft clean
+# 	$(RM) $(OBJ)
+
+# fclean : clean
+# 	$(RM) $(NAME)
+# 	$(RM) libft/libft.a
+
+# re : fclean all
+
+# .PHONY: all clean fclean re libft

@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:17:01 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/22 16:47:48 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/23 16:08:27 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,32 @@ int	start_cmd_fork(t_cmd *cmd, t_shell *shell)// выполнение некот
 	set_env(shell, "?", ft_itoa(status));// статус выхода самого последнего пайпа, вроде так, хз
 	return (status);
 }
+// int	ft_cmdlen(t_cmd *cmd)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (cmd)
+// 	{
+// 		i++;
+// 		cmd = cmd->next;
+// 	}
+// 	return (i);
+// }
+
+// void	check_cd_exit(t_cmd *cmd, int n)
+// {
+// 	int	docmd;
+
+// 	if (ft_cmdlen(cmd) == 1 && !n)
+// 		docmd = 1;
+// 	else
+// 		docmd = 0;
+// 	if (!ft_strncmp(cmd->argv[0], "exit", ft_strlen(cmd->argv[0])))
+// 		ft_exit(cmd, docmd);
+// 	if (!ft_strncmp(cmd->argv[0], "cd", ft_strlen(cmd->argv[0])))
+// 		g_shell.envp = ft_todir(cmd->argv, docmd);
+// }
 
 void	pipex(t_shell *shell)
 {

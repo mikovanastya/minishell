@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 18:34:52 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/22 16:09:32 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/23 16:09:03 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	create_pipe(t_shell *shell, t_cmd *cmd)
 			if (dup2(cmd->prev->fd[0], 0) < 0 )//скопировать один fd в другой
 				return (1);// если не создался все плохо если не скопировался
 		}
-		// check_redirection(cmd, 0);
+		check_redirection(cmd, 0);
 		if (builtins(cmd->argv, shell))
 			return (0);
 		execute_execve(cmd, shell);
