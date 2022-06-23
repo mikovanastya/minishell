@@ -6,7 +6,7 @@
 #    By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/16 14:07:19 by rtwitch           #+#    #+#              #
-#    Updated: 2022/06/23 17:10:06 by rtwitch          ###   ########.fr        #
+#    Updated: 2022/06/23 17:48:16 by rtwitch          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,13 +67,6 @@ $(NAME) : $(OBJ) ./libft/*.c
 %.o: %.c  */*.h $(HEADER)
 	$(CC) -g $(FLAGS) -c $< -o $@
 
-# $(LIB):
-# 	@gcc -c -Wall -Werror -Wextra libft/*.c -I libft/libft.h
-# 	@ar -q libft/$(LIB) *.o
-
-# libft :
-# 	make -C libft
-
 clean :
 	$(RM) $(OBJ)
 	make clean -C libft/
@@ -84,26 +77,4 @@ fclean : clean
 
 re : fclean all
 
-.PHONY: all clean fclean re #libft
-# all : libft $(NAME)
-# 	stty -ctlecho
-# $(NAME) : $(OBJ) 
-# 	$(CC) $(FLAGS) $(OBJ) -o $(NAME)  -lreadline -L./libft -lft
-
-# %.o: %.c $(HEADER) Makefile
-# 	$(CC) $(FLAGS) -c $< -o $@
-
-# libft :
-# 	make -C libft
-
-# clean :
-# 	make -C libft clean
-# 	$(RM) $(OBJ)
-
-# fclean : clean
-# 	$(RM) $(NAME)
-# 	$(RM) libft/libft.a
-
-# re : fclean all
-
-# .PHONY: all clean fclean re libft
+.PHONY: all clean fclean re

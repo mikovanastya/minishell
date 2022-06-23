@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:17:01 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/23 16:08:27 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/23 19:42:07 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	ft_free_str(char **s)
 {
-	
 	if (*s != NULL)
 	{
 		free(*s);
@@ -76,7 +75,7 @@ void	*ft_free_str_arr(char ***arr)
 	return (NULL);
 }
 
-int execute_execve(t_cmd *cmd, t_shell *shell)
+int execute_execve(t_cmd *cmd, t_shell *shell)// выполняет команды из bin///
 {
 	char	**env;
 	char	*paths;

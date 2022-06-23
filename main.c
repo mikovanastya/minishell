@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:01:07 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/23 16:04:59 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/23 19:36:42 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ int	main(int argc, char **argv, char **env)
 		}
 		signal(SIGINT, handler_signal);
 		signal(SIGQUIT, handler_signal);
-		pipex(&shell);
+		// pipex(&shell);
+		builtins(cmd->argv, &shell);
 		free_array(cmd->argv);
 	}
 	return (0);
