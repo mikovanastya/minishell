@@ -11,17 +11,46 @@ zxc
 2
 
 
+EXAMPLE
+
+env | grep "TERM" | wc -l >>file2
+
 cmd1
 
-cmd.argv[0] = "cat"
-cmd.argv[1] = "1.txt"
+cmd.argv[0] = "env"
+cmd.argv[1] = Null
 cmd.next = cmd2
 
+|  (pipe)
 
 cmd2
 
+cmd.argv[0] = "grep"
+cmd.argv[1] = "TERM"
+cmd.argv[2] = Null
+cmd.prev = cmd1
+cmd.next = cmd3
+
+|
+
+cmd3
+
 cmd.argv[0] = "wc"
 cmd.argv[1] = "-l"
-cmd.prev = cmd1
-cmd.mext = 0
-cmd.fd >> file
+cmd.prev = cmd2
+cmd.next = 0
+// cmd.file[0] == file2 (fd)
+
+
+EXAMPLE 2
+<1.txt grep kopa >> 2.txt
+
+cmd.argv[0] = grep
+cmd.argv[1] = kopa
+cmd.argv[2] = NULL
+--cmd.file[0] = NULL
+cmd.file[0] = >>
+--cmd.fd[0]   = 1.txt(fd)
+cmd.fd[1]   = 2.txt(fd)
+
+pwd > 334.txt

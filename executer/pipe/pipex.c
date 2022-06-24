@@ -6,21 +6,11 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:17:01 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/23 19:42:07 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/24 17:48:47 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-int	ft_free_str(char **s)
-{
-	if (*s != NULL)
-	{
-		free(*s);
-	}
-	*s = NULL;
-	return (0);
-}
 
 int	get_count_cmd(char ***cmd)
 {
@@ -50,30 +40,8 @@ int	execute_execve_without_path(t_cmd *cmd,
 	return (0);
 }
 
-void	*ft_free_str_arr(char ***arr)
-{
-	int	i;
 
-	if (arr == NULL || *arr == NULL)
-		return (NULL);
-	i = 0;
-	if ((*arr) != NULL)
-	{
-		while ((*arr)[i] != NULL)
-		{
-			if ((*arr)[i] != NULL)
-			{
-				free((*arr)[i]);
-				(*arr)[i] = NULL;
-			}
-			i++;
-		}
-		if (*arr != NULL)
-			free(*arr);
-		*arr = NULL;
-	}
-	return (NULL);
-}
+
 
 int execute_execve(t_cmd *cmd, t_shell *shell)// выполняет команды из bin///
 {
@@ -88,13 +56,13 @@ int execute_execve(t_cmd *cmd, t_shell *shell)// выполняет команд
 		&& (cmd->argv[0][0] == '/' || cmd->argv[0][0] == '.'))
 	{
 		execve(cmd->argv[0], cmd->argv, shell->envp);//весь путь
-		return (0);
 	}
 	else
 	{
 		execute_execve_without_path(cmd, shell->envp, path_arr);// без пути
 	}
 	ft_free_str(&paths);
+	ft_free_str_arr(&env);
 	ft_free_str_arr(&path_arr);
 	printf("minishell: %s: command not found\n", cmd->argv[0]);
 	cmd->exit_status = 127;
@@ -115,7 +83,7 @@ int	nofork(char *cmd)// эти команды не могут выполнять
 	return (0);
 }
 
-int	start_cmd_fork(t_cmd *cmd, t_shell *shell)// выполнение некоторых команд
+int	start_cmd_nofork(t_cmd *cmd, t_shell *shell)// выполнение некоторых команд
 {
 	int	status;//статус выхода 
 
@@ -132,32 +100,6 @@ int	start_cmd_fork(t_cmd *cmd, t_shell *shell)// выполнение некот
 	set_env(shell, "?", ft_itoa(status));// статус выхода самого последнего пайпа, вроде так, хз
 	return (status);
 }
-// int	ft_cmdlen(t_cmd *cmd)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (cmd)
-// 	{
-// 		i++;
-// 		cmd = cmd->next;
-// 	}
-// 	return (i);
-// }
-
-// void	check_cd_exit(t_cmd *cmd, int n)
-// {
-// 	int	docmd;
-
-// 	if (ft_cmdlen(cmd) == 1 && !n)
-// 		docmd = 1;
-// 	else
-// 		docmd = 0;
-// 	if (!ft_strncmp(cmd->argv[0], "exit", ft_strlen(cmd->argv[0])))
-// 		ft_exit(cmd, docmd);
-// 	if (!ft_strncmp(cmd->argv[0], "cd", ft_strlen(cmd->argv[0])))
-// 		g_shell.envp = ft_todir(cmd->argv, docmd);
-// }
 
 void	pipex(t_shell *shell)
 {
@@ -166,16 +108,13 @@ void	pipex(t_shell *shell)
 	cmd = *shell->cmd_start;
 	if (nofork(cmd->argv[0]))
 	{
-		//printf("NOFORK");
-		start_cmd_fork(cmd, shell);
+		start_cmd_nofork(cmd, shell);
 		return ;
 	}
 	else
 	{
-		//printf ("pipex\n");
 		while (cmd)
 		{
-			//printf("%s\n", cmd->argv[0]);
 			create_pipe(shell, cmd);
 			cmd = cmd->next;
 		}
@@ -184,10 +123,9 @@ void	pipex(t_shell *shell)
 
 void	set_last_status(t_shell *shell, t_cmd *cmd, int status)
 {
-	// printf("__%d___", status);
 	if (WIFEXITED(status))
 		set_env(shell, "?", ft_itoa(WEXITSTATUS(status)));
 	else if (WIFSIGNALED(status))
 		set_env(shell, "?", ft_itoa(WTERMSIG(status) + 128));
-	set_env(shell, "_", cmd->argv[0]);// argv[0] ?????
+	set_env(shell, "_", cmd->argv[0]);
 }

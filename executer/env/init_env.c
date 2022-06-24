@@ -6,58 +6,39 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 15:04:45 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/22 14:08:45 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/24 18:34:36 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-// char	**ms_matrix_add_line(char **matrix, char *new_line)
-// {
-// 	int		i;
-// 	char	**new_matrix;
+void	check_shlvl(t_shell *shell)
+{
+	t_cmd	*cmd;
+	int		nb_shlvl;
+	char	*str_shlvlv;
+	char	*final_str;
+	char	**cmnd_words;
 
-// 	i = 0;
-// 	while (matrix[i])
-// 		i++;
-// 	new_matrix = malloc(sizeof(char *) * (i + 2));
-// 	i = 0;
-// 	while (matrix[i])
-// 	{
-// 		new_matrix[i] = ft_strdup(matrix[i]);
-// 		i++;
-// 	}
-// 	new_matrix[i] = ft_strdup(new_line);
-// 	i++;
-// 	new_matrix[i] = NULL;
-// //	ft_free_tab(matrix);
-// 	return (new_matrix);
-// }
-
-// void	check_shlvl(t_shell *shell)
-// {
-// 	char	*var;
-// 	char	*var1;
-// 	int		num;
-// 	char	**arg;
-
-// 	var = get_env(shell->envp, "SHLVL");
-// 	if (var == NULL)
-// 	{
-// 		shell->envp = ms_matrix_add_line(shell->envp, "SHLVL=1");// переделать функцию
-// 		return ;
-// 	}
-// 	arg = ft_split(var, '=');
-// 	num = ft_atoi(arg[1]);
-// 	num++;
-// 	var = ft_itoa(num);
-// 	var1 = ft_strjoin("SHLVL=", var);
-// 	set_env(shell->envp, var1, shell);
-// 	free (var);
-// 	free (var1);
-// 	//ft_free_tab(arg);
-// 	return ;
-// }
+	while (cmd != NULL)
+	{
+		if (strcmp("SHLVL", cmd->argv[0]) == 0)
+		{
+			if (cmd->argv[1] != NULL)
+				nb_shlvl = ft_atoi(cmd->argv[1]) + 1;
+			else
+				nb_shlvl = 1;
+		}
+		cmd = cmd->next;
+	}
+	str_shlvlv = ft_itoa(nb_shlvl);
+	final_str = ft_strjoin("export SHLVL=", str_shlvlv);
+	cmnd_words = ft_split(final_str, ' ');
+	builtin_export(cmnd_words, shell);
+	ft_free_str(&str_shlvlv);
+	ft_free_str(&final_str);
+	ft_free_str_arr(&cmnd_words);
+}
 
 void	init_env(char **prmtrs, t_shell *shell)// инициализация env, скопировать весь env терминал в новый созданный envp
 {
@@ -76,6 +57,8 @@ void	init_env(char **prmtrs, t_shell *shell)// инициализация env, �
 		i++;
 	}
 	shell->envp[i] = NULL;
+	//check_shlvl(shell);
+	return ;
 }
 
 ///int	new_envp_set(t_env *env, char *str, char **tmp) перезаписывает нашт  env

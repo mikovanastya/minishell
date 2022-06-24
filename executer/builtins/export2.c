@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:20:53 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/05/27 17:27:03 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/24 17:42:55 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	sort_tmp_env(char **envp, int len)
 	char	*tmp;
 
 	i = 0;
-	//printf ("-----------------------------%d\n", len);
 	while (i < len - 1)
 	{
 		min = i;

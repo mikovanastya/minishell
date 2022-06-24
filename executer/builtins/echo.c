@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:24:43 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/05/27 15:08:52 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/24 17:44:23 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,3 @@ int	builtin_echo(char **argv, int fd)
 		ft_putstr_fd("\n", fd);
 	return (0);
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	if (strcmp(argv[1], "echo") == 0)
-// 		builtin_echo(&argv[1], 1);
-// }

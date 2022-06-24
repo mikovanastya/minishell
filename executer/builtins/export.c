@@ -6,17 +6,16 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:13:19 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/05/31 17:44:24 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/24 17:44:48 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int		check_name(char *args)
+int	check_name(char *args)
 {
-	int i;
+	int	i;
 
-	//printf ("%s\n", args);
 	//args[0] буква или _
 	if ((!ft_isalpha(args[0])) && args[0] != '_' )
 		return (1);

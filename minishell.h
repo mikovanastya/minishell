@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:02:04 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/22 14:03:45 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/24 17:50:33 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,9 @@ struct	s_cmd
 {
 	pid_t		pid;
 	int			fd[2];
+	char		**file_name;//redirect
 	int			exit_status;
-	char		**file;
+	char		**redir;
 	char		**argv;//аргументы, которые нам подаются
 	struct s_cmd *prev;
 	struct s_cmd *next;
@@ -111,6 +112,8 @@ int		redir_heredoc(char *iter, int fd, t_cmd *cmd, t_shell *shell);
 void	set_last_status(t_shell *shell, t_cmd *cmd, int status);
 int		open_file(char *argv, int i, int quit);
 int		check_redirection(t_cmd *cmd, int quit);
+int		ft_free_str(char **s);
+void	*ft_free_str_arr(char ***arr);
 /*
 ** PARSER:
 */
