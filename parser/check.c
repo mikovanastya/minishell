@@ -12,9 +12,9 @@
 
 #include "../minishell.h"
 
-int	not_allowed(char c)
+int	n_a(char c)
 {
-	if (c == '|' || c == '&' || c ==';')
+	if (c == '|' || c == '&' || c == ';')
 		return (1);
 	return (0);
 }
@@ -24,15 +24,15 @@ int	double_check_inpt(char *inpt)
 {
 	while (*inpt)
 	{
-		if (is_arrow(inpt))
+		if (is_a(inpt))
 		{
-			if (is_arrow(inpt) % 2)
+			if (is_a(inpt) % 2)
 				inpt += 2;
 			else
 				inpt++;
-			while (is_space(*inpt))
+			while (sp(*inpt))
 				inpt++;
-			if (!*inpt || is_arrow(inpt) || not_allowed(*inpt))
+			if (!*inpt || is_a(inpt) || n_a(*inpt))
 			{
 				if (!*inpt)
 					printf("parse error near `\\n'\n");

@@ -38,3 +38,18 @@ int	replace(char **to_change, int i)
 		free(var_name);
 	return (rez);
 }
+
+void	skip_quotes(char *input, int *i)
+{
+	if ((*(input + (*i)) == '\'' || *(input + (*i)) == '\"') && !g_shell.quote)
+	{
+		g_shell.quote = *(input + (*i));
+		(*i)++;
+		if (*(input + (*i) - 1) == '\'' && g_shell.quote != '\"')
+		{
+			(*i)++;
+			while (*(input + (*i)) && *(input + (*i)) != '\'')
+				(*i)++;
+		}
+	}
+}

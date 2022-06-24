@@ -12,43 +12,29 @@
 
 #include "../minishell.h"
 
-// &
-// | +
-// > 1
-// >> 2
-// < 3
-// << 4
-
-// int	service_symbol(char **str)
-// {
-
-// }
-
-int	count_elements(char **str)
+int	count_elements(char **s)
 {
 	int	n;
 	int	i;
 
 	n = 1;
 	i = 0;
-	g_shell.quote = 0;
-	while (*(*str + i))
+	while (*(*s + i))
 	{
-		if ((*(*str + i) == '\'' || *(*str + i) == '\"') && !g_shell.quote)
+		if ((*(*s + i) == '\'' || *(*s + i) == '\"') && !g_shell.quote)
 		{
-			g_shell.quote = *(*str + i);
+			g_shell.quote = s[0][i++];
 			n++;
-			i++;
-			while (*(*str + i) != g_shell.quote && *(*str + i))
+			while (*(*s + i) != g_shell.quote && *(*s + i))
 				i++;
 			i++;
 			g_shell.quote = 0;
 		}
-		while (is_space(*(*str + i)))
+		while (sp(*(*s + i)))
 			i++;
-		if (*(*str + i))
+		if (*(*s + i))
 			n++;
-		while (!is_space(*(*str + i)) && *(*str + i) && !is_arrow(*str + i) && !not_allowed(*(*str + i)))
+		while (!sp(*(*s + i)) && *(*s + i) && !is_a(*s + i) && !n_a(*(*s + i)))
 			i++;
 		i++;
 	}
@@ -76,54 +62,47 @@ int	count_until_spaces(char	*str)
 	i++;
 	return (i + 1);
 }
+
+int	create_and_fill_array(t_for_array	*help, char **str)
+{
+	while (sp(*(*str + help->k)))
+			help->k++;
+	help->rez[help->i] = (char *)malloc(sizeof(char)
+			* count_until_spaces(*str + help->k));
+	help->j = 0;
+	while (*(*str + help->k) != ' ' && str[0][help->k])
+	{
+		if ((*(*str + help->k) == '\"' || *(*str + help->k) == '\'')
+			&& !g_shell.quote)
+		{
+			g_shell.quote = str[0][help->k++];
+			while (*(*str + help->k) != g_shell.quote && *(*str + help->k))
+				help->rez[help->i][help->j++] = str[0][help->k++];
+			g_shell.quote = 0;
+		}
+		else
+			help->rez[help->i][help->j++] = *(*str + help->k);
+		help->k++;
+	}
+	help->rez[help->i++][help->j] = '\0';
+}
+
 char	**put_str_to_tree(char **str)
 {
-	char	**rez;
-	int		num;
-	int		i;
-	int		j;
-	int		k;
+	t_for_array	help;
 
-	num = count_elements(str);
-	rez = (char **)malloc(sizeof(char *) * num);
-	if (!rez)
-		return (0);
-	rez[num - 1] = NULL;
-	i = 0;
-	k = 0;
 	g_shell.quote = 0;
-	while (i < num - 1)
-	{
-		while (is_space(*(*str + k)))
-			k++;
-		rez[i] = (char *)malloc(sizeof(char) * count_until_spaces(*str + k));
-		j = 0;
-		while (*(*str + k) != ' ' && *(*str + k))
-		{
-			if ((*(*str + k) == '\"' || *(*str + k) == '\'') && !g_shell.quote)
-			{
-				g_shell.quote = *(*str + k);
-				k++;
-				while (*(*str + k) != g_shell.quote && *(*str + k))
-				{
-					rez[i][j] = *(*str + k);
-					j++;
-					k++;
-				}
-				g_shell.quote = 0;
-			}
-			else
-			{
-				rez[i][j] = *(*str + k);
-				j++;
-			}
-			
-			k++;
-		}
-		rez[i][j] = '\0';
-		i++;
-	}
-	return (rez);
+	help.num = count_elements(str);
+	help.rez = (char **)malloc(sizeof(char *) * help.num);
+	if (!help.rez)
+		return (0);
+	help.rez[help.num - 1] = NULL;
+	help.i = 0;
+	help.k = 0;
+	g_shell.quote = 0;
+	while (help.i < help.num - 1)
+		create_and_fill_array(&help, str);
+	return (help.rez);
 }
 
 char	**get_str(char **envp)
@@ -132,7 +111,7 @@ char	**get_str(char **envp)
 	int		i;
 	char	**rez;
 
-	rez  = NULL;
+	rez = NULL;
 	i = 0;
 	input = NULL;
 	g_shell.console_name = "minishell> ";
@@ -144,8 +123,7 @@ char	**get_str(char **envp)
 	if (read_str(&input) == 0)
 	{
 		substitute_envp(input, envp);
-		double_check_inpt(input); // if -1 error
-		//printf("\n answ %s\n", input);
+		double_check_inpt(input);
 		rez = put_str_to_tree(&input);
 	}
 	else

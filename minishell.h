@@ -25,37 +25,41 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "string.h" // !! УДАЛИТЬ !!!*
+# include <fcntl.h>
+//# include "string.h" // !! УДАЛИТЬ !!!*
 
-
-#include <fcntl.h>
-
-typedef struct s_cmd	t_cmd;
+typedef struct s_cmd
+{
+	struct s_cmd	*prev;
+	struct s_cmd	*next;
+	pid_t			pid;
+	int				fd[2];
+	int				exit_status;
+	char			**file;
+	char			**argv;//аргументы, которые нам подаются
+}t_cmd;
 
 typedef struct s_shell{	
 	pid_t	pid;
 	char	**envp;
 	char	**export;
-	char	**argv;//
+	char	**argv;
 	int		len;
 	char	*console_name;
 	int		quote;	
 	int		arrow;
 	int		pipe;
-	t_cmd	**cmd_start; // *
+	t_cmd	**cmd_start;
 }t_shell;
 
-struct	s_cmd
+typedef struct s_for_array
 {
-	pid_t		pid;
-	int			fd[2];
-	int			exit_status;
-	char		**file;
-	char		**argv;//аргументы, которые нам подаются
-	struct s_cmd *prev;
-	struct s_cmd *next;
-	
-};
+	char	**rez;
+	int		num;
+	int		i;
+	int		j;
+	int		k;
+}t_for_array;
 
 t_shell	g_shell;
 
@@ -95,7 +99,6 @@ char	**new_envp(char **envp, t_shell *shell);
 char	**after_quotes(char **tmpmass, t_shell *shell);
 char	**before_quotes(char **tmpmass,	t_shell *shell);
 
-
 int		builtins(char **argv, t_shell *shell);
 int		create_pipe(t_shell *shell, t_cmd *cmd);
 int		nofork(char *cmd);
@@ -122,7 +125,7 @@ int		init_rez(char **inpt, char **rez);
 int		in_cycle(char **rez, char **inpt, int *may_continue);
 int		go_on(char *str);
 int		substitute_envp(char *input, char **envp);
-int		is_space(char c);
+int		sp(char c);
 int		replace(char **to_change, int i);
 char	*find_var(char *what_to_find);
 int		set_envp(char **envp);
@@ -133,11 +136,12 @@ int		repl_less(char **to_change, char *repl, int i, int a);
 int		sub_envp(char **to_change, char **repl, int i, int a);
 char	**put_str_to_tree(char **str);
 int		double_check_inpt(char *inpt);
-int		is_arrow(char *str);
+int		is_a(char *str);
 int		delete_quote(char **inpt);
-int		not_allowed(char c);
+int		n_a(char c);
 char	**get_str(char **envp);
 void	free_array(char **arr);
+void	skip_quotes(char *input, int *i);
 /*
 ** STUFF:
 */

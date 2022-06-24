@@ -30,7 +30,7 @@ void	free_memory(char *inpt, char *help, char *rez)
 		free(rez);
 }
 
-int	is_arrow(char *str)
+int	is_a(char *str)
 {
 	if (*str == '>' && *(str + 1) == '>')
 		return (2);
