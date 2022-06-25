@@ -33,26 +33,33 @@ int	main(int argc, char **argv, char **env)
 	char	**rez;
 	t_shell	shell;
 	t_cmd	*cmd;
+	int		i;
 
 	if (argc != 1)
 	 	ft_error(argv[0], EINVAL);
+	cmd = NULL;
 	while (1)
 	{
 		init_env(env, &shell);
-		cmd = malloc(sizeof(t_cmd));
-		shell.cmd_start = &cmd;
-		cmd->argv = get_str(env); // !!
-		int i = 0;
-		while (cmd->argv[i])
+		shell.cmd_start = cmd;
+		rez = get_str(env); // !!
+		fill_list(rez);
+		cmd = g_shell.cmd_start->next;
+		while (cmd->next)
 		{
-			printf("Cmd %d:[%s]\n",i, cmd->argv[i]);
-			i++;
+			i = 0;
+			while (cmd->argv[i])
+			{
+				printf("Cmd %d:[%s]\n",i, cmd->argv[i]);
+				i++;
+			}
+			cmd = cmd->next;
 		}
-		signal(SIGINT, handler_signal);
-		signal(SIGQUIT, handler_signal);
-		// pipex(&shell);
-		builtins(cmd->argv, &shell);
-		free_array(cmd->argv);
+		// signal(SIGINT, handler_signal);
+		// signal(SIGQUIT, handler_signal);
+		// // pipex(&shell);
+		// builtins(cmd->argv, &shell);
+		free_array(rez);
 	}
 	return (0);
 }

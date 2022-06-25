@@ -49,7 +49,7 @@ typedef struct s_shell{
 	int		quote;	
 	int		arrow;
 	int		pipe;
-	t_cmd	**cmd_start;
+	t_cmd	*cmd_start;
 }t_shell;
 
 typedef struct s_for_array
@@ -142,6 +142,7 @@ int		n_a(char c);
 char	**get_str(char **envp);
 void	free_array(char **arr);
 void	skip_quotes(char *input, int *i);
+void	fill_list(char	**str);
 /*
 ** STUFF:
 */

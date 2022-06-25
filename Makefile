@@ -31,14 +31,17 @@ SRCS = 	main.c\
 		executer/signal/signal.c\
 		executer/pipe/heredoc.c\
 		executer/pipe/redirect.c\
+		\
 		parser/read_lines.c\
 		parser/read_lines_1.c\
 		parser/substitute_envp.c\
 		parser/substitute_envp_1.c\
 		parser/substitute_envp_2.c\
 		parser/to_tree.c\
+		parser/to_tree_1.c\
 		parser/check.c\
 		parser/free_memory.c\
+		\
 		utils/utils.c\
 
 
