@@ -56,7 +56,7 @@ void	fill_list(char	**str)
 		if (*str)
 			str++;
 	}
-	s = NULL;
+	e->next = NULL;
 	// while(h->prev)
 	// 	h = h->prev;
 }

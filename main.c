@@ -45,7 +45,7 @@ int	main(int argc, char **argv, char **env)
 		rez = get_str(env); // !!
 		fill_list(rez);
 		cmd = g_shell.cmd_start->next;
-		while (cmd->next)
+		while (cmd)
 		{
 			i = 0;
 			while (cmd->argv[i])
