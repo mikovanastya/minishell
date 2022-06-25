@@ -42,3 +42,11 @@ int	is_a(char *str)
 		return (3);
 	return (0);
 }
+
+void	ft_shell_error(char *argv, int exit_code, int exit_flag)
+{
+	ft_putstr_fd(argv, 2);
+	//g_shell.status = exit_code;
+	if (exit_flag == EXIT_FLAG)
+		exit (exit_code);
+}

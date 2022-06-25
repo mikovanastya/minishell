@@ -23,10 +23,17 @@
 # include <stdlib.h>
 # include <limits.h>
 # include <stdio.h>
-# include <readline/readline.h>
+//# include <readline/tilde.h>
+// # include <readline/rlconf.h>
+// # include <readline/rlstdc.h>
 # include <readline/history.h>
+// # include <readline/keymaps.h>
+# include <readline/readline.h>
+// # include <readline/chardefs.h>
+// # include <readline/rltypedefs.h>
 # include <fcntl.h>
 //# include "string.h" // !! УДАЛИТЬ !!!*
+# define EXIT_FLAG 1
 
 typedef struct s_cmd
 {
@@ -49,7 +56,8 @@ typedef struct s_shell{
 	int		quote;	
 	int		arrow;
 	int		pipe;
-	t_cmd	*cmd_start;
+	t_cmd	**cmd_start;
+	char	*line;
 }t_shell;
 
 typedef struct s_for_array
@@ -143,6 +151,8 @@ char	**get_str(char **envp);
 void	free_array(char **arr);
 void	skip_quotes(char *input, int *i);
 void	fill_list(char	**str);
+void	free_list(t_cmd *cmd);
+void	ft_shell_error(char *argv, int exit_code, int exit_flag);
 /*
 ** STUFF:
 */

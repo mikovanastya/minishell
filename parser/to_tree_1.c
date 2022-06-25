@@ -16,7 +16,7 @@ int	len_to_pipe(char **src)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	if (!*src)
 		return(1);
 	while (*(src + 1 + i) && (*(src + i))[0] != '|')
@@ -29,13 +29,14 @@ int	len_to_pipe(char **src)
 
 void	fill_list(char	**str)
 {
-	t_cmd	*s, *e;
+	t_cmd	*s, *e, *t;
 	int		i;
 
-	g_shell.cmd_start = (t_cmd *)malloc(sizeof(t_cmd));
+	t = (t_cmd *)malloc(sizeof(t_cmd));
 	s = (t_cmd *)malloc(sizeof(t_cmd));
-	g_shell.cmd_start->prev = NULL;
-	e = g_shell.cmd_start;
+	g_shell.cmd_start = &t;
+	t->prev = NULL;
+	e = t;
 	e->next = s;
 	s->prev = e;
 	while (*str)
@@ -43,7 +44,6 @@ void	fill_list(char	**str)
 		e = s;
 		i = 0;
 		s->argv = (char **)malloc(sizeof(char *) * len_to_pipe(str));
-		printf("len to pipe %d\n", len_to_pipe(str));
 		while (*str && **str != '|')
 		{
 			s->argv[i] = ft_strdup(*str);
@@ -57,6 +57,4 @@ void	fill_list(char	**str)
 			str++;
 	}
 	e->next = NULL;
-	// while(h->prev)
-	// 	h = h->prev;
 }

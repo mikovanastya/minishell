@@ -16,16 +16,16 @@ int	change_help_and_rez(char **help, char **rez, char **inpt)
 {
 	if (!*rez)
 		free(*rez);
-	*rez = ((char *)malloc(sizeof(char *) * (ft_strlen(*inpt)
+	*rez = ((char *)malloc(sizeof(char *) * (ft_strlen(g_shell.line)
 					+ ft_strlen(*help) + 1)));
 	if (!*rez)
 	{
-		free_memory(*inpt, *help, *rez);
+		free_memory(g_shell.line, *help, *rez);
 		return (-1);
 	}
 	if (ft_strlcpy(*rez, *help, ft_strlen(*help) + 1) < 0)
 	{
-		free_memory(*inpt, *help, *rez);
+		free_memory(g_shell.line, *help, *rez);
 		return (-2);
 	}
 	return (1);
@@ -39,13 +39,13 @@ int	resize_rez(char **rez, char **inpt)
 	help = (char *)malloc(sizeof(char *) * (ft_strlen(*rez) + 1));
 	if (!help)
 	{
-		free_memory(*inpt, help, *rez);
+		free_memory(g_shell.line, help, *rez);
 		return (-1);
 	}
 	(*rez)[ft_strlen(*rez)] = '\0';
 	if (ft_strlcpy(help, *rez, ft_strlen(*rez) + 1) < 0)
 	{
-		free_memory(*inpt, help, *rez);
+		free_memory(g_shell.line, help, *rez);
 		return (-2);
 	}
 	from_func = change_help_and_rez(&help, rez, inpt);
@@ -59,16 +59,16 @@ int	init_rez(char **rez, char **inpt)
 {
 	if (!*rez)
 		free(*rez);
-	*rez = (char *)malloc(sizeof(char *) * (ft_strlen(*inpt) + 1));
+	*rez = (char *)malloc(sizeof(char *) * (ft_strlen(g_shell.line) + 1));
 	if (!*rez)
 	{
-		if (*inpt)
-			free(*inpt);
+		if (g_shell.line)
+			free(g_shell.line);
 		if (*rez)
 			free(*rez);
 		return (-1);
 	}
-	ft_bzero(*rez, ft_strlen(*inpt));
+	ft_bzero(*rez, ft_strlen(g_shell.line));
 	return (1);
 }
 
@@ -88,9 +88,9 @@ int	in_cycle(char **rez, char **inpt, int *may_continue)
 			return (resize);
 	}
 	*may_continue = go_on(*inpt);
-	if (ft_strlcat(*rez, *inpt, ft_strlen(*inpt) + ft_strlen(*rez) + 1) < 0)
+	if (ft_strlcat(*rez, g_shell.line, ft_strlen(*inpt) + ft_strlen(*rez) + 1) < 0)
 	{
-		free_memory(*inpt, *inpt, *rez);
+		free_memory(g_shell.line, g_shell.line, *rez);
 		return (-2);
 	}
 	return (1);

@@ -24,3 +24,16 @@ void	free_array(char **arr)
 	// if (arr)
 	// 	free(arr);
 }
+
+void	free_list(t_cmd *cmd)
+{
+	t_cmd	*t;
+
+	while(cmd)
+	{
+		free_array(cmd->argv);
+		t = cmd->next;
+		free(cmd);
+		cmd = t;
+	}
+}

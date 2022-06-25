@@ -163,7 +163,7 @@ void	pipex(t_shell *shell)
 {
 	t_cmd	*cmd;
 
-	cmd = shell->cmd_start;
+	cmd = *(shell->cmd_start);
 	if (nofork(cmd->argv[0]))
 	{
 		//printf("NOFORK");

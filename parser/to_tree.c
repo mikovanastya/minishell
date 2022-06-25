@@ -120,6 +120,7 @@ char	**get_str(char **envp)
 	g_shell.pipe = 0;
 	g_shell.arrow = '\0';
 	g_shell.quote = 0;
+	g_shell.line = NULL;
 	if (read_str(&input) == 0)
 	{
 		substitute_envp(input, envp);

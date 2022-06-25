@@ -92,10 +92,13 @@ int	read_str(char **str)
 	may_continue = 1;
 	while (may_continue == 1)
 	{
-		inpt = readline(g_shell.console_name);
-		add_history(inpt);
+		//ft_memset(g_shell.line, '*', 10);
+		g_shell.line = readline(g_shell.console_name);
+		if (!g_shell.line)
+			ft_shell_error("minishell> exit\n", 1, EXIT_FLAG);
+		add_history(g_shell.line);
 		cycle_rez = in_cycle(str, &inpt, &may_continue);
-		free(inpt);
+		free(g_shell.line);
 	}
 	return (may_continue);
 }

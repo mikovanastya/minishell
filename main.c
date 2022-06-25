@@ -37,14 +37,15 @@ int	main(int argc, char **argv, char **env)
 
 	if (argc != 1)
 	 	ft_error(argv[0], EINVAL);
-	cmd = NULL;
 	while (1)
 	{
+		cmd = (t_cmd *)malloc(sizeof(t_cmd));
 		init_env(env, &shell);
-		shell.cmd_start = cmd;
+		shell.cmd_start = &cmd;
 		rez = get_str(env); // !!
 		fill_list(rez);
-		cmd = g_shell.cmd_start->next;
+		*(g_shell.cmd_start) = (*(g_shell.cmd_start))->next;
+		cmd = *(g_shell.cmd_start);
 		while (cmd)
 		{
 			i = 0;
@@ -55,11 +56,14 @@ int	main(int argc, char **argv, char **env)
 			}
 			cmd = cmd->next;
 		}
+		// while (cmd->prev)
+		// 	cmd = cmd->prev;
 		// signal(SIGINT, handler_signal);
 		// signal(SIGQUIT, handler_signal);
-		// // pipex(&shell);
+		//pipex(&g_shell);
 		// builtins(cmd->argv, &shell);
 		free_array(rez);
+		free_list(cmd);
 	}
 	return (0);
 }
