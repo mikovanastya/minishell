@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:17:01 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/24 17:48:47 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/25 15:06:24 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,6 @@ int	execute_execve_without_path(t_cmd *cmd,
 	}
 	return (0);
 }
-
-
-
 
 int execute_execve(t_cmd *cmd, t_shell *shell)// выполняет команды из bin///
 {
@@ -105,7 +102,7 @@ void	pipex(t_shell *shell)
 {
 	t_cmd	*cmd;
 
-	cmd = *shell->cmd_start;
+	cmd = shell->cmd_start;
 	if (nofork(cmd->argv[0]))
 	{
 		start_cmd_nofork(cmd, shell);

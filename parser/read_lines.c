@@ -40,13 +40,13 @@ int	decision_about_quotes(char **str, int *go_to_next_str)
 {
 	while (**str)
 	{
-		if (is_arrow(*str))
-			g_shell.arrow = is_arrow(*str);
-		if ((**str == '\'' || **str == '"' || **str == '|'))
+		if (is_a(*str))
+			g_shell.arrow = is_a(*str);
+		if ((**str == '\'' || **str == '\"' || **str == '|'))
 			if (quote_actions(**str) == -1)
 				return (-1);
 		if (g_shell.quote == '|' && **str != '|'
-			&&!is_space(**str) && **str && **str != '\n')
+			&&!sp(**str) && **str && **str != '\n')
 			g_shell.pipe = 0;
 		if (**str == '\\')
 		{

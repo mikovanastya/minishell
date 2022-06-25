@@ -6,7 +6,7 @@
 #    By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/16 14:07:19 by rtwitch           #+#    #+#              #
-#    Updated: 2022/06/24 17:49:26 by rtwitch          ###   ########.fr        #
+#    Updated: 2022/06/25 15:08:27 by rtwitch          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,8 +38,10 @@ SRCS = 	main.c\
 		parser/substitute_envp_1.c\
 		parser/substitute_envp_2.c\
 		parser/to_tree.c\
+		parser/to_tree_1.c\
 		parser/check.c\
 		parser/free_memory.c\
+		\
 		utils/utils.c\
 		
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eward <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:10:29 by eward             #+#    #+#             */
-/*   Updated: 2022/06/06 17:10:30 by eward            ###   ########.fr       */
+/*   Updated: 2022/06/25 15:10:54 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	free_memory(char *inpt, char *help, char *rez)
 		free(rez);
 }
 
-int	is_arrow(char *str)
+int	is_a(char *str)
 {
 	if (*str == '>' && *(str + 1) == '>')
 		return (2);

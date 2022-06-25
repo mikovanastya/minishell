@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:02:04 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/24 17:50:33 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/25 15:07:22 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_shell{
 	int		quote;	
 	int		arrow;
 	int		pipe;
-	t_cmd	**cmd_start; // *
+	t_cmd	*cmd_start; // *
 }t_shell;
 
 struct	s_cmd
@@ -57,6 +57,15 @@ struct	s_cmd
 	struct s_cmd *next;
 	
 };
+
+typedef struct s_for_array
+{
+	char	**rez;
+	int		num;
+	int		i;
+	int		j;
+	int		k;
+}t_for_array;
 
 t_shell	g_shell;
 
@@ -125,7 +134,7 @@ int		init_rez(char **inpt, char **rez);
 int		in_cycle(char **rez, char **inpt, int *may_continue);
 int		go_on(char *str);
 int		substitute_envp(char *input, char **envp);
-int		is_space(char c);
+int		sp(char c);
 int		replace(char **to_change, int i);
 char	*find_var(char *what_to_find);
 int		set_envp(char **envp);
@@ -136,11 +145,13 @@ int		repl_less(char **to_change, char *repl, int i, int a);
 int		sub_envp(char **to_change, char **repl, int i, int a);
 char	**put_str_to_tree(char **str);
 int		double_check_inpt(char *inpt);
-int		is_arrow(char *str);
+int		is_a(char *str);
 int		delete_quote(char **inpt);
-int		not_allowed(char c);
+int		n_a(char c);
 char	**get_str(char **envp);
 void	free_array(char **arr);
+void	skip_quotes(char *input, int *i);
+void	fill_list(char	**str);
 /*
 ** STUFF:
 */

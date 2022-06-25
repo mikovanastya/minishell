@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 15:04:45 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/24 19:06:43 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/25 13:38:21 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	check_shlvl(t_shell *shell)
 	int		num;
 	char	*digit;
 
-	tmp = get_env_value("SHLVL=", shell);
+	tmp = get_env_value(shell, "SHLVL=");
 	num = ft_atoi(tmp) + 1;
 	free(tmp);
 	digit = ft_itoa(num);
@@ -50,5 +50,5 @@ void	init_env(char **prmtrs, t_shell *shell)// инициализация env, �
 	return ;
 }
 
-///int	new_envp_set(t_env *env, char *str, char **tmp) перезаписывает нашт  env
+//int	new_envp_set(t_env *env, char *str, char **tmp) перезаписывает нашт  env
 //set установить добавлять и редактировать 

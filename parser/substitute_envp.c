@@ -14,7 +14,7 @@
 
 /*тут запихиваем переменные среды в глобальную переменную */
 
-int	is_space(char c)
+int	sp(char c)
 {
 	if ((c >= 10 && c <= 13) || c == 32)
 		return (1);
@@ -80,24 +80,15 @@ int	substitute_envp(char *input, char **envp)
 		return (-1);
 	while (*(input + i))
 	{
-		while (*(input + i) && is_space(*(input + i)))
+		while (*(input + i) && sp(*(input + i)))
 			i++;
-		if ((*(input + i) == '\'' || *(input + i) == '\"') && !g_shell.quote)
-		{
-			g_shell.quote = *(input + i);
-			i++;
-			if (*(input + i - 1) == '\'' && g_shell.quote != '\"')
-			{
-				i++;
-				while (*(input + i) && *(input + i) != '\'')
-					i++;
-			}
-		}
-		if (*(input + i) == '$' && g_shell.quote != '\'') 
+		skip_quotes(input, &i);
+		if (*(input + i) == '$' && g_shell.quote != '\'')
 			replace(&input, i);
 		if (*(input + i))
 			i++;
-		if ((*(input + i) == '\'' || *(input + i) == '\"') && g_shell.quote == *(input + i))
+		if ((*(input + i) == '\'' || *(input + i) == '\"')
+			&& g_shell.quote == *(input + i))
 			g_shell.quote = 0;
 	}
 	return (0);
