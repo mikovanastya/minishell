@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   to_tree_1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eward <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 15:14:51 by eward             #+#    #+#             */
-/*   Updated: 2022/06/24 15:14:53 by eward            ###   ########.fr       */
+/*   Updated: 2022/06/25 16:17:00 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	len_to_pipe(char **src)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	if (!*src)
 		return(1);
 	while (*(src + 1 + i) && (*(src + i))[0] != '|')
@@ -29,13 +29,14 @@ int	len_to_pipe(char **src)
 
 void	fill_list(char	**str)
 {
-	t_cmd	*s, *e;
+	t_cmd	*s, *e, *f;
 	int		i;
-
-	g_shell.cmd_start = (t_cmd *)malloc(sizeof(t_cmd));
+	
+	f = (t_cmd *)malloc(sizeof(t_cmd));
+	g_shell.cmd_start = &f;
 	s = (t_cmd *)malloc(sizeof(t_cmd));
-	g_shell.cmd_start->prev = NULL;
-	e = g_shell.cmd_start;
+	f->prev = NULL;
+	e = f;
 	e->next = s;
 	s->prev = e;
 	while (*str)

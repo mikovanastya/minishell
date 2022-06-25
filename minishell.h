@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:02:04 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/25 15:07:22 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/25 16:14:09 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_shell{
 	int		quote;	
 	int		arrow;
 	int		pipe;
-	t_cmd	*cmd_start; // *
+	t_cmd	**cmd_start; // *
 }t_shell;
 
 struct	s_cmd

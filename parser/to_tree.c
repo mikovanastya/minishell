@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 14:07:52 by eward             #+#    #+#             */
-/*   Updated: 2022/06/22 16:03:40 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/25 15:16:55 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ char	**get_str(char **envp)
 		rez = put_str_to_tree(&input);
 	}
 	else
-		printf("parse error near `|'\n");
+		printf("\n");
 	if (*input || input)
 		ft_bzero(input, ft_strlen(input));
 	return (rez);
