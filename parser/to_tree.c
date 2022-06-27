@@ -67,3 +67,13 @@ void	fill_list(char	*str)
 	while (*str)
 		add_elem(g_shell.cmd_start, &str);
 }
+
+int	go_to_word(char **a, int *j, char **str)
+{
+	*j = 0;
+	*a = (char *)malloc(sizeof(char) * (word_len(*str) + 1));
+	if (!a)
+		return (-1);
+	while (**str && sp(**str))
+		(*str)++;
+}

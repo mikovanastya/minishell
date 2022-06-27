@@ -153,6 +153,11 @@ void	free_array(char **arr);
 void	skip_quotes(char *input, int *i);
 void	fill_list(char	*str);
 int		add_elem(t_cmd **cmd, char **str);
+int		arrow_action(char **str, t_cmd	**cmd);
+int		word_len(char *str);
+int		go_to_word(char **a, int *j, char **str);
+int	separate_str(char ***arr, char **str, t_cmd	*cmd);
+
 /*
 ** STUFF:
 */

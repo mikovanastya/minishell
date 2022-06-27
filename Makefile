@@ -55,7 +55,7 @@ HEADER = minishell.h
 
 CC		=	cc
 
-FLAGS = #-Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra
 
 RM			=	rm -f
 
