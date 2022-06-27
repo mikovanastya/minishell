@@ -148,10 +148,10 @@ int		double_check_inpt(char *inpt);
 int		is_a(char *str);
 int		delete_quote(char **inpt);
 int		n_a(char c);
-char	**get_str(char **envp);
+char	*get_str(char **envp);
 void	free_array(char **arr);
 void	skip_quotes(char *input, int *i);
-void	fill_list(char	**str);
+void	fill_list(char	*str);
 /*
 ** STUFF:
 */

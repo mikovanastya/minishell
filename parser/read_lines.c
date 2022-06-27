@@ -15,7 +15,7 @@
 
 int	quote_actions(char c)
 {
-	if (!g_shell.quote && (c == '\'' || c == '\"'))
+	if ((!g_shell.quote || g_shell.quote == '|') && (c == '\'' || c == '\"'))
 	{
 		g_shell.quote = c;
 		g_shell.console_name = "dquote> ";
@@ -31,7 +31,7 @@ int	quote_actions(char c)
 	{
 		g_shell.pipe = 1;
 		g_shell.quote = c;
-		g_shell.console_name = "pipe> ";
+		g_shell.console_name = "> ";
 	}
 	return (1);
 }

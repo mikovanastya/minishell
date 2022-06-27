@@ -12,7 +12,6 @@
 
 #include "../minishell.h"
 
-/*возвращает на сколько надо двинуться вперед*/
 int	replace(char **to_change, int i)
 {
 	char	*repl;
