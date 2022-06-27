@@ -32,7 +32,8 @@ int	double_check_inpt(char *inpt)
 				inpt++;
 			while (sp(*inpt))
 				inpt++;
-			if (!*inpt || is_a(inpt) || n_a(*inpt))
+			if (!*inpt || (is_a(inpt) && !((*(g_shell.cmd_start))->file_name))
+				|| n_a(*inpt))
 			{
 				if (!*inpt)
 					printf("parse error near `\\n'\n");

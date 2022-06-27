@@ -30,16 +30,18 @@ int	main(int argc, char **argv, char **env)
 		rez = get_str(env); // !!
 		printf("inpu1: \n%s\n", rez);
 		fill_list(rez);
-		// while (*(g_shell.cmd_start))
-		// {
-		// 	i = 0;
-		// 	while ((*(g_shell.cmd_start))->argv[i])
-		// 	{
-		// 		printf("Cmd %d:[%s]\n", i, (*(g_shell.cmd_start))->argv[i]);
-		// 		i++;
-		// 	}
-		// 	*(g_shell.cmd_start) = (*(g_shell.cmd_start))->next;
-		// }
+		while (*(g_shell.cmd_start))
+		{
+			i = 0;
+			while ((*(g_shell.cmd_start))->argv[i])
+			{
+				printf("Cmd %d:[%s]\n", i, (*(g_shell.cmd_start))->argv[i]);
+				i++;
+			}
+			if ((*(g_shell.cmd_start))->file_name)
+				printf("filename %s\n", *((*(g_shell.cmd_start))->file_name));
+			*(g_shell.cmd_start) = (*(g_shell.cmd_start))->next;
+		}
 		// signal(SIGINT, handler_signal);
 		// signal(SIGQUIT, handler_signal);
 		//pipex(&shell);

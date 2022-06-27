@@ -36,11 +36,11 @@ int	len_to_pipe(char *src)
 					src++;
 				g_shell.quote = 0;
 			}
-			if ((*src) == '|' || is_a(src) != 0)
+			if ((*src) == '|')
 				break ;
 			src++;
 		}
-		if ((*src) == '|' || is_a(src) != 0)
+		if ((*src) == '|')
 			break ;
 		i++;
 	}
@@ -65,7 +65,7 @@ int	word_len(char *str)
 				len++;
 			g_shell.quote = 0;
 		}
-		if (*(str + len) != '|' && is_a((str + len)) == 0
+		if (*(str + len) != '|'
 			&& n_a(*(str + len)) && !sp(*(str + len)))
 			break ;
 		len++;
@@ -73,15 +73,34 @@ int	word_len(char *str)
 	return (len);
 }
 
-int	separate_str(char ***arr, char **str)
+int	arrow_action(char **str, t_cmd	**cmd)
+{
+	((*cmd)->redir) = (char **)malloc(sizeof(char *));
+	*((*cmd)->redir) = (char *)malloc(sizeof(char) * 3);
+	if (is_a(*str) % 2)
+	{
+		ft_strlcpy(*((*cmd)->redir), *str, 1);
+		(*str)++;
+	}
+	else
+	{
+		ft_strlcpy(*((*cmd)->redir), *str, 2);
+		*str = (*str) + 2;
+	}
+	while (**str && sp(**str))
+		(*str)++;
+	return (0);
+}
+
+int	separate_str(char ***arr, char **str, t_cmd	*cmd)
 {
 	int	i;
 	int	j;
 
+	((cmd)->redir) = NULL;
 	i = 0;
 	g_shell.quote = 0;
-	while (**str && **str != '|' && is_a(*str) == 0
-		&& !n_a(**str))
+	while (**str && **str != '|' && !n_a(**str))
 	{
 		j = 0;
 		(*arr)[i] = (char *)malloc(sizeof(char) * (word_len(*str) + 1));
@@ -89,9 +108,11 @@ int	separate_str(char ***arr, char **str)
 			return (-1);
 		while (**str && sp(**str))
 			(*str)++;
-		while (**str && **str != '|' && is_a(*str) == 0
+		while (**str && **str != '|'
 			&& !n_a(**str) && !sp(**str))
 		{
+			if (is_a(*str) != 0)
+				arrow_action(str, &cmd);			
 			if (!g_shell.quote && (**str == '\"' || **str == '\''))
 			{
 				g_shell.quote = **str;
@@ -114,6 +135,19 @@ int	separate_str(char ***arr, char **str)
 			}
 		}
 		(*arr)[i][j] = '\0';
+		if ((cmd->redir))
+		{
+			cmd->file_name = (char **)malloc(sizeof(char *));
+			*(cmd->file_name) = ft_strdup((*arr)[i]);
+			free((*arr)[i]);
+			(*arr)[i] = NULL;
+			if (**str)
+				while (**str && sp(**str))
+					(*str)++;
+			if (**str)
+				while (**str && **str != '|' && !n_a(**str))
+					(*str)++;
+		}
 		if (**str)
 			while (**str && sp(**str))
 				(*str)++;
@@ -137,7 +171,7 @@ int	add_elem(t_cmd **cmd, char **str)
 	new = (t_cmd *)malloc(sizeof(t_cmd));
 	last = *cmd;
 	new->argv = (char **)malloc(sizeof(char *) * len_to_pipe(*str));
-	separate_str(&(new->argv), str);
+	separate_str(&(new->argv), str, new);
 	new->next = NULL;
 	if (*cmd == NULL)
 	{
