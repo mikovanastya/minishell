@@ -6,11 +6,40 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:07:32 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/24 18:40:28 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/27 20:06:38 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+// void	r_in(t_cmd *cmd)
+// {
+// 	char *name;
+// 	int	fd;
+
+// 	fd = 0;
+
+// 	while (cmd->redir && cmd->redir)
+// 	{
+// 		if (fd)
+// 			close(fd);
+// 		if (!ft_strncmp("<", cmd->redir, ft_strlen(cmd->redir)))
+// 			fd = open(name, O_RDONLY, 0777);
+// 		else if (!ft_strncmp("<<", cmd->redir, ft_strlen(cmd->redir)))
+// 			fd = open(cmd->file_name, O_RDONLY);
+// 		// if (fd < 0)
+// 		// 	//warning(tmp->value, errno, 1);
+// 		// 	return (1);
+// 		cmd = cmd->next;
+// 	}
+// 	if (fd && dup2(fd, STDIN_FILENO) < 0)
+// 		return (1);
+// 		//warning("file: ", errno, 1);
+// 	if (fd)
+// 		close(fd);
+// 	// if (cmd->tmpfile && unlink(cmd->file_name) < 0)
+// 	// 	warning("unlink: ", errno, 1);
+// }  
 
 int	open_file(char *name, int i, int quit)
 {
@@ -43,6 +72,8 @@ int	check_redirection(t_cmd *cmd, int quit)
 	i = 0;
 	fd[0] = 0;
 	fd[1] = 0;
+	if (!cmd->redir)
+		return 0;
 	while (cmd->redir && cmd->redir[i])
 	{
 	//printf("Redir [%d]_%s%s_\n", i, cmd->redir[i], cmd->file_name[i]);
@@ -56,7 +87,7 @@ int	check_redirection(t_cmd *cmd, int quit)
 			dup2(cmd->fd[0], STDIN_FILENO);
 		i++;
 	}
-	//printf("AFTER OPENING FILE [%d][%d]\n", fd[0], fd[1]);
+	// printf("AFTER OPENING FILE [%d][%d]\n", fd[0], fd[1]);
 	if (fd[0] == -1 || fd[1] == -1)
 		return (1);
 	if (fd[0])

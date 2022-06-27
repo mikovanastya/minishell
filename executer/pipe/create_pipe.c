@@ -6,49 +6,43 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 18:34:52 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/25 13:26:44 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/27 21:49:14 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-
-
 int	create_pipe(t_shell *shell, t_cmd *cmd)
 {
-	if (cmd->prev || cmd->next)
-	{
-		if (pipe(cmd->fd) == -1)//проверяем вывод
-			printf("error"); //exit ulimit -f
-		// printf("fd [%d][%d]\n", cmd->fd[0], cmd->fd[1]);
-	}
-	cmd->pid = fork();// создаем дочерний процесс
-	if (cmd->pid < 0)// если пид меньше нуля, значит процесс не создался
-		return (1);//exit printf
+	cmd->pid = fork();
+	if (cmd->pid == -1)
+		printf("error");
+	if (cmd->pid < 0)
+		return (1);
 	if (cmd->pid == 0)
 	{
 		if (cmd->next)
 		{
-			if (dup2(cmd->fd[1], 1) < 0 )//скопировать один fd в другой
-				return (1);// если не создался все плохо если не скопировался
+			if (dup2(cmd->fd[1], 1) < 0)
+				return (1);
 		}
 		if (cmd->prev)
 		{
-			if (dup2(cmd->prev->fd[0], 0) < 0 )//скопировать один fd в другой
-				return (1);// если не создался все плохо если не скопировался
+			if (dup2(cmd->prev->fd[0], 0) < 0)
+				return (1);
 		}
-		check_redirection(cmd, 0);
-		make_heredocs(cmd, shell);
+		// check_redirection(cmd, 0);
+		// close(cmd->fd[0]);
+		// close(cmd->fd[1]);
 		if (builtins(cmd->argv, shell))
 			return (0);
-		execute_execve(cmd, shell);
+		//execute_execve(cmd, shell);
 		free(shell);
-		//exit(0);
 	}
 	else
 	{
-		waitpid(cmd->pid, &cmd->exit_status, 0);//жду дочерний процесс
-		//write(1, "Mama\n", 5);
+		//printf("AFTER OPENING FILE [%d][%d]\n", cmd->fd[0], cmd->fd[1]);
+		waitpid(cmd->pid, &cmd->exit_status, 0);
 		set_last_status(shell, cmd, cmd->exit_status);
 		if (cmd->prev || cmd->next)
 			close(cmd->fd[1]);
@@ -59,19 +53,3 @@ int	create_pipe(t_shell *shell, t_cmd *cmd)
 	}
 	return (0);
 }
-
-// void	check_shlvl(t_shell *shell)
-// {
-// 	char	*tmp;
-// 	int		num;
-// 	char	*digit;
-
-// 	tmp = get_env_value("SHLVL=", shell);
-// 	num = ft_atoi(tmp) + 1;
-// 	free(tmp);
-// 	digit = ft_itoa(num);
-// 	tmp = ft_strjoin("export SHELVL=", digit);
-// 	free(digit);
-// 	export(tmp, shell);
-// 	free(tmp);
-// }

@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:02:04 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/25 16:14:09 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/27 21:48:51 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char	**before_quotes(char **tmpmass,	t_shell *shell);
 int		builtins(char **argv, t_shell *shell);
 int		create_pipe(t_shell *shell, t_cmd *cmd);
 int		nofork(char *cmd);
-void	pipex(t_shell *shell);
+void	pipex(t_cmd *cmd, t_shell *shell);
 int		execute_execve(t_cmd *cmd, t_shell *shell);
 void	handler_signal(int signal);
 int		start_cmd_fork(t_cmd *cmd, t_shell *shell);
@@ -123,6 +123,8 @@ int		open_file(char *argv, int i, int quit);
 int		check_redirection(t_cmd *cmd, int quit);
 int		ft_free_str(char **s);
 void	*ft_free_str_arr(char ***arr);
+
+void	r_in(t_cmd *cmd);
 /*
 ** PARSER:
 */
@@ -148,10 +150,14 @@ int		double_check_inpt(char *inpt);
 int		is_a(char *str);
 int		delete_quote(char **inpt);
 int		n_a(char c);
-char	**get_str(char **envp);
+char	*get_str(char **envp);
 void	free_array(char **arr);
 void	skip_quotes(char *input, int *i);
-void	fill_list(char	**str);
+void	fill_list(char	*str);
+int		add_elem(t_cmd **cmd, char **str);
+int		word_len(char *str);
+int		arrow_action(char **str, t_cmd	**cmd);
+int		separate_str(char ***arr, char **str, t_cmd	*cmd);
 /*
 ** STUFF:
 */

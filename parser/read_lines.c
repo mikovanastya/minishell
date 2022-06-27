@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:45:31 by eward             #+#    #+#             */
-/*   Updated: 2022/06/23 18:39:37 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/27 21:43:31 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	quote_actions(char c)
 {
-	if (!g_shell.quote && (c == '\'' || c == '\"'))
+	if ((!g_shell.quote || g_shell.quote == '|') && (c == '\'' || c == '\"'))
 	{
 		g_shell.quote = c;
 		g_shell.console_name = "dquote> ";
@@ -31,7 +31,7 @@ int	quote_actions(char c)
 	{
 		g_shell.pipe = 1;
 		g_shell.quote = c;
-		g_shell.console_name = "pipe> ";
+		g_shell.console_name = "> ";
 	}
 	return (1);
 }

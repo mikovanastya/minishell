@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:17:01 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/25 16:22:21 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/27 21:35:01 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	nofork(char *cmd)// эти команды не могут выполнять
 
 int	start_cmd_nofork(t_cmd *cmd, t_shell *shell)// выполнение некоторых команд
 {
-	int	status;//статус выхода 
+	int	status;//статус выхода
 
 	if (!cmd->argv)
 		return (1);
@@ -98,17 +98,70 @@ int	start_cmd_nofork(t_cmd *cmd, t_shell *shell)// выполнение неко
 	return (status);
 }
 
-void	pipex(t_shell *shell)
+int	check_builtins(char **arg)
 {
-	t_cmd	*cmd;
+	if (ft_strcmp(arg[0], "echo") == 0
+		||ft_strcmp(arg[0], "cd") == 0
+		||ft_strcmp(arg[0], "pwd") == 0
+		||ft_strcmp(arg[0], "export") == 0
+		||ft_strcmp(arg[0], "unset") == 0
+		||ft_strcmp(arg[0], "env") == 0
+		||ft_strcmp(arg[0], "exit") == 0)
+		return (0);
+	else
+		return (1);
+}
 
-	cmd = *shell->cmd_start;
+
+int	ft_builtin(t_cmd *cmd, t_shell *shell)
+{
+	int	saved_stdin;
+	int	saved_stdout;
+
+	saved_stdin = dup(0);
+	saved_stdout = dup(1);
+	if (cmd && cmd->next == NULL && cmd->argv[0] != NULL)
+	{
+		if (cmd->argv && check_builtins(cmd->argv) == 1)
+			return (0);
+		if (check_redirection(cmd, 1) == 1)
+			return (1);
+		if (builtins(cmd->argv, shell) == 0)
+		{
+			dup2(saved_stdin, 0);
+			close(saved_stdin);
+			dup2(saved_stdout, 1);
+			close(saved_stdout);
+			return (1);
+		}
+	}
+	return (0);
+}
+
+void	init_pipe(t_cmd *cmd)
+{
+	while (cmd)
+	{
+		pipe(cmd->fd);
+		cmd = cmd->next;
+	}
+}
+
+void	pipex(t_cmd *cmd, t_shell *shell)
+{
+	t_cmd	*first;
+
+	first = cmd;
+	//cmd = *shell->cmd_start;
+	//init_pipe(first);
 	if (nofork(cmd->argv[0]))
 	{
 		start_cmd_nofork(cmd, shell);
 		return ;
 	}
-	else
+	// if (make_heredocs(cmd, shell) == 1 || ft_builtin(cmd, shell) == 1)
+	// 	return ;
+	if (cmd && cmd->argv)
 	{
 		while (cmd)
 		{
@@ -126,3 +179,4 @@ void	set_last_status(t_shell *shell, t_cmd *cmd, int status)
 		set_env(shell, "?", ft_itoa(WTERMSIG(status) + 128));
 	set_env(shell, "_", cmd->argv[0]);
 }
+		// printf("fd [%d][%d]\n", cmd->fd[0], cmd->fd[1]);

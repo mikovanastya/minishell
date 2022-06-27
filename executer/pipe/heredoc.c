@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:49:46 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/25 14:03:49 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/27 20:37:22 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 int	make_heredocs(t_cmd *cmd, t_shell *shell)
 {
 	char **redir;
-	printf("tyt");
 	while (cmd != NULL)
 	{
-		printf("herdoc");
 		if (check_heredoc(redir, cmd->fd[0], cmd, shell) == 1)
 			return (1);
 		cmd = cmd->next;
@@ -93,5 +91,7 @@ int	redir_heredoc(char *iter, int fd, t_cmd *cmd, t_shell *shell)
 	dup2(new_fd[0], fd);
 	close(new_fd[1]);
 	close(new_fd[0]);
+	// if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
+	// 	return (1);
 	return (0);
 }

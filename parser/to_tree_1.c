@@ -12,52 +12,108 @@
 
 #include "../minishell.h"
 
-int	len_to_pipe(char **src)
+void	skip_quotes_in_len(char **src)
+{
+	g_shell.quote = **src;
+	(*src)++;
+	while (**src && g_shell.quote != **src)
+		(*src)++;
+	if (**src)
+		(*src)++;
+	g_shell.quote = 0;
+}
+
+int	len_to_pipe(char *src)
 {
 	int	i;
 
+	g_shell.quote = 0;
 	i = 0;
-	if (!*src)
-		return(1);
-	while (*(src + 1 + i) && (*(src + i))[0] != '|')
+	if (!src)
+		return (1);
+	while (*src)
+	{
+		while (*src && sp(*src))
+			src++;
+		while (*src && !sp(*src))
+		{
+			if (!g_shell.quote && (*src == '\"' || *src == '\''))
+				skip_quotes_in_len(&src);
+			if ((*src) == '|')
+				break ;
+			src++;
+		}
+		if ((*src) == '|')
+			break ;
 		i++;
-	if (*(src + i))
-		return(i + 2);
-	else
-		return (i + 1);
+	}
+	return (i + 1);
 }
 
-void	fill_list(char	**str)
+int	word_len(char *str)
 {
-	t_cmd	*s, *e, *f;
-	int		i;
-	
-	f = (t_cmd *)malloc(sizeof(t_cmd));
-	g_shell.cmd_start = &f;
-	s = (t_cmd *)malloc(sizeof(t_cmd));
-	f->prev = NULL;
-	e = f;
-	e->next = s;
-	s->prev = e;
-	while (*str)
+	int	len;
+
+	len = 0;
+	g_shell.quote = 0;
+	while (*(str + len))
 	{
-		e = s;
-		i = 0;
-		s->argv = (char **)malloc(sizeof(char *) * len_to_pipe(str));
-		printf("len to pipe %d\n", len_to_pipe(str));
-		while (*str && **str != '|')
+		if (!g_shell.quote && (*(str + len) == '\"' || *(str + len) == '\''))
 		{
-			s->argv[i] = ft_strdup(*str);
-			str++;
-			i++;
+			g_shell.quote = *(str + len);
+			len++;
+			while (*(str + len) && g_shell.quote != *(str + len))
+				len++;
+			if (*(str + len))
+				len++;
+			g_shell.quote = 0;
 		}
-		s = (t_cmd *)malloc(sizeof(t_cmd));
-		e->next = s;
-		s->prev = e;
-		if (*str)
-			str++;
+		if (*(str + len) != '|'
+			&& n_a(*(str + len)) && !sp(*(str + len)))
+			break ;
+		len++;
 	}
-	e->next = NULL;
-	// while(h->prev)
-	// 	h = h->prev;
+	return (len);
+}
+
+int	arrow_action(char **str, t_cmd	**cmd)
+{
+	((*cmd)->redir) = (char **)malloc(sizeof(char *));
+	*((*cmd)->redir) = (char *)malloc(sizeof(char) * 3);
+	if (is_a(*str) % 2)
+	{
+		ft_strlcpy(*((*cmd)->redir), *str, 1);
+		(*str)++;
+	}
+	else
+	{
+		ft_strlcpy(*((*cmd)->redir), *str, 2);
+		*str = (*str) + 2;
+	}
+	return (0);
+}
+
+int	add_elem(t_cmd **cmd, char **str)
+{
+	t_cmd	*new;
+	t_cmd	*last;
+
+	new = (t_cmd *)malloc(sizeof(t_cmd));
+	last = *cmd;
+	new->argv = (char **)malloc(sizeof(char *) * len_to_pipe(*str));
+	separate_str(&(new->argv), str, new);
+	new->next = NULL;
+	if (*cmd == NULL)
+	{
+		new->prev = NULL;
+		*cmd = new;
+		return (0);
+	}
+	while (last->next != NULL)
+		last = last->next;
+	last->next = new;
+	new->prev = last;
+	if (**str)
+		(*str)++;
+	return (0);
 }

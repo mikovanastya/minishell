@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 16:00:22 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/24 17:02:14 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/27 16:08:58 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	handler_signal(int signal)
 		write(1, "Quit: 3\n", 8);
 }
 
-// void	sig_signal(void)
-// {
-// 	signal(SIGINT, SIG_IGN);//игнорируем сигнал
-// 	signal(SIGQUIT, SIG_IGN);
-// }
+void	sig_signal(void)
+{
+	signal(SIGINT, SIG_IGN);//игнорируем сигнал
+	signal(SIGQUIT, SIG_IGN);
+}
