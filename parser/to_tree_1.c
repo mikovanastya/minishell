@@ -12,6 +12,17 @@
 
 #include "../minishell.h"
 
+void	skip_quotes_in_len(char **src)
+{
+	g_shell.quote = **src;
+	(*src)++;
+	while (**src && g_shell.quote != **src)
+		(*src)++;
+	if (**src)
+		(*src)++;
+	g_shell.quote = 0;
+}
+
 int	len_to_pipe(char *src)
 {
 	int	i;
@@ -27,15 +38,7 @@ int	len_to_pipe(char *src)
 		while (*src && !sp(*src))
 		{
 			if (!g_shell.quote && (*src == '\"' || *src == '\''))
-			{
-				g_shell.quote = *src;
-				src++;
-				while (*src && g_shell.quote != *src)
-					src++;
-				if (*src)
-					src++;
-				g_shell.quote = 0;
-			}
+				skip_quotes_in_len(&src);
 			if ((*src) == '|')
 				break ;
 			src++;
@@ -87,79 +90,6 @@ int	arrow_action(char **str, t_cmd	**cmd)
 		ft_strlcpy(*((*cmd)->redir), *str, 2);
 		*str = (*str) + 2;
 	}
-	while (**str && sp(**str))
-		(*str)++;
-	return (0);
-}
-
-int	separate_str(char ***arr, char **str, t_cmd	*cmd)
-{
-	int	i;
-	int	j;
-
-	((cmd)->redir) = NULL;
-	i = 0;
-	g_shell.quote = 0;
-	while (**str && **str != '|' && !n_a(**str))
-	{
-		j = 0;
-		(*arr)[i] = (char *)malloc(sizeof(char) * (word_len(*str) + 1));
-		if (!(*arr)[i])
-			return (-1);
-		while (**str && sp(**str))
-			(*str)++;
-		while (**str && **str != '|'
-			&& !n_a(**str) && !sp(**str))
-		{
-			if (is_a(*str) != 0)
-				arrow_action(str, &cmd);			
-			if (!g_shell.quote && (**str == '\"' || **str == '\''))
-			{
-				g_shell.quote = **str;
-				(*str)++;
-				while (**str && g_shell.quote != **str)
-				{
-					(*arr)[i][j] = **str;
-					j++;
-					(*str)++;
-				}
-				if (**str)
-					(*str)++;
-				g_shell.quote = 0;
-			}
-			else
-			{
-				(*arr)[i][j] = **str;
-				j++;
-				(*str)++;
-			}
-		}
-		(*arr)[i][j] = '\0';
-		if ((cmd->redir))
-		{
-			cmd->file_name = (char **)malloc(sizeof(char *));
-			*(cmd->file_name) = ft_strdup((*arr)[i]);
-			free((*arr)[i]);
-			(*arr)[i] = NULL;
-			if (**str)
-				while (**str && sp(**str))
-					(*str)++;
-			if (**str)
-				while (**str && **str != '|' && !n_a(**str))
-					(*str)++;
-		}
-		if (**str)
-			while (**str && sp(**str))
-				(*str)++;
-		i++;
-	}
-	(*arr)[i] = NULL;
-	i = 0;
-	while ((*arr)[i])
-	{
-		printf("%s\n", (*arr)[i]);
-		i++;
-	}
 	return (0);
 }
 
@@ -186,12 +116,4 @@ int	add_elem(t_cmd **cmd, char **str)
 	if (**str)
 		(*str)++;
 	return (0);
-}
-
-void	fill_list(char	*str)
-{
-	g_shell.cmd_start = (t_cmd **)malloc(sizeof(t_cmd *));
-	*(g_shell.cmd_start) = NULL;
-	while (*str)
-		add_elem(g_shell.cmd_start, &str);
 }

@@ -59,3 +59,11 @@ char	*get_str(char **envp)
 	printf("input: \n%s\n", input);
 	return (input);
 }
+
+void	fill_list(char	*str)
+{
+	g_shell.cmd_start = (t_cmd **)malloc(sizeof(t_cmd *));
+	*(g_shell.cmd_start) = NULL;
+	while (*str)
+		add_elem(g_shell.cmd_start, &str);
+}

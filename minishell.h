@@ -152,6 +152,7 @@ char	*get_str(char **envp);
 void	free_array(char **arr);
 void	skip_quotes(char *input, int *i);
 void	fill_list(char	*str);
+int		add_elem(t_cmd **cmd, char **str);
 /*
 ** STUFF:
 */

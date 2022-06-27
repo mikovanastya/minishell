@@ -32,6 +32,7 @@ SRCS = 	main.c\
 		executer/pipe/heredoc.c\
 		executer/pipe/redirect.c\
 		executer/pipe/free.c\
+		\
 		parser/read_lines.c\
 		parser/read_lines_1.c\
 		parser/substitute_envp.c\
@@ -39,6 +40,7 @@ SRCS = 	main.c\
 		parser/substitute_envp_2.c\
 		parser/to_tree.c\
 		parser/to_tree_1.c\
+		parser/to_tree_2.c\
 		parser/check.c\
 		parser/free_memory.c\
 		\
@@ -53,7 +55,7 @@ HEADER = minishell.h
 
 CC		=	cc
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = #-Wall -Werror -Wextra
 
 RM			=	rm -f
 
