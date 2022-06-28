@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:17:01 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/28 16:45:20 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/28 19:04:04 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int execute_execve(t_cmd *cmd, t_shell *shell)// выполняет команд
 		execute_execve_without_path(cmd, shell->envp, path_arr);// без пути
 	}
 	ft_free_str(&paths);
-	ft_free_str_arr(&env);
+	// ft_free_str_arr(&env);
 	ft_free_str_arr(&path_arr);
 	printf("minishell: %s: command not found\n", cmd->argv[0]);
 	cmd->exit_status = 127;
@@ -151,7 +151,6 @@ void	pipex(t_cmd *cmd, t_shell *shell)
 {
 	// cmd = *shell->cmd_start;
 	//init_pipe(first);
-	printf ("pipe\n");
 	if (nofork(cmd->argv[0]))
 	{
 		start_cmd_nofork(cmd, shell);

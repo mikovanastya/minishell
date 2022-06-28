@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:02:04 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/27 21:48:51 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/28 18:19:34 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,17 @@
 # include <stdlib.h>
 # include <limits.h>
 # include <stdio.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include "string.h" // !! УДАЛИТЬ !!!*
-
-
+# include <dirent.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include "readline/tilde.h"
+# include "readline/rlconf.h"
+# include "readline/rlstdc.h"
+# include "readline/history.h"
+# include "readline/keymaps.h"
+# include "readline/readline.h"
+# include "readline/chardefs.h"
+# include "readline/rltypedefs.h"
 #include <fcntl.h>
 
 typedef struct s_cmd	t_cmd;
@@ -42,6 +48,7 @@ typedef struct s_shell{
 	int		quote;	
 	int		arrow;
 	int		pipe;
+	char	*inpt;
 	t_cmd	**cmd_start; // *
 }t_shell;
 

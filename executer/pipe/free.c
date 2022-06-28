@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 17:47:56 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/24 17:49:49 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/28 19:03:05 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	*ft_free_str_arr(char ***arr)
 			if ((*arr)[i] != NULL)
 			{
 				free((*arr)[i]);
-				(*arr)[i] = NULL;
+				//(*arr)[i] = NULL;
 			}
 			i++;
 		}

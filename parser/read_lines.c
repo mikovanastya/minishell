@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:45:31 by eward             #+#    #+#             */
-/*   Updated: 2022/06/28 15:56:14 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/28 18:59:24 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,17 +85,26 @@ int	go_on(char *str)
 
 int	read_str(char **str)
 {
-	char	*inpt;
+	// char	*inpt;
 	int		may_continue;
 	int		cycle_rez;
 
 	may_continue = 1;
+	// inpt = NULL;
+	g_shell.inpt = NULL;
 	while (may_continue == 1)
 	{
-		inpt = readline(g_shell.console_name);
-		add_history(inpt);
-		cycle_rez = in_cycle(str, &inpt, &may_continue);
-		free(inpt);
+		// while (!g_shell.inpt)
+		g_shell.inpt = readline(g_shell.console_name);
+		
+		// while (!g_shell.inpt)
+		// 	g_shell.inpt = readline("");
+		// if (!g_shell.inpt)
+		// 	break;
+		if (g_shell.inpt && *g_shell.inpt != '\0')
+			add_history(g_shell.inpt);
+		cycle_rez = in_cycle(str, &(g_shell.inpt), &may_continue);
+		free(g_shell.inpt);
 	}
 	return (may_continue);
 }

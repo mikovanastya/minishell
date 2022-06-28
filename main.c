@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:01:07 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/28 16:52:29 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/28 18:47:49 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,11 @@ int	main(int argc, char **argv, char **env)
 	while (1)
 	{
 		init_env(env, &shell);
-		shell.cmd_start = &cmd;
+		// shell.cmd_start = g_shell.cmd_start;
 		rez = get_str(env); // !!
 		printf("inpu1: \n%s\n", rez);
 		fill_list(rez);
+		// shell.cmd_start = g_shell.cmd_start;
 		// while (*(g_shell.cmd_start))
 		// {
 		// 	i = 0;
@@ -53,8 +54,29 @@ int	main(int argc, char **argv, char **env)
 		// }
 		// signal(SIGINT, handler_signal);
 		// signal(SIGQUIT, handler_signal);
-		pipex(*(g_shell.cmd_start), &shell);
+		pipex(*(g_shell.cmd_start), &g_shell);
 		// builtins(cmd->argv, &shell);
+		// while (*(g_shell.cmd_start))
+		// {
+		// 	i = 0;
+		// 	if (g_shell.cmd_start)
+		// 	{
+		// 		while ((*(g_shell.cmd_start))->argv[i])
+		// 	{
+		// 		free((*(g_shell.cmd_start))->argv[i]);
+		// 		i++;
+		// 	}
+		// 	if ((*(g_shell.cmd_start))->file_name)
+		// 		free(*((*(g_shell.cmd_start))->file_name));
+		// 	free((*(g_shell.cmd_start))->argv);
+		// 	*(g_shell.cmd_start) = (*(g_shell.cmd_start))->next;
+		// 	if (*(g_shell.cmd_start))
+		// 	{
+		// 		if ((*(g_shell.cmd_start))->prev)
+		// 		free((*(g_shell.cmd_start))->prev);
+		// 	}
+		// 	}
+		// }
 		free(rez);
 		//free struct!!!!!
 	}

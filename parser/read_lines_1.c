@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_lines_1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eward <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 17:50:18 by eward             #+#    #+#             */
-/*   Updated: 2022/05/26 17:50:20 by eward            ###   ########.fr       */
+/*   Updated: 2022/06/28 18:03:39 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	change_help_and_rez(char **help, char **rez, char **inpt)
 {
-	if (!*rez)
+	if (*rez)
 		free(*rez);
 	*rez = ((char *)malloc(sizeof(char *) * (ft_strlen(*inpt)
 					+ ft_strlen(*help) + 1)));
@@ -57,7 +57,7 @@ int	resize_rez(char **rez, char **inpt)
 
 int	init_rez(char **rez, char **inpt)
 {
-	if (!*rez)
+	if (*rez)
 		free(*rez);
 	*rez = (char *)malloc(sizeof(char *) * (ft_strlen(*inpt) + 1));
 	if (!*rez)
@@ -90,7 +90,7 @@ int	in_cycle(char **rez, char **inpt, int *may_continue)
 	*may_continue = go_on(*inpt);
 	if (ft_strlcat(*rez, *inpt, ft_strlen(*inpt) + ft_strlen(*rez) + 1) < 0)
 	{
-		free_memory(*inpt, *inpt, *rez);
+		// free_memory(*inpt, *inpt, *rez);
 		return (-2);
 	}
 	return (1);

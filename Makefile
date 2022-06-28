@@ -6,7 +6,7 @@
 #    By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/16 14:07:19 by rtwitch           #+#    #+#              #
-#    Updated: 2022/06/27 21:26:24 by rtwitch          ###   ########.fr        #
+#    Updated: 2022/06/28 19:06:48 by rtwitch          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ HEADER = minishell.h
 
 CC		=	cc
 
-FLAGS = 
+FLAGS = -fsanitize=address -Wall -Werror -Wextra
 
 RM			=	rm -f
 
