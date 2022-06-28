@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 21:10:38 by eward             #+#    #+#             */
-/*   Updated: 2022/06/28 20:34:22 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/28 21:16:44 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ int	separate_str(char ***arr, char **str, t_cmd	*cmd)
 	((cmd)->redir) = NULL;
 	pos.i = 0;
 	g_shell.quote = 0;
+	while (**str && sp(**str))
+				(*str)++;
 	while (**str && **str != '|' && !n_a(**str))
 	{
 		go_to_word(&((*arr)[pos.i]), &(pos.j), str);

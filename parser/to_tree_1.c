@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 15:14:51 by eward             #+#    #+#             */
-/*   Updated: 2022/06/25 16:17:00 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/28 21:24:26 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,12 @@ int	len_to_pipe(char *src)
 				skip_quotes_in_len(&src);
 			if ((*src) == '|')
 				break ;
-			src++;
+			if (*src != '\0')
+				src++;
 		}
-		if ((*src) == '|')
-			break ;
+		if (src)
+			if ((*src) == '|')
+				break ;
 		i++;
 	}
 	return (i + 1);
@@ -68,8 +70,7 @@ int	word_len(char *str)
 				len++;
 			g_shell.quote = 0;
 		}
-		if (*(str + len) != '|'
-			&& n_a(*(str + len)) && !sp(*(str + len)))
+		if (n_a(*(str + len)) || sp(*(str + len)) || !(*(str + len)))
 			break ;
 		len++;
 	}

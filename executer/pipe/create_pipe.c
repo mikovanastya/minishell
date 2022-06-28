@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 18:34:52 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/28 20:10:46 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/28 21:35:59 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,14 @@ int	create_pipe(t_shell *shell, t_cmd *cmd)
 			if (dup2(cmd->prev->fd[0], 0) < 0)
 				return (1);
 		}
-		check_redirection(cmd, 0);
+		// check_redirection(cmd, 0);
 		// close(cmd->fd[0]);
 		// close(cmd->fd[1]);
 		if (builtins(cmd->argv, shell))
 			return (0);
 		execute_execve(cmd, shell);
 		free(shell);
+		exit(0);///////
 	}
 	else
 	{

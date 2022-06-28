@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:01:07 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/28 20:38:12 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/28 21:42:16 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int argc, char **argv, char **env)
 		// printf("inpu1: \n%s\n", rez);
 		fill_list(rez);
 		// shell.cmd_start = g_shell.cmd_start;
-		cmd = *(g_shell.cmd_start);
+		// cmd = *(g_shell.cmd_start);
 		// while (cmd)
 		// {
 		// 	i = 0;
@@ -56,7 +56,8 @@ int	main(int argc, char **argv, char **env)
 		// }
 		// signal(SIGINT, handler_signal);
 		// signal(SIGQUIT, handler_signal);
-		// pipex(*(g_shell.cmd_start), &g_shell);
+		pipex(*(g_shell.cmd_start), &g_shell);
+		// pipex(cmd, &g_shell);
 		// builtins(cmd->argv, &shell);
 		// while (*(g_shell.cmd_start))
 		// {
