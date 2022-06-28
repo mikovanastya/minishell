@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:01:07 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/27 21:31:41 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/28 16:52:29 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	main(int argc, char **argv, char **env)
 	}
 	return (0);
 }
+
 // int	main(int argc, char **argv, char **env)
 // {
 // 	char	**rez;
@@ -136,7 +137,7 @@ int	main(int argc, char **argv, char **env)
 // 	printf("%s\n", (*shell.cmd_start)->next->argv[1]);
 // 	printf("%s\n", (*shell.cmd_start)->next->next->argv[0]);
 // 	printf("%s\n", (*shell.cmd_start)->next->next->argv[1]);
-// 	pipex(&cmd1, &shell);
+// 	pipex(*(g_shell.cmd_start), &shell);
 // }
 
 /*
