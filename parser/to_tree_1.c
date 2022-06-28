@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 15:14:51 by eward             #+#    #+#             */
-/*   Updated: 2022/06/28 17:28:31 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/25 16:17:00 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ int	add_elem(t_cmd **cmd, char **str)
 	new = (t_cmd *)malloc(sizeof(t_cmd));
 	last = *cmd;
 	new->argv = (char **)malloc(sizeof(char *) * len_to_pipe(*str));
-	new->exit_status = 0;
 	separate_str(&(new->argv), str, new);
 	new->next = NULL;
 	if (*cmd == NULL)

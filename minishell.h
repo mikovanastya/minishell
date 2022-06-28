@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:02:04 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/28 18:19:34 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/28 20:27:28 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ int		add_elem(t_cmd **cmd, char **str);
 int		word_len(char *str);
 int		arrow_action(char **str, t_cmd	**cmd);
 int		separate_str(char ***arr, char **str, t_cmd	*cmd);
+int	go_to_word(char **a, int *j, char **str);
 /*
 ** STUFF:
 */

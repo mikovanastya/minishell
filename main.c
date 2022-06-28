@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:01:07 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/28 18:47:49 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/28 20:38:12 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int argc, char **argv, char **env)
 	t_cmd	*cmd;
 	int		i;
 
+	(void)i;
 	//g_shell = (t_shell)malloc(sizeof(t_shell));
 	if (argc != 1)
 	 	ft_error(argv[0], EINVAL);
@@ -37,24 +38,25 @@ int	main(int argc, char **argv, char **env)
 		init_env(env, &shell);
 		// shell.cmd_start = g_shell.cmd_start;
 		rez = get_str(env); // !!
-		printf("inpu1: \n%s\n", rez);
+		// printf("inpu1: \n%s\n", rez);
 		fill_list(rez);
 		// shell.cmd_start = g_shell.cmd_start;
-		// while (*(g_shell.cmd_start))
+		cmd = *(g_shell.cmd_start);
+		// while (cmd)
 		// {
 		// 	i = 0;
-		// 	while ((*(g_shell.cmd_start))->argv[i])
+		// 	while (cmd->argv[i])
 		// 	{
-		// 		printf("Cmd %d:[%s]\n", i, (*(g_shell.cmd_start))->argv[i]);
+		// 		printf("Cmd %d:[%s]\n", i, cmd->argv[i]);
 		// 		i++;
 		// 	}
-		// 	if ((*(g_shell.cmd_start))->file_name)
-		// 		printf("filename %s\n", *((*(g_shell.cmd_start))->file_name));
-		// 	*(g_shell.cmd_start) = (*(g_shell.cmd_start))->next;
+		// 	if ((cmd->file_name))
+		// 		printf("filename %s\n",  *(cmd->file_name));
+		// 	cmd = cmd->next;
 		// }
 		// signal(SIGINT, handler_signal);
 		// signal(SIGQUIT, handler_signal);
-		pipex(*(g_shell.cmd_start), &g_shell);
+		// pipex(*(g_shell.cmd_start), &g_shell);
 		// builtins(cmd->argv, &shell);
 		// while (*(g_shell.cmd_start))
 		// {

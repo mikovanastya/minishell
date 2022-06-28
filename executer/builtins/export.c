@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:13:19 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/24 17:44:48 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/28 20:28:13 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,8 @@ int	export_prmtrs(t_shell *shell, char *str)
 int	builtin_export(char **args, t_shell *shell)
 {
 	int		i;
-	char	**do_ravno;
-	char	**posle_ravno;
+	// char	**do_ravno;
+	// char	**posle_ravno;
 
 	if (!args[1])
 		no_args(shell->envp, shell);

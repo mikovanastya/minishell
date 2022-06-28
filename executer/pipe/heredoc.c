@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:49:46 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/27 20:37:22 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/28 20:02:30 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 int	make_heredocs(t_cmd *cmd, t_shell *shell)
 {
-	char **redir;
+	// char **redir;
+
 	while (cmd != NULL)
 	{
-		if (check_heredoc(redir, cmd->fd[0], cmd, shell) == 1)
+		if (check_heredoc(cmd->redir, cmd->fd[0], cmd, shell) == 1)
 			return (1);
 		cmd = cmd->next;
 	}
@@ -29,9 +30,11 @@ int	check_heredoc(char **redir, int stdin_fd, t_cmd *cmd, t_shell *shell)
 	int	i;
 
 	i = 0;
-	while (redir && redir[i])
+	if (!redir)
+		return (0);
+	while ((*redir)[i] != '\0')
 	{
-		if (ft_strcmp(redir[i], "<<") == 0)
+		if (ft_strcmp((*redir), "<<") == 0)
 		{
 			if (redir_heredoc(redir[i + 1], stdin_fd, cmd, shell) == 1)
 				return (1);
@@ -72,6 +75,8 @@ void	heredoc(char *iter, int *fd, t_cmd *cmd, t_shell *shell)
 		line = readline("heredoc > ");
 	}
 	free(line);
+	(void)shell;
+	(void)cmd;
 	exit(EXIT_SUCCESS);
 }
 

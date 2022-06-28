@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:17:01 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/28 19:04:04 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/28 20:09:27 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	execute_execve_without_path(t_cmd *cmd,
 
 int execute_execve(t_cmd *cmd, t_shell *shell)// выполняет команды из bin///
 {
-	char	**env;
+	// char	**env;
 	char	*paths;
 	char	**path_arr;
 

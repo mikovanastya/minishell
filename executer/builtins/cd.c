@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:08:53 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/24 17:44:04 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/28 20:27:55 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	builtin_cd(char **args, t_shell *shell)
 	char	cwd[PATH_MAX];
 	char	*home;
 
+	home = NULL;
 	if (!args[1])// параметр помле cd
 	{
 		if (!env_prmtrs_exist(shell, home))

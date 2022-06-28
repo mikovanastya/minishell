@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 14:07:52 by eward             #+#    #+#             */
-/*   Updated: 2022/06/25 15:16:55 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/28 20:37:16 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ char	*get_str(char **envp)
 	}
 	else
 		printf("\n");
-	printf("input: \n%s\n", input);
 	return (input);
 }
 
@@ -66,4 +65,15 @@ void	fill_list(char	*str)
 	*(g_shell.cmd_start) = NULL;
 	while (*str)
 		add_elem(g_shell.cmd_start, &str);
+}
+
+int	go_to_word(char **a, int *j, char **str)
+{
+	*j = 0;
+	*a = (char *)malloc(sizeof(char) * (word_len(*str) + 1));
+	if (!a)
+		return (-1);
+	while (**str && sp(**str))
+		(*str)++;
+	return (0);
 }
