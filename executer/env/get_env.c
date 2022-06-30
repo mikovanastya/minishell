@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:12:45 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/29 17:50:46 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/30 21:14:12 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,13 @@ char	*get_env_value(t_shell *shell, char *prmtrs)// получаю значен�
 
 	i = 0;
 	prmtrs = ft_strjoin(prmtrs, "=");
+	
 	while (shell->envp[i])
 	{
+		// printf(" shell.envp[j] %s\n",  shell->envp[i]);
+	
+		// if (shell->envp[i])
+		// 	printf("shell->envp[i] %s", shell->envp[i]);
 		if (ft_strncmp(ft_substr(shell->envp[i], 0, ft_strchr(shell->envp[i], '=')
 					- shell->envp[i] + 1), prmtrs, ft_strlen(prmtrs)) == 0)//ищем в строке подстроку prmtrs до =, считая длинну сравниваем 
 		{

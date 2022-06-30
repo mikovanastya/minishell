@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:14:15 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/25 16:09:35 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/30 17:15:43 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	env_prmtrs_exist(t_shell *shell, char *prmtrs)//проверяем суще�
 	prmtrs = ft_strjoin(prmtrs, "=");
 	while (shell->envp[i] && i < shell->len)
 	{
+		// if (shell->envp[i])
+		// 	printf("shell->envp[i] %s\n", shell->envp[i]);
 		if (ft_strncmp(ft_substr(shell->envp[i], 0, ft_strchr(shell->envp[i], '=')
 					- shell->envp[i] + 1), prmtrs, ft_strlen(prmtrs)) == 0)
 			return (1);

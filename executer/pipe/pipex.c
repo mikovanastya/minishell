@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:17:01 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/30 13:27:25 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/30 21:39:27 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,113 +28,33 @@ int	execute_execve_without_path(t_cmd *cmd,
 	char	*tmp;
 	char	*final;
 
+	printf("*path_arr: %s\n", *path_arr);
+	printf("*path_arr: %s\n", path_arr[1]);
 	while (*path_arr != NULL)
 	{
 		tmp = ft_strjoin(*path_arr, "/");
 		final = ft_strjoin(tmp, cmd->argv[0]);
-		execve(final, cmd->argv, env);
+		printf("final: %s\n", final);
+		if (access(final, F_OK) == 0)
+		{
+			printf("kek\n");
+			break;
+		}
 		path_arr++;
 		ft_free_str(&tmp);
 		ft_free_str(&final);
 	}
+	if (*path_arr == NULL)
+	{
+		// not found
+	}
+	else
+	{
+		execve(final, cmd->argv, env);
+	}
 	return (0);
 }
-char	**ft_get_path(t_shell *pipex, char **envp)
-{
-	int		i;
-	char	**bin_path;
-	size_t	len;
 
-	len = ft_strlen("PATH=");
-	if (!envp)
-		return (NULL);
-	if (!(*envp))
-		return (NULL);
-	i = 0;
-	while (envp[i] != NULL)
-	{
-		if (!ft_strncmp(envp[i], "PATH=", len))
-			break ;
-		i++;
-	}
-	bin_path = ft_split(envp[i] + len, ':');
-	// if (!bin_path)
-	// {
-	// 	ft_close_file(pipex->pipe1[0], NULL);
-	// 	ft_close_file(pipex->pipe1[1], NULL);
-	// // 	perror("./pipex: ");
-	// // 	exit (ERR_MEMORY_ALLOCATE);
-	// // }
-	return (bin_path);
-}
-
-char	*ft_strjoin_slash(char const *s1, char const *s2)
-{
-	char	*dest;
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	dest = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 2) * sizeof(char));
-	if (dest == NULL)
-		return (NULL);
-	while (i < ft_strlen(s1))
-	{
-		dest[i] = s1[i];
-		i++;
-	}
-	dest[i] = '/';
-	j = i + 1;
-	i = 0;
-	while (i < ft_strlen(s2))
-		dest[j++] = s2[i++];
-	dest[j] = '\0';
-	return (dest);
-}
-
-void	ft_exec_with_path(t_shell *shell, char **envp, char **cmd)
-{
-	int		i;
-	char	*cmd_with_path;
-
-	i = 0;
-	while (shell->cmd_start[i] != NULL)
-	{
-		cmd_with_path = ft_strjoin_slash(shell->cmd_start[i], cmd[0]);
-		// if (!cmd_with_path)
-		// {
-		// 	ft_free_pipex(pipex);
-		// 	// perror("./pipex: ");
-		// 	// exit (ERR_MEMORY_ALLOCATE);
-		// }
-		if (access(cmd_with_path, 01) == 0)
-		{
-			execve(cmd_with_path, cmd, envp);
-			// ft_free_pipex(pipex);
-			// free(cmd_with_path);
-			// perror("./pipex: ");
-			// exit(ERR_EXEC);
-		}
-		// free(cmd_with_path);
-		i++;
-	}
-}
-void	ft_exec_without_path(t_shell *shell, char **envp, char **cmd)
-{
-	if (access(cmd[0], 01) == 0)
-	{
-		execve(cmd[0], cmd, envp);
-		//free(shell);
-		//ft_free_pipex(pipex);
-		//perror("./pipex: ");
-		//exit(ERR_EXEC);
-	}
-	// if (!pipex->bin_path)
-	// {
-	// 	ft_free_pipex(pipex);
-	// 	//exit(ERR_EXECUTE_CMD);
-	// }
-}
 
 int execute_execve(t_cmd *cmd, t_shell *shell)// выполняет команды из bin///
 {
@@ -142,27 +62,39 @@ int execute_execve(t_cmd *cmd, t_shell *shell)// выполняет команд
 	char	*paths;
 	char	**path_arr;
 
+	// env = env_create_arr(shell);
+	// init_env(prmtrs, shell);
+	printf("132323123 %s\n", cmd->argv[0]);
+	// int j = 0;
+	// while (g_shell.envp[j])
+	// {
+	// 	printf(" g_shell.envp[%d] %s\n", j, g_shell.envp[j]);
+	// 	j++;
+	// }
+	(void)shell;
 	// printf ("[%d][%d]_%s_%s_\n", cmd->fd[0], cmd->fd[1], cmd->argv[0], cmd->argv[1]);
-	paths = get_env_value(shell, "PATH");
+	paths = get_env_value(&g_shell, "PATH");
 	path_arr = ft_split(paths, ':');
 	if ((ft_strlen(cmd->argv[0]) > 2)
 		&& (cmd->argv[0][0] == '/' || cmd->argv[0][0] == '.'))
 	{
-		execve(cmd->argv[0], cmd->argv, shell->envp);//весь путь
+		execve(cmd->argv[0], cmd->argv, g_shell.envp);//весь путь
 	}
 	else
 	{
-		ft_exec_without_path(cmd, shell->envp, path_arr);
-		// execute_execve_without_path(cmd, shell->envp, path_arr);// без пути
+		// ft_exec_without_path(cmd, shell->envp, path_arr);
+		execute_execve_without_path(cmd, g_shell.envp, path_arr);// без пути
 	}
-	ft_free_str(&paths);
-	// ft_free_str_arr(&env);
-	ft_free_str_arr(&path_arr);
+	// ft_free_str(&paths);
+	// ft_free_str_arr(&(g_shell.envp));
+	// ft_free_str_arr(&path_arr);
 	printf("minishell: %s: command not found\n", cmd->argv[0]);
 	cmd->exit_status = 127;
 	exit(cmd->exit_status);
 	return (0);
 }
+
+
 
 int	nofork(char *cmd)// эти команды не могут выполняться в пайпе тем самым с форк
 {
@@ -238,6 +170,9 @@ int	ft_builtin(t_cmd *cmd, t_shell *shell)
 
 void	pipex(t_cmd *cmd, t_shell *shell)
 {
+	t_cmd	*head;
+
+	head = cmd;
 	// cmd = *shell->cmd_start;
 	if (nofork(cmd->argv[0]))
 	{
@@ -250,16 +185,33 @@ void	pipex(t_cmd *cmd, t_shell *shell)
 	{
 		while (cmd)
 		{
-			// int i = 0;
-			// while (cmd->argv[i])
-			// {
-			// 	printf("cmd %d [%s]\n", i, cmd->argv[i]);
-			// 	i++;
-			// }
 			create_pipe(shell, cmd);
+			printf("cmd %s \n", cmd->argv[0]);
+			printf("pid %d \n", cmd->pid);
+			printf("exit status %d \n", cmd->exit_status);
+			// waitpid(cmd->pid, &cmd->exit_status, 0);
+			// set_last_status(shell, cmd, cmd->exit_status);
+			// waitpid(cmd->pid, &cmd->exit_status, 0);
 			cmd = cmd->next;
 		}
+		//cmd = head;
+		// while(cmd)
+		// {
+		// 	printf("cmd %s \n", cmd->argv[0]);
+		// 	waitpid(-1, 0, 0);
+		// 	// waitpid(cmd->pid, &cmd->exit_status, 0);
+		// 	set_last_status(shell, cmd, cmd->exit_status);
+		// 	if (cmd->prev || cmd->next)
+		// 		close(cmd->fd[1]);
+		// 	if (cmd->next)
+		// 		close(cmd->fd[0]);
+		// 	if (cmd->prev)
+		// 		close(cmd->prev->fd[0]);
+		// 	cmd = cmd->next;
+		// }
+		// waitpid(-1, 0, 0);
 	}
+
 }
 
 void	set_last_status(t_shell *shell, t_cmd *cmd, int status)

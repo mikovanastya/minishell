@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:02:04 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/30 13:17:38 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/30 21:11:13 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,15 @@
 # include <dirent.h>
 # include <sys/types.h>
 # include <sys/stat.h>
-# include "readline/tilde.h"
-# include "readline/rlconf.h"
-# include "readline/rlstdc.h"
+# include <sys/wait.h>
+// # include "readline/tilde.h"
+// # include "readline/rlconf.h"
+// # include "readline/rlstdc.h"
 # include "readline/history.h"
-# include "readline/keymaps.h"
+// # include "readline/keymaps.h"
 # include "readline/readline.h"
-# include "readline/chardefs.h"
-# include "readline/rltypedefs.h"
+// # include "readline/chardefs.h"
+// # include "readline/rltypedefs.h"
 #include <fcntl.h>
 
 typedef struct s_cmd	t_cmd;
@@ -118,7 +119,7 @@ int		builtins(char **argv, t_shell *shell);
 int		create_pipe(t_shell *shell, t_cmd *cmd);
 int		nofork(char *cmd);
 void	pipex(t_cmd *cmd, t_shell *shell);
-int		execute_execve(t_cmd *cmd, t_shell *shell);
+int execute_execve(t_cmd *cmd, t_shell *shell);
 void	handler_signal(int signal);
 int		start_cmd_fork(t_cmd *cmd, t_shell *shell);
 int		redir_heredoc(char *iter, int fd, t_cmd *cmd, t_shell *shell);
@@ -174,7 +175,5 @@ int	go_to_word(char **a, int *j, char **str);
 void	ft_error(char *argv, int exit_code);
 void	free_memory(char *inpt, char *help, char *rez);
 
-
-char	**ft_get_path(t_shell *shell, char **envp);
 
 #endif
