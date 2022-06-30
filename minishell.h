@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:02:04 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/28 20:27:28 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/30 13:17:38 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_shell{
 struct	s_cmd
 {
 	pid_t		pid;
+	char		**bin_path;
 	int			fd[2];
 	char		**file_name;//redirect
 	int			exit_status;
@@ -172,5 +173,8 @@ int	go_to_word(char **a, int *j, char **str);
 
 void	ft_error(char *argv, int exit_code);
 void	free_memory(char *inpt, char *help, char *rez);
+
+
+char	**ft_get_path(t_shell *shell, char **envp);
 
 #endif

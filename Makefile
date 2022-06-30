@@ -6,7 +6,7 @@
 #    By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/16 14:07:19 by rtwitch           #+#    #+#              #
-#    Updated: 2022/06/28 19:20:12 by rtwitch          ###   ########.fr        #
+#    Updated: 2022/06/29 18:01:56 by rtwitch          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,8 +53,8 @@ HEADER = minishell.h
 #RL_LIB      =   ~/.brew/opt/readline/lib
 
 CC		=	cc
-
-FLAGS = -fsanitize=address -Wall -Werror -Wextra
+# FLAGS =-Wall -Werror -Wextra
+FLAGS = -fsanitize=address -g 
 
 RM			=	rm -f
 

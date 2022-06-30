@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/13 13:00:42 by rtwitch           #+#    #+#             */
-/*   Updated: 2021/10/18 14:53:51 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/29 17:44:17 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strchr(const char *str, int c)
 	char	*s1;
 
 	s1 = (char *)str;
-	while (*s1 != '\0' || (char)c == 0)
+	while (str || *s1 != '\0' || (char)c == 0)
 	{
 		if (*s1 == (char)c)
 		{

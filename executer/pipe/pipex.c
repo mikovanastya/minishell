@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:17:01 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/28 21:30:07 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/06/30 13:27:25 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,102 @@ int	execute_execve_without_path(t_cmd *cmd,
 	}
 	return (0);
 }
+char	**ft_get_path(t_shell *pipex, char **envp)
+{
+	int		i;
+	char	**bin_path;
+	size_t	len;
+
+	len = ft_strlen("PATH=");
+	if (!envp)
+		return (NULL);
+	if (!(*envp))
+		return (NULL);
+	i = 0;
+	while (envp[i] != NULL)
+	{
+		if (!ft_strncmp(envp[i], "PATH=", len))
+			break ;
+		i++;
+	}
+	bin_path = ft_split(envp[i] + len, ':');
+	// if (!bin_path)
+	// {
+	// 	ft_close_file(pipex->pipe1[0], NULL);
+	// 	ft_close_file(pipex->pipe1[1], NULL);
+	// // 	perror("./pipex: ");
+	// // 	exit (ERR_MEMORY_ALLOCATE);
+	// // }
+	return (bin_path);
+}
+
+char	*ft_strjoin_slash(char const *s1, char const *s2)
+{
+	char	*dest;
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	dest = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 2) * sizeof(char));
+	if (dest == NULL)
+		return (NULL);
+	while (i < ft_strlen(s1))
+	{
+		dest[i] = s1[i];
+		i++;
+	}
+	dest[i] = '/';
+	j = i + 1;
+	i = 0;
+	while (i < ft_strlen(s2))
+		dest[j++] = s2[i++];
+	dest[j] = '\0';
+	return (dest);
+}
+
+void	ft_exec_with_path(t_shell *shell, char **envp, char **cmd)
+{
+	int		i;
+	char	*cmd_with_path;
+
+	i = 0;
+	while (shell->cmd_start[i] != NULL)
+	{
+		cmd_with_path = ft_strjoin_slash(shell->cmd_start[i], cmd[0]);
+		// if (!cmd_with_path)
+		// {
+		// 	ft_free_pipex(pipex);
+		// 	// perror("./pipex: ");
+		// 	// exit (ERR_MEMORY_ALLOCATE);
+		// }
+		if (access(cmd_with_path, 01) == 0)
+		{
+			execve(cmd_with_path, cmd, envp);
+			// ft_free_pipex(pipex);
+			// free(cmd_with_path);
+			// perror("./pipex: ");
+			// exit(ERR_EXEC);
+		}
+		// free(cmd_with_path);
+		i++;
+	}
+}
+void	ft_exec_without_path(t_shell *shell, char **envp, char **cmd)
+{
+	if (access(cmd[0], 01) == 0)
+	{
+		execve(cmd[0], cmd, envp);
+		//free(shell);
+		//ft_free_pipex(pipex);
+		//perror("./pipex: ");
+		//exit(ERR_EXEC);
+	}
+	// if (!pipex->bin_path)
+	// {
+	// 	ft_free_pipex(pipex);
+	// 	//exit(ERR_EXECUTE_CMD);
+	// }
+}
 
 int execute_execve(t_cmd *cmd, t_shell *shell)// выполняет команды из bin///
 {
@@ -46,7 +142,7 @@ int execute_execve(t_cmd *cmd, t_shell *shell)// выполняет команд
 	char	*paths;
 	char	**path_arr;
 
-	//printf ("[%d][%d]_%s_%s_\n", cmd->fd[0], cmd->fd[1], cmd->argv[0], cmd->argv[1]);
+	// printf ("[%d][%d]_%s_%s_\n", cmd->fd[0], cmd->fd[1], cmd->argv[0], cmd->argv[1]);
 	paths = get_env_value(shell, "PATH");
 	path_arr = ft_split(paths, ':');
 	if ((ft_strlen(cmd->argv[0]) > 2)
@@ -56,7 +152,8 @@ int execute_execve(t_cmd *cmd, t_shell *shell)// выполняет команд
 	}
 	else
 	{
-		execute_execve_without_path(cmd, shell->envp, path_arr);// без пути
+		ft_exec_without_path(cmd, shell->envp, path_arr);
+		// execute_execve_without_path(cmd, shell->envp, path_arr);// без пути
 	}
 	ft_free_str(&paths);
 	// ft_free_str_arr(&env);
@@ -138,19 +235,10 @@ int	ft_builtin(t_cmd *cmd, t_shell *shell)
 	return (0);
 }
 
-void	init_pipe(t_cmd *cmd)
-{
-	while (cmd)
-	{
-		pipe(cmd->fd);
-		cmd = cmd->next;
-	}
-}
 
 void	pipex(t_cmd *cmd, t_shell *shell)
 {
 	// cmd = *shell->cmd_start;
-	//init_pipe(first);
 	if (nofork(cmd->argv[0]))
 	{
 		start_cmd_nofork(cmd, shell);
@@ -162,6 +250,12 @@ void	pipex(t_cmd *cmd, t_shell *shell)
 	{
 		while (cmd)
 		{
+			// int i = 0;
+			// while (cmd->argv[i])
+			// {
+			// 	printf("cmd %d [%s]\n", i, cmd->argv[i]);
+			// 	i++;
+			// }
 			create_pipe(shell, cmd);
 			cmd = cmd->next;
 		}
