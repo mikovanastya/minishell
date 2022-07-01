@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 18:34:52 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/01 17:40:45 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/01 18:56:17 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 int	create_pipe()
 {
-	printf("create_pipe: cmd: %s\n", (*(g_shell.cmd_start))->argv[0]);
 	if ((*(g_shell.cmd_start))->prev || (*(g_shell.cmd_start))->next)
 	{
 		if (pipe((*(g_shell.cmd_start))->fd) == -1)//проверяем вывод
 			printf("error"); //exit ulimit -f
-		printf("fd [%d][%d]\n", (*(g_shell.cmd_start))->fd[0], (*(g_shell.cmd_start))->fd[1]);
 	}
 	// write(2, "10", 2);
 	(*(g_shell.cmd_start))->pid = fork();
@@ -49,7 +47,7 @@ int	create_pipe()
 		if (builtins((*(g_shell.cmd_start))->argv))
 			return (0);
 		execute_execve((*(g_shell.cmd_start)));
-		// free(shell);
+		free(*g_shell.cmd_start);
 		// exit(0);///////
 
 	}

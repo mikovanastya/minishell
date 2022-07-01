@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:17:01 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/01 17:53:35 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/01 18:59:18 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,12 @@ int	execute_execve_without_path(char **env, char **path_arr)
 	char	*tmp;
 	char	*final;
 
-	printf("*path_arr: %s\n", *path_arr);
-	printf("*path_arr: %s\n", path_arr[1]);
 	while (*path_arr != NULL)
 	{
 		tmp = ft_strjoin(*path_arr, "/");
 		final = ft_strjoin(tmp, (*(g_shell.cmd_start))->argv[0]);
-		printf("final: %s\n", final);
 		if (access(final, F_OK) == 0)
 		{
-			printf("kek\n");
 			break;
 		}
 		path_arr++;
@@ -57,23 +53,10 @@ int	execute_execve_without_path(char **env, char **path_arr)
 
 int execute_execve()// выполняет команды из bin///
 {
-	// char	**env;
 	char	*paths;
 	char	**path_arr;
 
-	// env = env_create_arr(shell);
-	// init_env(prmtrs, shell);
-	// printf("132323123 %s\n", (*(g_shell.cmd_start))->argv[0]);
-	// int j = 0;
-	// while (g_shell.envp[j])
-	// {
-	// 	printf(" g_shell.envp[%d] %s\n", j, g_shell.envp[j]);
-	// 	j++;
-	// }
-	// (void)shell;
-	// printf ("[%d][%d]_%s_%s_\n", (*(g_shell.cmd_start))->fd[0], (*(g_shell.cmd_start))->fd[1], (*(g_shell.cmd_start))->argv[0], (*(g_shell.cmd_start))->argv[1]);
 	paths = get_env_value("PATH");
-	// printf("PATH:[%s]\n", paths);
 	path_arr = ft_split(paths, ':');
 	if ((ft_strlen((*(g_shell.cmd_start))->argv[0]) > 2)
 		&& ((*(g_shell.cmd_start))->argv[0][0] == '/' || (*(g_shell.cmd_start))->argv[0][0] == '.'))
@@ -186,9 +169,6 @@ void	pipex()
 		while ((*(g_shell.cmd_start)))
 		{
 			create_pipe((*(g_shell.cmd_start)));
-			printf("cmd %s \n", (*(g_shell.cmd_start))->argv[0]);
-			printf("pid %d \n", (*(g_shell.cmd_start))->pid);
-			printf("exit status %d \n", (*(g_shell.cmd_start))->exit_status);
 			waitpid((*(g_shell.cmd_start))->pid, &(*(g_shell.cmd_start))->exit_status, 0);
 			set_last_status((*(g_shell.cmd_start))->exit_status);
 			if ((*(g_shell.cmd_start))->prev || (*(g_shell.cmd_start))->next) {
@@ -199,25 +179,7 @@ void	pipex()
 			if ((*(g_shell.cmd_start))->prev)
 				close((*(g_shell.cmd_start))->prev->fd[0]);
 			(*(g_shell.cmd_start)) = (*(g_shell.cmd_start))->next;
-			char *paths = get_env_value( "PATH");
-			printf("PATH:[%s]\n", paths);
 		}
-		//cmd = head;
-		// while(cmd)
-		// {
-		// 	printf("cmd %s \n", (*(g_shell.cmd_start))->argv[0]);
-		// 	waitpid(-1, 0, 0);
-		// 	// waitpid((*(g_shell.cmd_start))->pid, &(*(g_shell.cmd_start))->exit_status, 0);
-		// 	set_last_status(shell, cmd, (*(g_shell.cmd_start))->exit_status);
-		// 	if ((*(g_shell.cmd_start))->prev || (*(g_shell.cmd_start))->next)
-		// 		close((*(g_shell.cmd_start))->fd[1]);
-		// 	if ((*(g_shell.cmd_start))->next)
-		// 		close((*(g_shell.cmd_start))->fd[0]);
-		// 	if ((*(g_shell.cmd_start))->prev)
-		// 		close((*(g_shell.cmd_start))->prev->fd[0]);
-		// 	cmd = (*(g_shell.cmd_start))->next;
-		// }
-		// waitpid(-1, 0, 0);
 	}
 
 }
