@@ -6,18 +6,18 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 14:28:10 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/05/27 15:08:54 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/01 17:32:25 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	builtin_env(t_shell *shell)
+int	builtin_env()
 {
 	int	i;
 
 	i = 0;
-	while (shell->envp[i])
-		printf("%s\n", shell->envp[i++]);
+	while (g_shell.envp[i])
+		printf("%s\n", g_shell.envp[i++]);
 	return (0);
 }

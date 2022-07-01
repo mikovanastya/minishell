@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:02:04 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/30 21:11:13 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/01 17:56:00 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,59 +81,59 @@ t_shell	g_shell;
 /*
 **	ENV:
 */
-void	init_env(char **prmtrs, t_shell *shell);
-char	*get_env_value(t_shell *shell, char *prmtrs);
-int		env_prmtrs_exist(t_shell *shell, char *prmtrs);
-int		new_env(t_shell *shell, char *str, char **tmp);
-void	rewrite_env_prmtrs(t_shell *shell, char *prmtrs, char *join);
-int		set_env(t_shell *shell, char *prmtrs, char *value);
-void	del_new_env(t_shell *shell, char **tmp, char *prmtrs);
-int		del_env(t_shell *shell, char *prmtrs);
+void	init_env(char **prmtrs);
+char	*get_env_value(char *prmtrs);
+int		env_prmtrs_exist(char *prmtrs);
+int		new_env(char *str, char **tmp);
+void	rewrite_env_prmtrs(char *prmtrs, char *join);
+int		set_env(char *prmtrs, char *value);
+void	del_new_env(char **tmp, char *prmtrs);
+int		del_env(char *prmtrs);
 /*
 **	BUILTINS:
 */
 
 int		builtin_echo(char **argv, int fd);
 int		check_n_flag(char *argv, int *flag);
-int		builtin_env(t_shell *shell);
-int		builtin_cd(char **args, t_shell *shell);
+int		builtin_env();
+int		builtin_cd(char **args);
 int		builtin_pwd(void);
 int		check_name(char *name);
 int		size_mass(char **envp);
 int		max(int a, int b);
-int		builtin_export(char **args, t_shell *shell);
-int		export_prmtrs(t_shell *shell, char *str);
-int		builtin_unset(char **args, t_shell *shell);
+int		builtin_export(char **args);
+int		export_prmtrs(char *str);
+int		builtin_unset(char **args);
 int		ft_sym_export(char *str);
 
 void	ft_free(char **mass);
 void	sort_tmp_env(char	**tmp, int len);
-void	no_args(char **envp, t_shell *shell);
+void	no_args(char **envp);
 
-char	**new_envp(char **envp, t_shell *shell);
-char	**after_quotes(char **tmpmass, t_shell *shell);
-char	**before_quotes(char **tmpmass,	t_shell *shell);
+char	**new_envp(char **envp);
+char	**after_quotes(char **tmpmass );
+char	**before_quotes(char **tmpmass);
 
 
-int		builtins(char **argv, t_shell *shell);
-int		create_pipe(t_shell *shell, t_cmd *cmd);
+int		builtins(char **argv);
+int		create_pipe();
 int		nofork(char *cmd);
-void	pipex(t_cmd *cmd, t_shell *shell);
-int execute_execve(t_cmd *cmd, t_shell *shell);
+void	pipex();
+int execute_execve();
 void	handler_signal(int signal);
-int		start_cmd_fork(t_cmd *cmd, t_shell *shell);
-int		redir_heredoc(char *iter, int fd, t_cmd *cmd, t_shell *shell);
-void	heredoc(char *iter, int *fd, t_cmd *cmd, t_shell *shell);
-int		check_heredoc(char **redir, int stdin_fd, t_cmd *cmd, t_shell *shell);
-int		make_heredocs(t_cmd *cmd, t_shell *shell);
-int		redir_heredoc(char *iter, int fd, t_cmd *cmd, t_shell *shell);
-void	set_last_status(t_shell *shell, t_cmd *cmd, int status);
+int		start_cmd_fork();
+int		redir_heredoc(char *iter, int fd);
+void	heredoc(char *iter, int *fd);
+int		check_heredoc(char **redir, int stdin_fd);
+int		make_heredocs();
+int		redir_heredoc(char *iter, int fd);
+void	set_last_status(int status);
 int		open_file(char *argv, int i, int quit);
-int		check_redirection(t_cmd *cmd, int quit);
+int		check_redirection(int quit);
 int		ft_free_str(char **s);
 void	*ft_free_str_arr(char ***arr);
 
-void	r_in(t_cmd *cmd);
+void	r_in();
 /*
 ** PARSER:
 */
@@ -165,8 +165,8 @@ void	skip_quotes(char *input, int *i);
 void	fill_list(char	*str);
 int		add_elem(t_cmd **cmd, char **str);
 int		word_len(char *str);
-int		arrow_action(char **str, t_cmd	**cmd);
-int		separate_str(char ***arr, char **str, t_cmd	*cmd);
+int     arrow_action(char **str, t_cmd  **cmd);
+int	separate_str(char ***arr, char **str, t_cmd	*cmd);
 int	go_to_word(char **a, int *j, char **str);
 /*
 ** STUFF:

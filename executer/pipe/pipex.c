@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:17:01 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/30 21:39:27 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/01 17:53:35 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ int	get_count_cmd(char ***cmd)
 	return (count);
 }
 
-int	execute_execve_without_path(t_cmd *cmd,
-										char **env, char **path_arr)
+int	execute_execve_without_path(char **env, char **path_arr)
 {
 	char	*tmp;
 	char	*final;
@@ -33,7 +32,7 @@ int	execute_execve_without_path(t_cmd *cmd,
 	while (*path_arr != NULL)
 	{
 		tmp = ft_strjoin(*path_arr, "/");
-		final = ft_strjoin(tmp, cmd->argv[0]);
+		final = ft_strjoin(tmp, (*(g_shell.cmd_start))->argv[0]);
 		printf("final: %s\n", final);
 		if (access(final, F_OK) == 0)
 		{
@@ -50,13 +49,13 @@ int	execute_execve_without_path(t_cmd *cmd,
 	}
 	else
 	{
-		execve(final, cmd->argv, env);
+		execve(final, (*(g_shell.cmd_start))->argv, env);
 	}
 	return (0);
 }
 
 
-int execute_execve(t_cmd *cmd, t_shell *shell)// выполняет команды из bin///
+int execute_execve()// выполняет команды из bin///
 {
 	// char	**env;
 	char	*paths;
@@ -64,33 +63,34 @@ int execute_execve(t_cmd *cmd, t_shell *shell)// выполняет команд
 
 	// env = env_create_arr(shell);
 	// init_env(prmtrs, shell);
-	printf("132323123 %s\n", cmd->argv[0]);
+	// printf("132323123 %s\n", (*(g_shell.cmd_start))->argv[0]);
 	// int j = 0;
 	// while (g_shell.envp[j])
 	// {
 	// 	printf(" g_shell.envp[%d] %s\n", j, g_shell.envp[j]);
 	// 	j++;
 	// }
-	(void)shell;
-	// printf ("[%d][%d]_%s_%s_\n", cmd->fd[0], cmd->fd[1], cmd->argv[0], cmd->argv[1]);
-	paths = get_env_value(&g_shell, "PATH");
+	// (void)shell;
+	// printf ("[%d][%d]_%s_%s_\n", (*(g_shell.cmd_start))->fd[0], (*(g_shell.cmd_start))->fd[1], (*(g_shell.cmd_start))->argv[0], (*(g_shell.cmd_start))->argv[1]);
+	paths = get_env_value("PATH");
+	// printf("PATH:[%s]\n", paths);
 	path_arr = ft_split(paths, ':');
-	if ((ft_strlen(cmd->argv[0]) > 2)
-		&& (cmd->argv[0][0] == '/' || cmd->argv[0][0] == '.'))
+	if ((ft_strlen((*(g_shell.cmd_start))->argv[0]) > 2)
+		&& ((*(g_shell.cmd_start))->argv[0][0] == '/' || (*(g_shell.cmd_start))->argv[0][0] == '.'))
 	{
-		execve(cmd->argv[0], cmd->argv, g_shell.envp);//весь путь
+		execve((*(g_shell.cmd_start))->argv[0], (*(g_shell.cmd_start))->argv, g_shell.envp);//весь путь
 	}
 	else
 	{
-		// ft_exec_without_path(cmd, shell->envp, path_arr);
-		execute_execve_without_path(cmd, g_shell.envp, path_arr);// без пути
+		// ft_exec_without_path((*(g_shell.cmd_start)), shell->en->p, path_arr);
+		execute_execve_without_path(g_shell.envp, path_arr);// без пути
 	}
 	// ft_free_str(&paths);
 	// ft_free_str_arr(&(g_shell.envp));
 	// ft_free_str_arr(&path_arr);
-	printf("minishell: %s: command not found\n", cmd->argv[0]);
-	cmd->exit_status = 127;
-	exit(cmd->exit_status);
+	printf("minishell: %s: command not found\n", (*(g_shell.cmd_start))->argv[0]);
+	(*(g_shell.cmd_start))->exit_status = 127;
+	exit((*(g_shell.cmd_start))->exit_status);
 	return (0);
 }
 
@@ -109,21 +109,21 @@ int	nofork(char *cmd)// эти команды не могут выполнять
 	return (0);
 }
 
-int	start_cmd_nofork(t_cmd *cmd, t_shell *shell)// выполнение некоторых команд
+int	start_cmd_nofork()// выполнение некоторых команд
 {
 	int	status;//статус выхода
 
-	if (!cmd->argv)
+	if (!((*(g_shell.cmd_start))->argv))
 		return (1);
 	status = 0;
-	if (ft_strncmp(*cmd->argv, "cd", ft_strlen("cd")) == 0)
-		status = builtin_cd(cmd->argv, shell);
-	else if (ft_strncmp(*cmd->argv, "unset", ft_strlen("unset")) == 0)
-		status = builtin_unset(cmd->argv, shell);
-	else if (ft_strncmp(*cmd->argv, "export", ft_strlen("export")) == 0)
-		status = builtin_export(cmd->argv, shell);//
-	set_env(shell, "_", *cmd->argv);// я пока хз, но так нужно;
-	set_env(shell, "?", ft_itoa(status));// статус выхода самого последнего пайпа, вроде так, хз
+	if (ft_strncmp(*((*(g_shell.cmd_start))->argv), "cd", ft_strlen("cd")) == 0)
+		status = builtin_cd((*(g_shell.cmd_start))->argv );
+	else if (ft_strncmp(*(*(g_shell.cmd_start))->argv, "unset", ft_strlen("unset")) == 0)
+		status = builtin_unset((*(g_shell.cmd_start))->argv);
+	else if (ft_strncmp(*(*(g_shell.cmd_start))->argv, "export", ft_strlen("export")) == 0)
+		status = builtin_export((*(g_shell.cmd_start))->argv);//
+	set_env("_", *(*(g_shell.cmd_start))->argv);// я пока хз, но так нужно;
+	set_env( "?", ft_itoa(status));// статус выхода самого последнего пайпа, вроде так, хз
 	return (status);
 }
 
@@ -142,20 +142,20 @@ int	check_builtins(char **arg)
 }
 
 
-int	ft_builtin(t_cmd *cmd, t_shell *shell)
+int	ft_builtin(t_cmd *cmd)
 {
 	int	saved_stdin;
 	int	saved_stdout;
 
 	saved_stdin = dup(0);
 	saved_stdout = dup(1);
-	if (cmd && cmd->next == NULL && cmd->argv[0] != NULL)
+	if (cmd && (*(g_shell.cmd_start))->next == NULL && (*(g_shell.cmd_start))->argv[0] != NULL)
 	{
-		if (cmd->argv && check_builtins(cmd->argv) == 1)
+		if ((*(g_shell.cmd_start))->argv && check_builtins((*(g_shell.cmd_start))->argv) == 1)
 			return (0);
-		if (check_redirection(cmd, 1) == 1)
+		if (check_redirection( 1) == 1)
 			return (1);
-		if (builtins(cmd->argv, shell) == 0)
+		if (builtins((*(g_shell.cmd_start))->argv) == 0)
 		{
 			dup2(saved_stdin, 0);
 			close(saved_stdin);
@@ -168,58 +168,66 @@ int	ft_builtin(t_cmd *cmd, t_shell *shell)
 }
 
 
-void	pipex(t_cmd *cmd, t_shell *shell)
+void	pipex()
 {
 	t_cmd	*head;
 
-	head = cmd;
+	head = (*(g_shell.cmd_start));
 	// cmd = *shell->cmd_start;
-	if (nofork(cmd->argv[0]))
+	if (nofork((*(g_shell.cmd_start))->argv[0]))
 	{
-		start_cmd_nofork(cmd, shell);
+		start_cmd_nofork();
 		return ;
 	}
-	// if (make_heredocs(cmd, shell) == 1 || ft_builtin(cmd, shell) == 1)
+	// if (make_heredocs((*(g_shell.cmd_start)), shell) == 1 || ft_builtin((*(g_shell.cmd_start)), shell) == 1)
 	// 	return ;
-	if (cmd && cmd->argv)
+	if ((*(g_shell.cmd_start)) && (*(g_shell.cmd_start))->argv)
 	{
-		while (cmd)
+		while ((*(g_shell.cmd_start)))
 		{
-			create_pipe(shell, cmd);
-			printf("cmd %s \n", cmd->argv[0]);
-			printf("pid %d \n", cmd->pid);
-			printf("exit status %d \n", cmd->exit_status);
-			// waitpid(cmd->pid, &cmd->exit_status, 0);
-			// set_last_status(shell, cmd, cmd->exit_status);
-			// waitpid(cmd->pid, &cmd->exit_status, 0);
-			cmd = cmd->next;
+			create_pipe((*(g_shell.cmd_start)));
+			printf("cmd %s \n", (*(g_shell.cmd_start))->argv[0]);
+			printf("pid %d \n", (*(g_shell.cmd_start))->pid);
+			printf("exit status %d \n", (*(g_shell.cmd_start))->exit_status);
+			waitpid((*(g_shell.cmd_start))->pid, &(*(g_shell.cmd_start))->exit_status, 0);
+			set_last_status((*(g_shell.cmd_start))->exit_status);
+			if ((*(g_shell.cmd_start))->prev || (*(g_shell.cmd_start))->next) {
+				close((*(g_shell.cmd_start))->fd[1]);
+				if (!(*(g_shell.cmd_start))->next)
+					close((*(g_shell.cmd_start))->fd[0]);
+			}
+			if ((*(g_shell.cmd_start))->prev)
+				close((*(g_shell.cmd_start))->prev->fd[0]);
+			(*(g_shell.cmd_start)) = (*(g_shell.cmd_start))->next;
+			char *paths = get_env_value( "PATH");
+			printf("PATH:[%s]\n", paths);
 		}
 		//cmd = head;
 		// while(cmd)
 		// {
-		// 	printf("cmd %s \n", cmd->argv[0]);
+		// 	printf("cmd %s \n", (*(g_shell.cmd_start))->argv[0]);
 		// 	waitpid(-1, 0, 0);
-		// 	// waitpid(cmd->pid, &cmd->exit_status, 0);
-		// 	set_last_status(shell, cmd, cmd->exit_status);
-		// 	if (cmd->prev || cmd->next)
-		// 		close(cmd->fd[1]);
-		// 	if (cmd->next)
-		// 		close(cmd->fd[0]);
-		// 	if (cmd->prev)
-		// 		close(cmd->prev->fd[0]);
-		// 	cmd = cmd->next;
+		// 	// waitpid((*(g_shell.cmd_start))->pid, &(*(g_shell.cmd_start))->exit_status, 0);
+		// 	set_last_status(shell, cmd, (*(g_shell.cmd_start))->exit_status);
+		// 	if ((*(g_shell.cmd_start))->prev || (*(g_shell.cmd_start))->next)
+		// 		close((*(g_shell.cmd_start))->fd[1]);
+		// 	if ((*(g_shell.cmd_start))->next)
+		// 		close((*(g_shell.cmd_start))->fd[0]);
+		// 	if ((*(g_shell.cmd_start))->prev)
+		// 		close((*(g_shell.cmd_start))->prev->fd[0]);
+		// 	cmd = (*(g_shell.cmd_start))->next;
 		// }
 		// waitpid(-1, 0, 0);
 	}
 
 }
 
-void	set_last_status(t_shell *shell, t_cmd *cmd, int status)
+void	set_last_status(int status)
 {
 	if (WIFEXITED(status))
-		set_env(shell, "?", ft_itoa(WEXITSTATUS(status)));
+		set_env("?", ft_itoa(WEXITSTATUS(status)));
 	else if (WIFSIGNALED(status))
-		set_env(shell, "?", ft_itoa(WTERMSIG(status) + 128));
-	set_env(shell, "_", cmd->argv[0]);
+		set_env("?", ft_itoa(WTERMSIG(status) + 128));
+	set_env("_", (*(g_shell.cmd_start))->argv[0]);
 }
-		// printf("fd [%d][%d]\n", cmd->fd[0], cmd->fd[1]);
+		// printf("fd [%d][%d]\n", (*(g_shell.cmd_start))->fd[0], (*(g_shell.cmd_start))->fd[1]);

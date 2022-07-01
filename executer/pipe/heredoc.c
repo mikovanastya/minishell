@@ -6,26 +6,26 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:49:46 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/28 20:02:30 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/01 17:43:22 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	make_heredocs(t_cmd *cmd, t_shell *shell)
+int	make_heredocs()
 {
 	// char **redir;
 
-	while (cmd != NULL)
+	while ((*(g_shell.cmd_start)) != NULL)
 	{
-		if (check_heredoc(cmd->redir, cmd->fd[0], cmd, shell) == 1)
+		if (check_heredoc((*(g_shell.cmd_start))->redir, (*(g_shell.cmd_start))->fd[0]) == 1)
 			return (1);
-		cmd = cmd->next;
+		(*(g_shell.cmd_start)) = (*(g_shell.cmd_start))->next;
 	}
 	return (0);
 }
 
-int	check_heredoc(char **redir, int stdin_fd, t_cmd *cmd, t_shell *shell)
+int	check_heredoc(char **redir, int stdin_fd)
 {
 	int	i;
 
@@ -36,7 +36,7 @@ int	check_heredoc(char **redir, int stdin_fd, t_cmd *cmd, t_shell *shell)
 	{
 		if (ft_strcmp((*redir), "<<") == 0)
 		{
-			if (redir_heredoc(redir[i + 1], stdin_fd, cmd, shell) == 1)
+			if (redir_heredoc(redir[i + 1], stdin_fd) == 1)
 				return (1);
 		}
 		i++;
@@ -56,7 +56,7 @@ void	stop_heredoc(int signal)
 	exit(130);
 }
 
-void	heredoc(char *iter, int *fd, t_cmd *cmd, t_shell *shell)
+void	heredoc(char *iter, int *fd)
 {
 	char	*line;
 
@@ -75,12 +75,10 @@ void	heredoc(char *iter, int *fd, t_cmd *cmd, t_shell *shell)
 		line = readline("heredoc > ");
 	}
 	free(line);
-	(void)shell;
-	(void)cmd;
 	exit(EXIT_SUCCESS);
 }
 
-int	redir_heredoc(char *iter, int fd, t_cmd *cmd, t_shell *shell)
+int	redir_heredoc(char *iter, int fd)
 {
 	int		new_fd[2];
 	pid_t	pid;
@@ -90,7 +88,7 @@ int	redir_heredoc(char *iter, int fd, t_cmd *cmd, t_shell *shell)
 	pipe(new_fd);
 	pid = fork();
 	if (pid == 0)
-		heredoc(iter, new_fd, cmd, shell);
+		heredoc(iter, new_fd);
 	wait(&status);
 	//signal
 	dup2(new_fd[0], fd);

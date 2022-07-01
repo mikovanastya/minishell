@@ -6,20 +6,20 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:45:35 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/05/27 17:27:14 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/01 17:48:33 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-char	**after_quotes(char **tmpmass, 	t_shell *shell)
+char	**after_quotes(char **tmpmass)
 {
 	int		i;
 	int		j;
 	int		k;
 	char	**after;
 
-	after = malloc(sizeof(char *) * (shell->len + 1));
+	after = malloc(sizeof(char *) * (g_shell.len + 1));
 	if (!after)
 		return (NULL);
 	i = -1;
@@ -39,13 +39,13 @@ char	**after_quotes(char **tmpmass, 	t_shell *shell)
 	return (after);
 }
 
-char	**before_quotes(char **tmpmass,	t_shell *shell)
+char	**before_quotes(char **tmpmass)
 {
 	int		i;
 	int		j;
 	char	**before;
 
-	before = malloc(sizeof(char *) * (shell->len + 1));
+	before = malloc(sizeof(char *) * (g_shell.len + 1));
 	if (!before)
 		return (NULL);
 	i = -1;

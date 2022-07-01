@@ -6,30 +6,30 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 15:04:45 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/30 20:32:50 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/01 17:38:18 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	check_shlvl(t_shell *shell)
+void	check_shlvl()
 {
 	char	*tmp;
 	int		num;
 	char	*digit;
 
-	tmp = get_env_value(shell, "SHLVL=");
+	tmp = get_env_value("SHLVL=");
 	num = ft_atoi(tmp) + 1;
 	free(tmp);
 	digit = ft_itoa(num);
 	tmp = ft_strjoin("export SHLVL=", digit);
 	free(digit);
-	rewrite_env_prmtrs(shell, tmp, digit);
+	rewrite_env_prmtrs( tmp, digit);
 	free(tmp);
 }
 
 
-void	init_env(char **prmtrs, t_shell *shell)// инициализация env, скопировать весь env терминал в новый созданный envp
+void	init_env(char **prmtrs)// инициализация env, скопировать весь env терминал в новый созданный envp
 {
 	int	i;
 
@@ -37,16 +37,16 @@ void	init_env(char **prmtrs, t_shell *shell)// инициализация env, �
 	while (prmtrs[i])
 		i++;
 	//printf("HERE %d\n", i);
-	shell->envp = malloc(sizeof(char *) * (i + 1));
-	shell->len = i;
+	g_shell.envp = malloc(sizeof(char *) * (i + 1));
+	g_shell.len = i;
 	i = 0;
 	while (prmtrs[i])
 	{
-		shell->envp[i] = ft_strdup(prmtrs[i]);
+		g_shell.envp[i] = ft_strdup(prmtrs[i]);
 		i++;
 	}
-	shell->envp[i] = NULL;
-	check_shlvl(shell);
+	g_shell.envp[i] = NULL;
+	check_shlvl();
 	return ;
 }
 

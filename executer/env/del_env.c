@@ -6,13 +6,13 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/16 17:47:24 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/05/27 18:36:00 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/01 17:37:19 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	del_new_env(t_shell *shell, char **tmp, char *prmtrs)
+void	del_new_env(char **tmp, char *prmtrs)
 {
 	int	i;
 	int	j;
@@ -20,12 +20,12 @@ void	del_new_env(t_shell *shell, char **tmp, char *prmtrs)
 	i = 0;
 	j = 0;
 	prmtrs = ft_strjoin(prmtrs, "=");
-	while (j < shell->len)
+	while (j < g_shell.len)
 	{
-		if (ft_strncmp(ft_substr(shell->envp[j], 0, ft_strchr(shell->envp[j], '=')
-					- shell->envp[j] + 1), prmtrs, ft_strlen(prmtrs)) != 0)
+		if (ft_strncmp(ft_substr(g_shell.envp[j], 0, ft_strchr(g_shell.envp[j], '=')
+					- g_shell.envp[j] + 1), prmtrs, ft_strlen(prmtrs)) != 0)
 		{
-			tmp[i] = shell->envp[j];
+			tmp[i] = g_shell.envp[j];
 			i++;
 			j++;
 		}
@@ -34,16 +34,16 @@ void	del_new_env(t_shell *shell, char **tmp, char *prmtrs)
 	}
 }
 
-int	del_env(t_shell *shell, char *prmtrs)
+int	del_env(char *prmtrs)
 {
 	char	**tmp;
 
-	if (env_prmtrs_exist(shell, prmtrs))// если параметр существует 
+	if (env_prmtrs_exist(prmtrs))// если параметр существует 
 	{
-		tmp = malloc(sizeof(char *) * (shell->len));
-		del_new_env(shell, tmp, prmtrs);
-		shell->len--;
-		shell->envp = tmp;
+		tmp = malloc(sizeof(char *) * (g_shell.len));
+		del_new_env( tmp, prmtrs);
+		g_shell.len--;
+		g_shell.envp = tmp;
 	}
 	return (0);
 }

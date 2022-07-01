@@ -6,13 +6,13 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:10:37 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/05/27 17:20:06 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/01 17:36:38 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	builtin_unset(char **args, t_shell *shell)
+int	builtin_unset(char **args)
 {
 	int	i;
 
@@ -29,8 +29,8 @@ int	builtin_unset(char **args, t_shell *shell)
 			printf ("unset: invalid parameter name");
 			return (1);
 		}
-		if (env_prmtrs_exist(shell, args[i]))
-			del_env(shell, args[i]);
+		if (env_prmtrs_exist( args[i]))
+			del_env(args[i]);
 		i++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:01:07 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/30 20:52:47 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/01 17:39:58 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 int	main(int argc, char **argv, char **env)
 {
 	char	*rez;
-	t_shell	shell;
+	// t_shell	shell;
 	t_cmd	*cmd;
 	int		i;
 
@@ -33,13 +33,13 @@ int	main(int argc, char **argv, char **env)
 	if (argc != 1)
 	 	ft_error(argv[0], EINVAL);
 	cmd = NULL;
-	init_env(env, &shell);
+	init_env(env);
 	while (1)
 	{
 		rez = get_str(env); // !! parser
 		fill_list(rez); // !! parser
-		init_env(env, &shell);
-		cmd = *(g_shell.cmd_start); // это вообще очень важеая хреня не дуалять
+		init_env(env);
+		cmd = (*(g_shell.cmd_start)); // это вообще очень важеая хреня не дуалять
 
 		// shell.cmd_start = g_shell.cmd_start;
 		// printf("inpu1: \n%s\n", rez);
@@ -78,7 +78,7 @@ int	main(int argc, char **argv, char **env)
 		// 	j++;
 		// }
 		if (cmd)
-			pipex( cmd, &g_shell);
+			pipex(cmd);
 		// builtins(cmd->argv, &shell);
 		// while (*(g_shell.cmd_start))
 		// {

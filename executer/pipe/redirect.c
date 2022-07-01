@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:07:32 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/28 19:40:26 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/01 17:47:08 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	open_file(char *name, int i, int quit)
 	return (file);
 }
 
-int	check_redirection(t_cmd *cmd, int quit)
+int	check_redirection(int quit)
 {
 	int	fd[2];
 	int	i;
@@ -43,19 +43,19 @@ int	check_redirection(t_cmd *cmd, int quit)
 	i = 0;
 	fd[0] = 0;
 	fd[1] = 0;
-	if (!cmd->redir)
+	if (!(*(g_shell.cmd_start))->redir)
 		return (0);
-	while (cmd->redir && cmd->redir[i])
+	while ((*(g_shell.cmd_start))->redir && (*(g_shell.cmd_start))->redir[i])
 	{
-	// printf("Redir [%d]_%s%s_\n", i, cmd->redir[i], cmd->file_name[i]);
-		if (ft_strcmp(cmd->redir[i], "<") == 0)
-			fd[0] = open_file(cmd->file_name[i], 2, quit);
-		else if (ft_strcmp(cmd->redir[i], ">") == 0)
-			fd[1] = open_file(cmd->file_name[i], 1, quit);
-		else if (ft_strcmp(cmd->redir[i], ">>") == 0)
-			fd[1] = open_file(cmd->file_name[i], 0, quit);
-		else if (ft_strcmp(cmd->redir[i], "<<") == 0)
-			dup2(cmd->fd[0], STDIN_FILENO);
+	// printf("Redir [%d]_%s%s_\n", i, (*(g_shell.cmd_start))->redir[i], (*(g_shell.cmd_start))->file_name[i]);
+		if (ft_strcmp((*(g_shell.cmd_start))->redir[i], "<") == 0)
+			fd[0] = open_file((*(g_shell.cmd_start))->file_name[i], 2, quit);
+		else if (ft_strcmp((*(g_shell.cmd_start))->redir[i], ">") == 0)
+			fd[1] = open_file((*(g_shell.cmd_start))->file_name[i], 1, quit);
+		else if (ft_strcmp((*(g_shell.cmd_start))->redir[i], ">>") == 0)
+			fd[1] = open_file((*(g_shell.cmd_start))->file_name[i], 0, quit);
+		else if (ft_strcmp((*(g_shell.cmd_start))->redir[i], "<<") == 0)
+			dup2((*(g_shell.cmd_start))->fd[0], STDIN_FILENO);
 		i++;
 	}
 	// printf("AFTER OPENING FILE [%d][%d]\n", fd[0], fd[1]);

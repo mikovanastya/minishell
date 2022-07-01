@@ -6,13 +6,13 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:56:12 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/24 17:43:45 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/01 17:48:49 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	builtins(char **argv, t_shell *shell)
+int	builtins(char **argv)
 {
 	int	i;
 
@@ -24,13 +24,13 @@ int	builtins(char **argv, t_shell *shell)
 	else if (!ft_strncmp(argv[0], "pwd", ft_strlen(argv[0])))
 		builtin_pwd();
 	else if (!ft_strncmp(argv[0], "env", ft_strlen(argv[0])))
-		builtin_env(shell);
+		builtin_env();
 	else if (!ft_strncmp(argv[0], "export", ft_strlen(argv[0])))
-		builtin_export(&argv[0], shell);
+		builtin_export(&argv[0]);
 	else if (!ft_strncmp(argv[0], "unset", ft_strlen(argv[0])))
-		builtin_unset(&argv[0], shell);
+		builtin_unset(&argv[0]);
 	else if (!ft_strncmp(argv[0], "cd", ft_strlen(argv[0])))
-		builtin_cd(&argv[0], shell);
+		builtin_cd(&argv[0]);
 	else
 		i = 0;
 	return (i);
