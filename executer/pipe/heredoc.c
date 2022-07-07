@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:49:46 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/01 17:43:22 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/07 15:08:43 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 int	make_heredocs()
 {
-	// char **redir;
+	// char	*tmpline1;
 
+	// tmpline1 = readline("heredoc > ");
 	while ((*(g_shell.cmd_start)) != NULL)
 	{
 		if (check_heredoc((*(g_shell.cmd_start))->redir, (*(g_shell.cmd_start))->fd[0]) == 1)

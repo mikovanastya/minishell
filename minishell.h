@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:02:04 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/01 17:56:00 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/05 17:08:46 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 // # include "readline/rltypedefs.h"
 #include <fcntl.h>
 
+
 typedef struct s_cmd	t_cmd;
 
 typedef struct s_shell{	
@@ -53,14 +54,21 @@ typedef struct s_shell{
 	t_cmd	**cmd_start; // *
 }t_shell;
 
+typedef struct s_list
+{
+	char			*content;
+	int				type;
+	struct s_list	*next;
+}					t_list;
+
 struct	s_cmd
 {
 	pid_t		pid;
 	char		**bin_path;
 	int			fd[2];
-	char		**file_name;//redirect
+	char		**file_name;
 	int			exit_status;
-	char		**redir;
+	char		**redir;//
 	char		**argv;//аргументы, которые нам подаются
 	struct s_cmd *prev;
 	struct s_cmd *next;
@@ -77,6 +85,20 @@ typedef struct s_for_array
 }t_for_array;
 
 t_shell	g_shell;
+
+
+# define NONE 0				// defaut set
+# define ARG 1				// word
+# define FILE_IN 2			// word == '<'
+# define HERE_DOC 3			// word == '<<'
+# define FILE_OUT 4			// word == '>'
+# define FILE_OUT_SUR 5		// word == '>>'
+# define OPEN_FILE 6		// word following '<'
+# define LIMITOR 7			// word following '<<'
+# define EXIT_FILE 8		// word following '>'
+# define EXIT_FILE_RET 9	// word following '>>'
+# define PIPE 10			// word == '|'
+# define BUILTIN 11			// word == command
 
 /*
 **	ENV:
@@ -141,7 +163,10 @@ void	r_in();
 void	free_memory(char *inpt, char *help, char *rez);
 int		read_str(char **str);
 int		resize_rez(char **inpt, char **rez);
-int		init_rez(char **inpt, char **rez);
+//int		init_rez(char **inpt, char **rez);
+int		init_rez(char **rez, char **inpt);
+void	init_redir(t_cmd **redir_cmd, t_list *tokens,
+		char **argv, char **file_name);
 int		in_cycle(char **rez, char **inpt, int *may_continue);
 int		go_on(char *str);
 int		substitute_envp(char *input, char **envp);
@@ -174,6 +199,17 @@ int	go_to_word(char **a, int *j, char **str);
 
 void	ft_error(char *argv, int exit_code);
 void	free_memory(char *inpt, char *help, char *rez);
+
+int	type_check(int type);
+// static int	ft_count_argv(t_list *tokens);
+// static int	ft_count_file(t_list *tokens);
+void	init_redir(t_cmd **redir_cmd, t_list *tokens,
+		char **argv, char **file_name);
+void	ft_copy_file(char **file, char *tokens, int type);
+void	ft_copy_argv(char **argv, char *tokens, int type);
+void	ex_cmd_add_back(t_cmd **ex_cmd, t_cmd *new);
+t_cmd	*new_ex_cmd(char **argv, char **file);
+void	copy_end(char **argv, char **file, t_cmd **ex_cmd);
 
 
 #endif

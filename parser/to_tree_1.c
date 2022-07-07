@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 15:14:51 by eward             #+#    #+#             */
-/*   Updated: 2022/06/28 21:24:26 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/05 17:52:16 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,16 @@ int	word_len(char *str)
 
 int	arrow_action(char **str, t_cmd	**cmd)
 {
-	((*cmd)->redir) = (char **)malloc(sizeof(char *));
+	((*cmd)->redir) = (char **)malloc(sizeof(char *));// проверка
 	*((*cmd)->redir) = (char *)malloc(sizeof(char) * 3);
 	if (is_a(*str) % 2)
 	{
-		ft_strlcpy(*((*cmd)->redir), *str, 1);
+		ft_strlcpy(*((*cmd)->redir), *str, 2);
 		(*str)++;
 	}
 	else
 	{
-		ft_strlcpy(*((*cmd)->redir), *str, 2);
+		ft_strlcpy(*((*cmd)->redir), *str, 3);
 		*str = (*str) + 2;
 	}
 	return (0);
