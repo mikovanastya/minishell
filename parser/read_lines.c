@@ -87,7 +87,6 @@ int	read_str(char **str)
 {
 	char	*inpt;
 	int		may_continue;
-	int		cycle_rez;
 
 	may_continue = 1;
 	while (may_continue == 1)
@@ -98,7 +97,12 @@ int	read_str(char **str)
 			exit(1);
 		}
 		add_history(inpt);
-		cycle_rez = in_cycle(str, &inpt, &may_continue);
+		if (in_cycle(str, &inpt, &may_continue) == -1)
+		{
+			// free
+			inpt = NULL;
+			return (-1);
+		}
 		free(inpt);
 	}
 	return (may_continue);

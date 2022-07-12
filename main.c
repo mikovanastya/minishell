@@ -95,12 +95,12 @@ int	main(int argc, char **argv, char **env)
 		// 	printf("filename %s \n", cmd->file_name[i]);
 		// 	i++;
 		// }
-		int i  = 0;
-		while (cmd->argv[i])
-		{
-			printf("argv %s \n", cmd->argv[i]);
-			i++;
-		}
+		// int i  = 0;
+		// while (cmd->argv[i])
+		// {
+		// 	printf("argv %s \n", cmd->argv[i]);
+		// 	i++;
+		// }
 		// if (cmd)
 		// 	pipex(cmd);
 		
