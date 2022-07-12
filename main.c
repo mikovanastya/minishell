@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:01:07 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/07 14:54:15 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/12 16:56:44 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,27 @@ int	main(int argc, char **argv, char **env)
 		// 	printf("%s\n", g_shell.envp[j]);
 		// 	j++;
 		// }
-		if (cmd)
-			pipex(cmd);
+		// int i = 0;
+		// while (cmd->argv[i])
+		// {
+		// 	printf("%s\n", cmd->argv[i]);
+		// 	i++;
+		// }
+		// int i = 0;
+		// while (cmd->file_name[i])
+		// {
+		// 	printf("filename %s \n", cmd->file_name[i]);
+		// 	i++;
+		// }
+		int i  = 0;
+		while (cmd->argv[i])
+		{
+			printf("argv %s \n", cmd->argv[i]);
+			i++;
+		}
+		// if (cmd)
+		// 	pipex(cmd);
+		
 		// builtins(cmd->argv, &shell);
 		// while (*(g_shell.cmd_start))
 		// {

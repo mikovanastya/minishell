@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:07:32 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/07 16:14:23 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/12 16:24:13 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,7 +250,7 @@ int	check_redirection(int quit)
 	while ((*(g_shell.cmd_start))->file_name && (*(g_shell.cmd_start))->file_name[i])
 	{
 	// printf("Redir [%d]_%s%s_\n", i, (*(g_shell.cmd_start))->redir[i], (*(g_shell.cmd_start))->file_name[i]);
-		printf("file_name: %s\n redir: %s\n argv: %s\n", (*(g_shell.cmd_start))->file_name[i], (*(g_shell.cmd_start))->redir[i], (*(g_shell.cmd_start))->argv[i]);
+		// printf("file_name: %s\n redir: %s\n argv: %s\n", (*(g_shell.cmd_start))->file_name[i], (*(g_shell.cmd_start))->redir[i], (*(g_shell.cmd_start))->argv[i]);
 		if (ft_strcmp(((*(g_shell.cmd_start))->redir[i]), "<") == 0)
 			fd[0] = open_file(((*(g_shell.cmd_start))->file_name[i]), 2, quit);
 		else if (ft_strcmp(((*(g_shell.cmd_start))->redir[i]), ">") == 0)

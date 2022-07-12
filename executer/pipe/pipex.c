@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:17:01 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/07 16:38:29 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/12 16:10:26 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,8 @@ int	execute_execve_without_path(char **env, char **path_arr)
 	{
 		tmp = ft_strjoin(*path_arr, "/");
 		final = ft_strjoin(tmp, (*(g_shell.cmd_start))->argv[0]);
-		//printf("final: %s\n", final);
 		if (access(final, F_OK) == 0)
 		{
-			write(1, "excve2\n", 7);
 			//printf("kek\n");
 			break;
 		}
@@ -66,12 +64,10 @@ int execute_execve()// выполняет команды из bin///
 	if ((ft_strlen((*(g_shell.cmd_start))->argv[0]) > 2)
 		&& ((*(g_shell.cmd_start))->argv[0][0] == '/' || (*(g_shell.cmd_start))->argv[0][0] == '.'))
 	{
-		write(1, "excve\n", 6);
 		execve((*(g_shell.cmd_start))->argv[0], (*(g_shell.cmd_start))->argv, g_shell.envp);//весь путь
 	}
 	else
 	{
-		write(1, "excve1\n", 7);
 		// ft_exec_without_path((*(g_shell.cmd_start)), shell->en->p, path_arr);
 		execute_execve_without_path(g_shell.envp, path_arr);// без пути
 	}

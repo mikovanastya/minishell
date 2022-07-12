@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 21:10:38 by eward             #+#    #+#             */
-/*   Updated: 2022/06/28 21:16:44 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/12 15:50:15 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	create_element(t_for_array	*pos, char **str, char ***arr,
 	{
 		arrow_action(str, &cmd);
 		new_elem(str, arr, &(pos->i), &(pos->j));
+		pos->i--;
 	}
 	if (!g_shell.quote && (**str == '\"' || **str == '\''))
 		skip_quotes_in_separation(str, (*arr)[pos->i], &(pos->j));
@@ -85,7 +86,10 @@ int	separate_str(char ***arr, char **str, t_cmd	*cmd)
 			create_element(&pos, str, arr, cmd);
 		(*arr)[pos.i][pos.j] = '\0';
 		if ((cmd->redir))
+		{
 			add_filename(cmd, str, &((*arr)[pos.i]));
+			pos.i--;
+		}
 		else
 			cmd->file_name = NULL;
 		if (**str)
@@ -97,5 +101,12 @@ int	separate_str(char ***arr, char **str, t_cmd	*cmd)
 		if (**str == '|')
 			(*str)++;
 	(*arr)[pos.i] = NULL;
+	//
+	// pos.i = 0;
+	// while ((*arr)[pos.i] != NULL)
+	// {
+	// 	printf("in sep %s\n", (*arr)[pos.i]);
+	// 	pos.i++;
+	// }
 	return (0);
 }
