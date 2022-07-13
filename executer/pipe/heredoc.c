@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:49:46 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/13 20:32:30 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/13 20:57:17 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int	check_heredoc()
 	int	i;
 
 	i = 0;
-	if (!(*(g_shell.cmd_start))->redir)
-		return (0);
-	while ((*(g_shell.cmd_start))->redir[i] != '\0')
+	// if (!(*(g_shell.cmd_start))->redir)
+	// 	return (0);
+	while ((*(g_shell.cmd_start))->redir && (*(g_shell.cmd_start))->redir[i])
 	{
 		if (ft_strcmp(*(*(g_shell.cmd_start))->redir, "<<") == 0)
 		{
@@ -44,11 +44,9 @@ int	check_heredoc()
 	return (0);
 }
 
-
-
 int	redir_heredoc()
 {
-	// int		status;
+	// int		wstatus;
 
 	//signal(SIGINT, nothing);
 	pipe((*(g_shell.cmd_start))->fd);
@@ -58,6 +56,7 @@ int	redir_heredoc()
 		close((*(g_shell.cmd_start))->fd[0]);
 		close((*(g_shell.cmd_start))->fd[1]);
 	}
+	// wait(&(*(g_shell.cmd_start))->pid);
 		// heredoc(iter, new_fd);
 	// wait(&status);
 	//signal

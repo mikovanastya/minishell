@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:17:01 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/13 20:38:50 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/13 20:49:16 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,10 +145,6 @@ int	ft_builtin(t_cmd *cmd)
 
 void	pipex(void)
 {
-	t_cmd	*head;
-
-	head = (*(g_shell.cmd_start));
-	// cmd = *shell->cmd_start;
 	if (nofork((*(g_shell.cmd_start))->argv[0]))
 	{
 		start_cmd_nofork();
@@ -183,4 +179,3 @@ void	set_last_status(int status)
 		set_env("?", ft_itoa(WTERMSIG(status) + 128));
 	set_env("_", (*(g_shell.cmd_start))->argv[0]);
 }
-		// printf("fd [%d][%d]\n", (*(g_shell.cmd_start))->fd[0], (*(g_shell.cmd_start))->fd[1]);
