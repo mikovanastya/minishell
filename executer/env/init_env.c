@@ -6,27 +6,27 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 15:04:45 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/12 19:01:33 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/13 15:23:15 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	check_shlvl()
-{
-	char	*tmp;
-	int		num;
-	char	*digit;
+// void	check_shlvl()
+// {
+// 	char	*tmp;
+// 	int		num;
+// 	char	*digit;
 
-	tmp = get_env_value("SHLVL=");
-	num = ft_atoi(tmp) + 1;
-	free(tmp);
-	digit = ft_itoa(num);
-	tmp = ft_strjoin("export SHLVL=", digit);
-	free(digit);
-	rewrite_env_prmtrs( tmp, digit);
-	free(tmp);
-}
+// 	tmp = get_env_value("SHLVL=");
+// 	num = ft_atoi(tmp) + 1;
+// 	free(tmp);
+// 	digit = ft_itoa(num);
+// 	tmp = ft_strjoin("export SHLVL=", digit);
+// 	free(digit);
+// 	rewrite_env_prmtrs( tmp, digit);
+// 	free(tmp);
+// }
 
 
 void	init_env(char **prmtrs)// инициализация env, скопировать весь env терминал в новый созданный envp
