@@ -6,13 +6,13 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/12 14:28:10 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/01 17:32:25 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/13 20:36:56 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	builtin_env()
+int	builtin_env(void)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:10:37 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/01 17:36:38 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/13 20:38:14 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	builtin_unset(char **args)
 			printf ("unset: invalid parameter name");
 			return (1);
 		}
-		if (env_prmtrs_exist( args[i]))
+		if (env_prmtrs_exist(args[i]))
 			del_env(args[i]);
 		i++;
 	}

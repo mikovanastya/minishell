@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 18:34:52 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/13 15:22:49 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/13 20:30:34 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,13 @@ int	create_pipe()
 		if (pipe((*(g_shell.cmd_start))->fd) == -1)
 			printf("error");
 	}
-	// if (make_heredocs(*(g_shell.cmd_start)) == 1 || ft_builtin(*(g_shell.cmd_start)) == 1)
+	if (make_heredocs(*(g_shell.cmd_start)) == 1 || ft_builtin(*(g_shell.cmd_start)) == 1)
+		return (0);
+	// if (make_heredocs(*(g_shell.cmd_start)) == 1)
 	// 	return (0);
 	(*(g_shell.cmd_start))->pid = fork();
+	// if ((*(g_shell.cmd_start))->pid)
+	// 	sig_sig_signal();
 	if ((*(g_shell.cmd_start))->pid < 0)
 	{
 		printf("error");

@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:07:32 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/13 14:48:21 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/13 18:16:43 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	open_file(char *name, int i, int quit)
 		file = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	else if (i == 2)
 		file = open(name, O_RDONLY, 0777);
+	// else if (i == 3)
+	// 	file = open(name, O_RDONLY |
 	if (file == -1)
 	{
 		if (access(name, F_OK) == 0)

@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:01:07 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/12 20:17:36 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/13 19:53:58 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,15 @@ int	main(int argc, char **argv, char **env)
 	 	ft_error(argv[0], EINVAL);
 	cmd = NULL;
 	init_env(env);
-	printf("ENP LEN INIT %d=%d \n", g_shell.len, envp_len_global());
 	while (1)
 	{
+		// signal(SIGQUIT, SIG_IGN);//command c игнор приходит сигнал
+		// signal(SIGINT, handler);//флаг который хотим
 		rez = get_str(env); // !! parser
 		fill_list(rez); // !! parser
 		cmd = (*(g_shell.cmd_start)); // это вообще очень важеая хреня не дуалять
+		// signal(SIGINT, handler_signal);
+		// signal(SIGQUIT, handler_signal);	
 		// int i  = 0;
 		// while (cmd->argv[i])
 		// {
@@ -57,23 +60,4 @@ int	main(int argc, char **argv, char **env)
 		//free struct!!!!!
 	}
 	return (0);
-}
-
-int envp_len_global(void) {
-		int i = 0;
-	while (g_shell.envp[i])
-		i++;
-	return i;
-}
-
-
-int envp_len_local(char **envp) {
-	int i = 0;
-	while (envp[i])
-		i++;
-	return i;
-}
-
-void envp_compr() {
-	printf("Glob=%d %d=gshell_len", envp_len_global(), g_shell.len);
 }

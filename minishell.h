@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:02:04 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/13 15:24:20 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/13 20:39:06 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int		del_env(char *prmtrs);
 
 int		builtin_echo(char **argv, int fd);
 int		check_n_flag(char *argv, int *flag);
-int		builtin_env();
+int		builtin_env(void);
 int		builtin_cd(char **args);
 int		builtin_pwd(void);
 int		check_name(char *name);
@@ -116,9 +116,9 @@ int		ft_sym_export(char *str);
 
 void	ft_free(char **mass);
 void	sort_tmp_env(char	**tmp);
-void	no_args();
+void	no_args(void);
 
-char	**new_envp();
+char	**new_envp(void);
 char	**after_quotes(char **tmpmass );
 char	**before_quotes(char **tmpmass);
 
@@ -130,19 +130,19 @@ void	pipex();
 int execute_execve();
 void	handler_signal(int signal);
 int		start_cmd_fork();
-int		redir_heredoc(char *iter, int fd);
-void	heredoc(char *iter, int *fd);
-int		check_heredoc(char **redir, int stdin_fd);
+int		redir_heredoc();
+void	heredoc();
+int		check_heredoc();
 int		make_heredocs();
-int		redir_heredoc(char *iter, int fd);
 void	set_last_status(int status);
 int		open_file(char *argv, int i, int quit);
 int		check_redirection(int quit);
 int		ft_free_str(char **s);
 void	*ft_free_str_arr(char ***arr);
 int	ft_builtin(t_cmd *cmd);
-
+void	sig_sig_signal(void);
 void	r_in();
+// void	handler(int signum);
 /*
 ** PARSER:
 */
@@ -198,9 +198,4 @@ void	ex_cmd_add_back(t_cmd **ex_cmd, t_cmd *new);
 t_cmd	*new_ex_cmd(char **argv, char **file);
 void	copy_end(char **argv, char **file, t_cmd **ex_cmd);
 
-//DELETE
-
-int envp_len_global(void);
-int envp_len_local(char **envp);
-void envp_compr();
 #endif

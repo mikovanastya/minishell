@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:17:01 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/13 14:49:27 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/13 20:38:50 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,7 @@ int	execute_execve_without_path(char **env, char **path_arr)
 		tmp = ft_strjoin(*path_arr, "/");
 		final = ft_strjoin(tmp, (*(g_shell.cmd_start))->argv[0]);
 		if (access(final, F_OK) == 0)
-		{
-			//printf("kek\n");
 			break;
-		}
 		path_arr++;
 		ft_free_str(&tmp);
 		ft_free_str(&final);
@@ -53,13 +50,10 @@ int	execute_execve_without_path(char **env, char **path_arr)
 
 int execute_execve()// выполняет команды из bin///
 {
-	// char	**env;
 	char	*paths;
 	char	**path_arr;
 
-	// printf ("[%d][%d]_%s_%s_\n", (*(g_shell.cmd_start))->fd[0], (*(g_shell.cmd_start))->fd[1], (*(g_shell.cmd_start))->argv[0], (*(g_shell.cmd_start))->argv[1]);
 	paths = get_env_value("PATH");
-	// printf("PATH:[%s]\n", paths);
 	path_arr = ft_split(paths, ':');
 	if ((ft_strlen((*(g_shell.cmd_start))->argv[0]) > 2)
 		&& ((*(g_shell.cmd_start))->argv[0][0] == '/' || (*(g_shell.cmd_start))->argv[0][0] == '.'))
@@ -68,7 +62,6 @@ int execute_execve()// выполняет команды из bin///
 	}
 	else
 	{
-		// ft_exec_without_path((*(g_shell.cmd_start)), shell->en->p, path_arr);
 		execute_execve_without_path(g_shell.envp, path_arr);// без пути
 	}
 	// ft_free_str(&paths);
@@ -79,8 +72,6 @@ int execute_execve()// выполняет команды из bin///
 	exit((*(g_shell.cmd_start))->exit_status);
 	return (0);
 }
-
-
 
 int	nofork(char *cmd)// эти команды не могут выполняться в пайпе тем самым с форк
 {
@@ -127,7 +118,6 @@ int	check_builtins(char **arg)
 		return (1);
 }
 
-
 int	ft_builtin(t_cmd *cmd)
 {
 	int	saved_stdin;
@@ -153,7 +143,7 @@ int	ft_builtin(t_cmd *cmd)
 	return (0);
 }
 
-void	pipex()
+void	pipex(void)
 {
 	t_cmd	*head;
 
@@ -164,8 +154,6 @@ void	pipex()
 		start_cmd_nofork();
 		return ;
 	}
-	// if (make_heredocs(*(g_shell.cmd_start)) == 1 || ft_builtin(*(g_shell.cmd_start)) == 1)
-	// 	return ;
 	if ((*(g_shell.cmd_start)) && (*(g_shell.cmd_start))->argv)
 	{
 		while ((*(g_shell.cmd_start)))
@@ -173,7 +161,8 @@ void	pipex()
 			create_pipe((*(g_shell.cmd_start)));
 			waitpid((*(g_shell.cmd_start))->pid, &(*(g_shell.cmd_start))->exit_status, 0);
 			set_last_status((*(g_shell.cmd_start))->exit_status);
-			if ((*(g_shell.cmd_start))->prev || (*(g_shell.cmd_start))->next) {
+			if ((*(g_shell.cmd_start))->prev || (*(g_shell.cmd_start))->next)
+			{
 				close((*(g_shell.cmd_start))->fd[1]);
 				if (!(*(g_shell.cmd_start))->next)
 					close((*(g_shell.cmd_start))->fd[0]);
