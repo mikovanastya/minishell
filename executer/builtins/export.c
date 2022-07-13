@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:13:19 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/01 17:48:23 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/12 20:01:47 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,49 @@ int	check_name(char *args)
 	return (0);
 }
 
-char	**new_envp(char **envp)
+char	**new_envp()
 {
 	int	i;
 
 	i = 0;
-	while (envp[i])
+	char **new_envp;
+	while (g_shell.envp[i])
 		i++;
-	g_shell.envp = malloc(sizeof(char *) * (i + 1));
-	g_shell.len = i;
-	if (!g_shell.envp)
+	new_envp = malloc(sizeof(char *) * (i + 1));
+	if (!new_envp)
 		return (NULL);
 	i = 0;
-	while (envp[i])
+	while (g_shell.envp[i])
 	{
-		g_shell.envp[i] = ft_strdup(envp[i]);
+		new_envp[i] = ft_strdup(g_shell.envp[i]);
 		i++;
 	}
-	g_shell.envp[i] = NULL;
-	return (g_shell.envp);
+	new_envp[i] = NULL;
+	return (new_envp);
 }
 
-void	no_args(char **envp)
+// char	**new_envp(char **envp)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (envp[i])
+// 		i++;
+// 	g_shell.envp = malloc(sizeof(char *) * (i + 1));
+// 	g_shell.len = i;
+// 	if (!g_shell.envp)
+// 		return (NULL);
+// 	i = 0;
+// 	while (envp[i])
+// 	{
+// 		g_shell.envp[i] = ft_strdup(envp[i]);
+// 		i++;
+// 	}
+// 	g_shell.envp[i] = NULL;
+// 	return (g_shell.envp);
+// }
+
+void	no_args()
 {
 	int		i;
 	char	**tmp;
@@ -59,8 +80,8 @@ void	no_args(char **envp)
 	char	**after;
 
 	i = 0;
-	tmp = new_envp(envp);
-	sort_tmp_env(tmp, g_shell.len);
+	tmp = new_envp();
+	sort_tmp_env(tmp);
 	before = before_quotes(tmp);//до =""
 	after = after_quotes(tmp);//после =""
 	while (tmp[i])
@@ -97,24 +118,19 @@ int	export_prmtrs(char *str)
 int	builtin_export(char **args)
 {
 	int		i;
-	// char	**do_ravno;
-	// char	**posle_ravno;
 
 	if (!args[1])
-		no_args(g_shell.envp);
+		no_args();
 	i = 1;
 	while (args[i])
 	{
-
 		if (check_name(args[i]))//// !!! Проверка на валидность аргумента ("name=value")
 		{
 			printf("export: not a valid identifier\n");
 			return (1);
 		}
-		//printf("work please\n");
 		export_prmtrs(args[i]);
 		i++;
 	}
-	//printf("!%s!", before_quotes(args, shell));
 	return (0);
 }

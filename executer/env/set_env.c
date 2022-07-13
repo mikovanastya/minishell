@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:14:15 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/01 17:39:24 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/12 20:07:06 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,20 @@ int	env_prmtrs_exist(char *prmtrs)//проверяем существует ли
 	return (0);
 }
 
-int	new_env(char *str, char **tmp)//записывваем  еще чтобы расширить место памяти
+int	new_env(char *str)//записывваем  еще чтобы расширить место памяти
 {
 	int	i;
 
 	i = 0;
-	g_shell.envp = malloc(sizeof(char *) * (g_shell.len + 2));// \0 и еще место под новую строчку(место в машине)
+	char **tmp;
+	tmp = malloc(sizeof(char *) * (g_shell.len + 2));// \0 и еще место под новую строчку
 	while (i < g_shell.len)
 	{
-		g_shell.envp[i] = tmp[i];
+		tmp[i] = g_shell.envp[i];
 		i++;
 	}
-	g_shell.envp[i] = str;
+	tmp[i] = str;
+	g_shell.envp = tmp;
 	return (0);
 }
 
@@ -55,7 +57,7 @@ void	rewrite_env_prmtrs(char *prmtrs, char *join)// все перезаписы�
 	{
 		if (g_shell.envp[i])
 		{
-			if (ft_strncmp(ft_substr(g_shell.envp[i], 0,
+			if (ft_strncmp(ft_substr(g_shell.envp[i], 0, \
 					ft_strchr(g_shell.envp[i], '=') - g_shell.envp[i] + 1),
 					prmtrs, ft_strlen(prmtrs) == 0))
 			{
@@ -68,12 +70,9 @@ void	rewrite_env_prmtrs(char *prmtrs, char *join)// все перезаписы�
 
 int	set_env(char *prmtrs, char *value)// обЪединяет параметр и значение
 {
-	char	**tmp;
 	char	*result_1st_join;
 	char	*result_2nd_join;
 
-	
-	//printf("%s  -  %s\n", prmtrs, value);
 	result_1st_join = ft_strjoin(prmtrs, "=");
 	result_2nd_join = ft_strjoin(result_1st_join, value);
 	if (env_prmtrs_exist(prmtrs))//проверяем существует ли такой prmtrs
@@ -82,9 +81,9 @@ int	set_env(char *prmtrs, char *value)// обЪединяет параметр �
 	}
 	else
 	{
-		tmp = g_shell.envp;
-		new_env(result_2nd_join, tmp);
+		new_env(result_2nd_join);
 		g_shell.len++;
 	}
 	return (0);
 }
+

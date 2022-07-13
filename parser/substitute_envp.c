@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substitute_envp.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eward <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 12:49:33 by eward             #+#    #+#             */
-/*   Updated: 2022/06/02 12:49:35 by eward            ###   ########.fr       */
+/*   Updated: 2022/07/12 20:48:35 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,16 @@ int	substitute_envp(char *input, char **envp)
 {
 	int		i;
 
+	//i = 0;
+	(void)envp;
+	// if (!set_envp(envp))
+	// 	return (-1);
+	// while (g_shell.envp[i])
+	// {
+	// 	printf("envp[%d] = %s\n", i, g_shell.envp[i]);
+	// 	i++;
+	// }
 	i = 0;
-	if (!set_envp(envp))
-		return (-1);
 	while (*(input + i))
 	{
 		while (*(input + i) && sp(*(input + i)))

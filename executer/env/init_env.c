@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/13 15:04:45 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/01 17:38:18 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/12 19:01:33 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	init_env(char **prmtrs)// инициализация env, скопиров�
 		i++;
 	}
 	g_shell.envp[i] = NULL;
-	check_shlvl();
+	// check_shlvl();
 	return ;
 }
 

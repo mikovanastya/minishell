@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:20:53 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/06/24 17:42:55 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/12 18:09:39 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,22 @@ void	ft_free(char **mass)
 	free(mass);
 }
 
-void	sort_tmp_env(char **envp, int len)
+void	sort_tmp_env(char **envp)
 {
 	int		i;
-	int		j; 
+	int		j;
 	int		min;
 	char	*tmp;
 
 	i = 0;
-	while (i < len - 1)
+	while (i < g_shell.len - 1)
 	{
 		min = i;
 		j = i + 1;
-		while (j < len)
+		while (j < g_shell.len)
 		{
 			if (ft_strncmp(envp[j], envp[min], \
-			ft_strlen(envp[min])) < 0)
+			ft_strlen(g_shell.envp[min])) < 0)
 				min = j;
 			j++;
 		}

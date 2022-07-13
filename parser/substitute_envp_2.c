@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substitute_envp_2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eward <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 13:59:38 by eward             #+#    #+#             */
-/*   Updated: 2022/06/18 13:59:40 by eward            ###   ########.fr       */
+/*   Updated: 2022/07/12 20:48:28 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	replace(char **to_change, int i)
 		a++;
 	var_name = (char *)malloc(sizeof(char) * (a + 1));
 	ft_memmove(var_name, *to_change + i + 1, a - 1);
+	var_name[a - 1] = '\0';
 	repl = find_var(var_name);
 	rez = sub_envp(to_change, &repl, i, a);
 	if (repl)

@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:02:04 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/12 16:28:39 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/12 19:57:53 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ struct	s_cmd
 	char		**file_name;
 	int			exit_status;
 	char		**redir;//
-	char		**argv;//аргументы, которые нам подаются
+	char		**argv;//аргументы, которые нам подаются команды
 	struct s_cmd *prev;
 	struct s_cmd *next;
 	
@@ -86,27 +86,13 @@ typedef struct s_for_array
 
 t_shell	g_shell;
 
-
-# define NONE 0				// defaut set
-# define ARG 1				// word
-# define FILE_IN 2			// word == '<'
-# define HERE_DOC 3			// word == '<<'
-# define FILE_OUT 4			// word == '>'
-# define FILE_OUT_SUR 5		// word == '>>'
-# define OPEN_FILE 6		// word following '<'
-# define LIMITOR 7			// word following '<<'
-# define EXIT_FILE 8		// word following '>'
-# define EXIT_FILE_RET 9	// word following '>>'
-# define PIPE 10			// word == '|'
-# define BUILTIN 11			// word == command
-
 /*
 **	ENV:
 */
 void	init_env(char **prmtrs);
 char	*get_env_value(char *prmtrs);
 int		env_prmtrs_exist(char *prmtrs);
-int		new_env(char *str, char **tmp);
+int		new_env(char *str);
 void	rewrite_env_prmtrs(char *prmtrs, char *join);
 int		set_env(char *prmtrs, char *value);
 void	del_new_env(char **tmp, char *prmtrs);
@@ -129,10 +115,10 @@ int		builtin_unset(char **args);
 int		ft_sym_export(char *str);
 
 void	ft_free(char **mass);
-void	sort_tmp_env(char	**tmp, int len);
-void	no_args(char **envp);
+void	sort_tmp_env(char	**tmp);
+void	no_args();
 
-char	**new_envp(char **envp);
+char	**new_envp();
 char	**after_quotes(char **tmpmass );
 char	**before_quotes(char **tmpmass);
 
@@ -154,6 +140,7 @@ int		open_file(char *argv, int i, int quit);
 int		check_redirection(int quit);
 int		ft_free_str(char **s);
 void	*ft_free_str_arr(char ***arr);
+int	ft_builtin(t_cmd *cmd);
 
 void	r_in();
 /*
@@ -205,11 +192,15 @@ int	type_check(int type);
 // static int	ft_count_file(t_list *tokens);
 void	init_redir(t_cmd **redir_cmd, t_list *tokens,
 		char **argv, char **file_name);
-void	ft_copy_file(char **file, char *tokens, int type);
+// void	ft_copy_file(char **file, char *tokens, int type);
 void	ft_copy_argv(char **argv, char *tokens, int type);
 void	ex_cmd_add_back(t_cmd **ex_cmd, t_cmd *new);
 t_cmd	*new_ex_cmd(char **argv, char **file);
 void	copy_end(char **argv, char **file, t_cmd **ex_cmd);
 
+//DELETE
 
+int envp_len_global(void);
+int envp_len_local(char **envp);
+void envp_compr();
 #endif

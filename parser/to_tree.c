@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 14:07:52 by eward             #+#    #+#             */
-/*   Updated: 2022/06/28 20:37:16 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/12 19:22:25 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*get_str(char **envp)
 	i = 0;
 	input = NULL;
 	g_shell.console_name = "minishell> ";
-	g_shell.len = 0;
+	// g_shell.len = 0; 
 	g_shell.pid = getpid();
 	g_shell.pipe = 0;
 	g_shell.arrow = '\0';
