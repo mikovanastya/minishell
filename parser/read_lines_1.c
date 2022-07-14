@@ -72,9 +72,9 @@ int	init_rez(char **rez, char **inpt)
 	return (1);
 }
 
-int	in_cycle(char **rez, char **inpt, int *may_continue)
+int	init_and_resize_rez(char **rez, char **inpt)
 {
-	int		j;
+	int	resize;
 
 	if (!*rez || !**rez)
 	{
@@ -83,11 +83,20 @@ int	in_cycle(char **rez, char **inpt, int *may_continue)
 	}
 	else
 	{
-		j = resize_rez(rez, inpt);
-		if (!j)
-			return (j);
+		resize = resize_rez(rez, inpt);
+		if (!resize)
+			return (resize);
 	}
-	j = 0;
+	return (0);
+}
+
+int	check_input(char **rez, char **inpt, int *may_continue)
+{
+	int		j;
+
+	j = init_and_resize_rez(rez, inpt);
+	if (j != 0)
+		return (j);
 	while (*(*inpt + j + 1))
 	{
 		if (is_a(*inpt + j) == 4)

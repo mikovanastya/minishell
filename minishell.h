@@ -154,7 +154,7 @@ int		resize_rez(char **inpt, char **rez);
 int		init_rez(char **rez, char **inpt);
 void	init_redir(t_cmd **redir_cmd, t_list *tokens,
 		char **argv, char **file_name);
-int		in_cycle(char **rez, char **inpt, int *may_continue);
+int		check_input(char **rez, char **inpt, int *may_continue);
 int		go_on(char *str);
 int		substitute_envp(char *input);
 int		sp(char c);

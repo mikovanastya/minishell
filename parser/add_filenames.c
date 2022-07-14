@@ -74,7 +74,6 @@ int	add_more(char **str, t_cmd *cmd, int i)
 		}
 	}
 	len = filename_len(*str);
-	printf("filename len %d\n", len);
 	if (len == 0)
 	{
 		while (**str && sp(**str))

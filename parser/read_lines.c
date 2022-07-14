@@ -117,7 +117,7 @@ int	read_str(char **str)
 			exit(1);
 		}
 		add_history(inpt);
-		cycle_rez = in_cycle(str, &inpt, &may_continue);
+		cycle_rez = check_input(str, &inpt, &may_continue);
 		free(inpt);
 	}
 	return (may_continue);
