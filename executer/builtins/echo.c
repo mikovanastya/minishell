@@ -38,12 +38,12 @@ int	builtin_echo(int fd)
 
 	flag = 0;
 	i = 1;
-	while ((*(g_shell.cmd_start))->argv[i] != NULL && check_n_flag((*(g_shell.cmd_start))->argv[i], &flag) == true)
+	while (g_shell.cmd_start->argv[i] != NULL && check_n_flag(g_shell.cmd_start->argv[i], &flag) == true)
 		i++;
-	while ((*(g_shell.cmd_start))->argv[i] != NULL)
+	while (g_shell.cmd_start->argv[i] != NULL)
 	{
-		ft_putstr_fd((*(g_shell.cmd_start))->argv[i], fd);
-		if ((*(g_shell.cmd_start))->argv[++i] != NULL)
+		ft_putstr_fd(g_shell.cmd_start->argv[i], fd);
+		if (g_shell.cmd_start->argv[++i] != NULL)
 			ft_putstr_fd(" ", fd);
 	}
 	if (flag != 1)

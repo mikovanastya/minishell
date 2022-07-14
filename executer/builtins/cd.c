@@ -18,7 +18,7 @@ int	builtin_cd()
 	char	*home;
 
 	home = NULL;
-	if (!(*(g_shell.cmd_start))->argv[1])// параметр помле cd
+	if (!g_shell.cmd_start->argv[1])// параметр помле cd
 	{
 		if (!env_prmtrs_exist(home))
 		{
@@ -29,12 +29,12 @@ int	builtin_cd()
 			home = get_env_value("HOME");
 	}
 	getcwd(cwd, sizeof(cwd));//копируем то что в HOME путь в строку куда указывает cwd
-	if (chdir(*(*(g_shell.cmd_start))->argv) == -1)
+	if (chdir(*g_shell.cmd_start->argv) == -1)
 	{
-		if ((*(g_shell.cmd_start))->argv[0] == '\0')
+		if (g_shell.cmd_start->argv[0] == '\0')
 			return (1);
 		ft_putstr_fd("cd: ", 2);
-		ft_putstr_fd(*(*(g_shell.cmd_start))->argv, 2);
+		ft_putstr_fd(*g_shell.cmd_start->argv, 2);
 		ft_putendl_fd(": No such file or directory", 2);
 		return (1);
 	}

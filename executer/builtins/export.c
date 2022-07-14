@@ -98,17 +98,17 @@ int	builtin_export()
 {
 	int		i;
 
-	if (!(*(g_shell.cmd_start))->argv[1])
+	if (!g_shell.cmd_start->argv[1])
 		no_args();
 	i = 1;
-	while ((*(g_shell.cmd_start))->argv[i])
+	while (g_shell.cmd_start->argv[i])
 	{
-		if (check_name((*(g_shell.cmd_start))->argv[i]))//// !!! Проверка на валидность аргумента ("name=value")
+		if (check_name(g_shell.cmd_start->argv[i]))//// !!! Проверка на валидность аргумента ("name=value")
 		{
 			printf("export: not a valid identifier\n");
 			return (1);
 		}
-		export_prmtrs((*(g_shell.cmd_start))->argv[i]);
+		export_prmtrs(g_shell.cmd_start->argv[i]);
 		i++;
 	}
 	return (0);

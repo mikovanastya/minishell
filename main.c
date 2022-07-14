@@ -49,7 +49,7 @@ int	main(int argc, char **argv, char **env)
 			if (fill_list(rez) == -1) // !! parser
 				cmd = NULL; // !! parser
 			else
-				cmd = (*(g_shell.cmd_start)); // это вообще очень важеая хреня не дуалять
+				cmd = g_shell.cmd_start; // это вообще очень важеая хреня не дуалять
 		}
 		
 		// signal(SIGINT, handler_signal);

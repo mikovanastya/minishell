@@ -15,7 +15,7 @@
 int	make_heredocs()
 {
 	t_cmd *cmd;
-	cmd = *(g_shell.cmd_start);
+	cmd = g_shell.cmd_start;
 	while (cmd != NULL)
 	{
 		if (check_heredoc() == 1)
@@ -32,9 +32,9 @@ int	check_heredoc()
 	i = 0;
 	// if (!(*(g_shell.cmd_start))->redir)
 	// 	return (0);
-	while ((*(g_shell.cmd_start))->redir && (*(g_shell.cmd_start))->redir[i])
+	while (g_shell.cmd_start->redir && g_shell.cmd_start->redir[i])
 	{
-		if (ft_strcmp((*(g_shell.cmd_start))->redir, "<<") == 0)
+		if (ft_strcmp(g_shell.cmd_start->redir, "<<") == 0)
 		{
 			if (redir_heredoc())
 				return (1);
@@ -49,20 +49,20 @@ int	redir_heredoc()
 	// int		wstatus;
 
 	//signal(SIGINT, nothing);
-	pipe((*(g_shell.cmd_start))->fd);
-	(*(g_shell.cmd_start))->pid = fork();
-	if ((*(g_shell.cmd_start))->pid == 0)
+	pipe(g_shell.cmd_start->fd);
+	g_shell.cmd_start->pid = fork();
+	if (g_shell.cmd_start->pid == 0)
 	{
-		close((*(g_shell.cmd_start))->fd[0]);
-		close((*(g_shell.cmd_start))->fd[1]);
+		close(g_shell.cmd_start->fd[0]);
+		close(g_shell.cmd_start->fd[1]);
 	}
 	// wait(&(*(g_shell.cmd_start))->pid);
 		// heredoc(iter, new_fd);
 	// wait(&status);
 	//signal
-	dup2((*(g_shell.cmd_start))->fd[0], STDIN_FILENO);
-	close((*(g_shell.cmd_start))->fd[1]);
-	close((*(g_shell.cmd_start))->fd[0]);
+	dup2(g_shell.cmd_start->fd[0], STDIN_FILENO);
+	close(g_shell.cmd_start->fd[1]);
+	close(g_shell.cmd_start->fd[0]);
 	// if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
 	// 	return (1);
 	return (0);

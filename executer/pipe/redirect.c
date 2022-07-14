@@ -49,15 +49,15 @@ int	check_redirection(int quit)
 	// if (!(*(g_shell.cmd_start))->redir)
 	// 	return (0);
 	// printf("haha %s\n", (*(g_shell.cmd_start))->file_name[i]);
-	if ((*(g_shell.cmd_start))->file_name)
-	while ((*(g_shell.cmd_start))->file_name[i])
+	if (g_shell.cmd_start->file_name)
+	while (g_shell.cmd_start->file_name[i])
 	{
-		if (ft_strcmp((*(g_shell.cmd_start))->redir, "<") == 0)
-			fd[0] = open_file(((*(g_shell.cmd_start))->file_name[i]), 2, quit);
-		else if (ft_strcmp((*(g_shell.cmd_start))->redir, ">") == 0)
-			fd[1] = open_file(((*(g_shell.cmd_start))->file_name[i]), 1, quit);
-		else if (ft_strcmp((*(g_shell.cmd_start))->redir, ">>") == 0)
-			fd[1] = open_file(((*(g_shell.cmd_start))->file_name[i]), 0, quit);
+		if (ft_strcmp(g_shell.cmd_start->redir, "<") == 0)
+			fd[0] = open_file(g_shell.cmd_start->file_name[i], 2, quit);
+		else if (ft_strcmp(g_shell.cmd_start->redir, ">") == 0)
+			fd[1] = open_file(g_shell.cmd_start->file_name[i], 1, quit);
+		else if (ft_strcmp(g_shell.cmd_start->redir, ">>") == 0)
+			fd[1] = open_file(g_shell.cmd_start->file_name[i], 0, quit);
 		// else if (ft_strcmp(((*(g_shell.cmd_start))->redir[i]), "<<") == 0)
 		// 	dup2((*(g_shell.cmd_start))->fd[0], STDIN_FILENO);
 		// printf("haha %s, %d, %d", *((*(g_shell.cmd_start))->redir), fd[1], fd[0]);

@@ -51,7 +51,7 @@ typedef struct s_shell{
 	int		arrow;
 	int		pipe;
 	char	*inpt;
-	t_cmd	**cmd_start; // *
+	t_cmd	*cmd_start; // *
 }t_shell;
 
 typedef struct s_list
