@@ -1,45 +1,37 @@
 make --dry-run --always-make --keep-going --print-directory
 make: Entering directory `/Users/eward/Documents/minishell'
 cc -g -Wall -Werror -Wextra -c main.c -o main.o
- 
 cc -g -Wall -Werror -Wextra -c executer/env/init_env.c -o executer/env/init_env.o
 cc -g -Wall -Werror -Wextra -c executer/env/get_env.c -o executer/env/get_env.o
 cc -g -Wall -Werror -Wextra -c executer/env/set_env.c -o executer/env/set_env.o
 cc -g -Wall -Werror -Wextra -c executer/env/del_env.c -o executer/env/del_env.o
- 
 cc -g -Wall -Werror -Wextra -c executer/builtins/cd.c -o executer/builtins/cd.o
 cc -g -Wall -Werror -Wextra -c executer/builtins/echo.c -o executer/builtins/echo.o
 cc -g -Wall -Werror -Wextra -c executer/builtins/env.c -o executer/builtins/env.o
 cc -g -Wall -Werror -Wextra -c executer/builtins/export.c -o executer/builtins/export.o
 cc -g -Wall -Werror -Wextra -c executer/builtins/export2.c -o executer/builtins/export2.o
 cc -g -Wall -Werror -Wextra -c executer/builtins/export3.c -o executer/builtins/export3.o
- 
 cc -g -Wall -Werror -Wextra -c executer/builtins/pwd.c -o executer/builtins/pwd.o
 cc -g -Wall -Werror -Wextra -c executer/builtins/unset.c -o executer/builtins/unset.o
 cc -g -Wall -Werror -Wextra -c executer/builtins/builtins.c -o executer/builtins/builtins.o
 cc -g -Wall -Werror -Wextra -c executer/pipe/create_pipe.c -o executer/pipe/create_pipe.o
 cc -g -Wall -Werror -Wextra -c executer/pipe/pipex.c -o executer/pipe/pipex.o
- 
 cc -g -Wall -Werror -Wextra -c executer/signal/signal.c -o executer/signal/signal.o
 cc -g -Wall -Werror -Wextra -c executer/pipe/heredoc.c -o executer/pipe/heredoc.o
 cc -g -Wall -Werror -Wextra -c executer/pipe/redirect.c -o executer/pipe/redirect.o
- 
 cc -g -Wall -Werror -Wextra -c executer/pipe/free.c -o executer/pipe/free.o
 cc -g -Wall -Werror -Wextra -c parser/parse_heredocs.c -o parser/parse_heredocs.o
 cc -g -Wall -Werror -Wextra -c parser/read_lines.c -o parser/read_lines.o
 cc -g -Wall -Werror -Wextra -c parser/read_lines_1.c -o parser/read_lines_1.o
 cc -g -Wall -Werror -Wextra -c parser/substitute_envp.c -o parser/substitute_envp.o
- 
 cc -g -Wall -Werror -Wextra -c parser/substitute_envp_1.c -o parser/substitute_envp_1.o
 cc -g -Wall -Werror -Wextra -c parser/substitute_envp_2.c -o parser/substitute_envp_2.o
 cc -g -Wall -Werror -Wextra -c parser/to_tree.c -o parser/to_tree.o
 cc -g -Wall -Werror -Wextra -c parser/to_tree_1.c -o parser/to_tree_1.o
- 
 cc -g -Wall -Werror -Wextra -c parser/to_tree_2.c -o parser/to_tree_2.o
 cc -g -Wall -Werror -Wextra -c parser/check.c -o parser/check.o
 cc -g -Wall -Werror -Wextra -c parser/add_filenames.c -o parser/add_filenames.o
 cc -g -Wall -Werror -Wextra -c utils/utils.c -o utils/utils.o
- 
 make -C ./libft
 cc -g -lreadline -Wall -Werror -Wextra main.o executer/env/init_env.o executer/env/get_env.o executer/env/set_env.o executer/env/del_env.o executer/builtins/cd.o executer/builtins/echo.o executer/builtins/env.o executer/builtins/export.o executer/builtins/export2.o executer/builtins/export3.o executer/builtins/pwd.o executer/builtins/unset.o executer/builtins/builtins.o executer/pipe/create_pipe.o executer/pipe/pipex.o executer/signal/signal.o executer/pipe/heredoc.o executer/pipe/redirect.o executer/pipe/free.o parser/parse_heredocs.o parser/read_lines.o parser/read_lines_1.o parser/substitute_envp.o parser/substitute_envp_1.o parser/substitute_envp_2.o parser/to_tree.o parser/to_tree_1.o parser/to_tree_2.o parser/check.o parser/add_filenames.o utils/utils.o -L libft ./libft/libft.a  -o minishell
 make: Leaving directory `/Users/eward/Documents/minishell'

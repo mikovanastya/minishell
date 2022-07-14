@@ -69,7 +69,8 @@ int	decision_about_quotes(char **str, int *go_to_next_str)
 				while (!is_a(*str) && sp(**str))
 					(*str)--;
 				if (is_a(*str))
-					return (2 * print_token_err('|'));
+					// return (2 * print_token_err('|'));
+					return (2 * print_token_err('6'));
 				while (**str && **str != '|')
 					(*str)++;
 			}

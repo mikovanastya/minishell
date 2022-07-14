@@ -57,7 +57,6 @@ char	*get_str(void)
 
 int	fill_list(char	*str)
 {
-	// g_shell.cmd_start = (t_cmd **)malloc(sizeof(t_cmd *));
 	g_shell.cmd_start = NULL;
 	while (*str)
 		if (add_elem(&g_shell.cmd_start, &str) == -1)

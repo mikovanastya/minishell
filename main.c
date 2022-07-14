@@ -55,7 +55,7 @@ int	main(int argc, char **argv, char **env)
 		// signal(SIGINT, handler_signal);
 		// signal(SIGQUIT, handler_signal);	
 		// int i  = 0;
-		// // cmd = cmd->next;
+		// // // cmd = cmd->next;
 		// while (cmd->argv[i])
 		// {
 		// 	printf("argv %s %s %s\n", cmd->argv[i], cmd->file_name[0], cmd->redir);

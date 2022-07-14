@@ -1,15 +1,2 @@
-rere2 ls
-Makefile
-executer
-file1.txt
-ggg
-here.txt
-l.txt
-libft
-main.c
-main.o
-minishell
-minishell.h
-parser
-readline
-utils
+adbfg
+minishell> 

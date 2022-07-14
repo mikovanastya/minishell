@@ -63,14 +63,20 @@ int	create_element(t_for_array	*pos, char **str, char ***arr,
 	while (**str && !n_a(**str) && !sp(**str))
 		create_argv(pos, str, arr, cmd);
 	(*arr)[pos->i][pos->j] = '\0';
-	if ((cmd->redir))
+	if (cmd->redir)
 	{
 		while (*((*arr)[pos->i]) && sp(*((*arr)[pos->i])))
 			((*arr)[pos->i])++;
 		if (is_a(((*arr)[pos->i])))
-			return (print_token_err(*((*arr)[pos->i])));
+			// return (print_token_err(*((*arr)[pos->i])));
+			return (print_token_err('7'));
 		if (add_filename(cmd, str, &((*arr)[pos->i])) == -1)
 			return (-1);
+		if (is_a(cmd->redir) == 4)
+		{
+			cmd->file_name = NULL;
+			return (0);
+		}
 		pos->i--;
 	}
 	else

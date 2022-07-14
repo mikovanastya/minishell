@@ -8,7 +8,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This program built for i386-apple-darwin11.3.0
  
 
-# Make data base, printed on Thu Jul 14 16:31:51 2022
+# Make data base, printed on Thu Jul 14 20:11:35 2022
 
 # Variables
 
@@ -24,7 +24,6 @@ VSCODE_LOG_NATIVE = false
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
- 
 # automatic
 @F = $(notdir $@)
 # makefile
@@ -42,7 +41,7 @@ MAKEFILE_LIST :=  Makefile
 # environment
 VSCODE_VERBOSE_LOGGING = true
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n00021fw000hbq/T/vscode-ipc-954c09ac-9769-44a0-b32b-8deed670a54b.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n00021fw000hbq/T/vscode-ipc-eae289fe-c71e-428b-b615-0bde1f37d5b8.sock
 # environment
 VSCODE_CWD = /
 # environment
@@ -168,17 +167,25 @@ VSCODE_PID = 29574
 
 # file1.txt (device 16777227, inode 421225): could not be opened.
 # Makefile (device 16777227, inode 421198): could not be opened.
-# utils (device 16777227, inode 421290): 3 files, no impossibilities.
-# . (device 16777227, inode 421131): 16 files, no impossibilities.
+# utils (device 16777227, inode 421290): 4 files, no impossibilities.
+# executer/signal (device 16777227, inode 421223): 3 files, no impossibilities so far.
+# . (device 16777227, inode 421131): 21 files, no impossibilities.
 # readline (device 16777227, inode 421279): 12 files, no impossibilities.
-# parser (device 16777227, inode 421267): 13 files, no impossibilities.
+# main.o (device 16777227, inode 425371): could not be opened.
+# parser (device 16777227, inode 421267): 24 files, no impossibilities.
 # executer (device 16777227, inode 421199): 8 files, no impossibilities.
+# ggg (device 16777227, inode 424490): could not be opened.
+# executer/builtins (device 16777227, inode 421202): 19 files, no impossibilities so far.
+# here.txt (device 16777227, inode 421908): could not be opened.
 # main.c (device 16777227, inode 421265): could not be opened.
 # minishell.h (device 16777227, inode 421266): could not be opened.
- 
-# libft (device 16777227, inode 421226): 40 files, no impossibilities.
+# minishell (device 16777227, inode 425372): could not be opened.
+# executer/env (device 16777227, inode 421212): 9 files, no impossibilities so far.
+# l.txt (device 16777227, inode 425161): could not be opened.
+# executer/pipe (device 16777227, inode 421217): 11 files, no impossibilities so far.
+# libft (device 16777227, inode 421226): 75 files, no impossibilities.
 
-# 92 files, no impossibilities in 10 directories.
+# 186 files, no impossibilities in 19 directories.
 
 # Implicit Rules
 
@@ -201,16 +208,37 @@ readline/chardefs.h:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
-executer/builtins/pwd.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+executer/pipe/free.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-14 16:31:31
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-# Not a target:
-executer/builtins/cd.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+executer/builtins/pwd.o: executer/builtins/pwd.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `executer/builtins/pwd'
+#  Last modified 2022-07-14 19:57:23
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 75):
+	$(CC) -g $(FLAGS) -c $< -o $@
+	
+
+executer/builtins/cd.o: executer/builtins/cd.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `executer/builtins/cd'
+#  Last modified 2022-07-14 19:57:23
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 75):
+	$(CC) -g $(FLAGS) -c $< -o $@
+	
 
 # Not a target:
 libft/ft_strlcpy.c:
@@ -224,11 +252,18 @@ libft/ft_strncmp.c:
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-executer/builtins/export3.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+ 
+executer/builtins/export3.o: executer/builtins/export3.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `executer/builtins/export3'
+#  Last modified 2022-07-14 19:57:23
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 75):
+	$(CC) -g $(FLAGS) -c $< -o $@
+	
 
 # Not a target:
 libft/ft_isalnum.c:
@@ -255,11 +290,17 @@ readline/history.h:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-# Not a target:
-executer/pipe/redirect.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+executer/pipe/redirect.o: executer/pipe/redirect.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `executer/pipe/redirect'
+#  Last modified 2022-07-14 20:03:59
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 75):
+	$(CC) -g $(FLAGS) -c $< -o $@
+	
 
 # Not a target:
 libft/ft_strdup.c:
@@ -272,11 +313,17 @@ libft/ft_strdup.c:
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-executer/builtins/echo.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+executer/builtins/echo.o: executer/builtins/echo.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `executer/builtins/echo'
+#  Last modified 2022-07-14 19:57:23
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 75):
+	$(CC) -g $(FLAGS) -c $< -o $@
+	
 
 # Not a target:
 libft/ft_memmove.c:
@@ -296,26 +343,47 @@ parser/to_tree_1.o:
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-executer/env/init_env.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+executer/env/init_env.o: executer/env/init_env.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `executer/env/init_env'
+#  Last modified 2022-07-14 19:57:23
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 75):
+	$(CC) -g $(FLAGS) -c $< -o $@
+	
 
 # Not a target:
 main.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-14 16:31:31
+#  Last modified 2022-07-14 20:09:21
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
+executer/builtins/export.o: executer/builtins/export.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `executer/builtins/export'
+#  Last modified 2022-07-14 19:57:23
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 75):
+	$(CC) -g $(FLAGS) -c $< -o $@
+	
+
 # Not a target:
-executer/builtins/export.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+executer/pipe/create_pipe.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-14 19:51:02
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
 libft/ft_toupper.c:
@@ -354,16 +422,49 @@ libft/ft_putstr_fd.c:
 #  File has not been updated.
 
 # Not a target:
+executer/env/del_env.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-14 16:31:31
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+parser/parse_heredocs.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-14 20:10:03
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+executer/pipe/heredoc.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-14 19:51:51
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
 parser/substitute_envp.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-executer/signal/signal.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+executer/signal/signal.o: executer/signal/signal.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `executer/signal/signal'
+#  Last modified 2022-07-14 19:57:24
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 75):
+	$(CC) -g $(FLAGS) -c $< -o $@
+	
 
 # Not a target:
 .SUFFIXES:
@@ -405,6 +506,7 @@ readline/keymaps.h:
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
+ 
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
@@ -420,10 +522,34 @@ parser/to_tree_2.o:
 #  File has not been updated.
 
 # Not a target:
-executer/pipe/pipex.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+executer/builtins/pwd.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-14 16:31:31
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+executer/pipe/pipex.o: executer/pipe/pipex.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `executer/pipe/pipex'
+#  Last modified 2022-07-14 19:57:23
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 75):
+	$(CC) -g $(FLAGS) -c $< -o $@
+	
+
+# Not a target:
+executer/builtins/cd.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-14 19:48:17
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
 libft/ft_putendl_fd.c:
@@ -437,17 +563,22 @@ libft/ft_strmapi.c:
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-executer/builtins/builtins.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+executer/builtins/builtins.o: executer/builtins/builtins.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `executer/builtins/builtins'
+#  Last modified 2022-07-14 19:57:23
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 75):
+	$(CC) -g $(FLAGS) -c $< -o $@
+	
 
 minishell: main.o executer/env/init_env.o executer/env/get_env.o executer/env/set_env.o executer/env/del_env.o executer/builtins/cd.o executer/builtins/echo.o executer/builtins/env.o executer/builtins/export.o executer/builtins/export2.o executer/builtins/export3.o executer/builtins/pwd.o executer/builtins/unset.o executer/builtins/builtins.o executer/pipe/create_pipe.o executer/pipe/pipex.o executer/signal/signal.o executer/pipe/heredoc.o executer/pipe/redirect.o executer/pipe/free.o parser/parse_heredocs.o parser/read_lines.o parser/read_lines_1.o parser/substitute_envp.o parser/substitute_envp_1.o parser/substitute_envp_2.o parser/to_tree.o parser/to_tree_1.o parser/to_tree_2.o parser/check.o parser/add_filenames.o utils/utils.o libft/ft_atoi.c libft/ft_bzero.c libft/ft_calloc.c libft/ft_isalnum.c libft/ft_isalpha.c libft/ft_isascii.c libft/ft_isdigit.c libft/ft_isprint.c libft/ft_itoa.c libft/ft_memchr.c libft/ft_memcmp.c libft/ft_memcpy.c libft/ft_memmove.c libft/ft_memset.c libft/ft_putchar_fd.c libft/ft_putendl_fd.c libft/ft_putnbr_fd.c libft/ft_putstr_fd.c libft/ft_split.c libft/ft_strchr.c libft/ft_strcmp.c libft/ft_strdup.c libft/ft_striteri.c libft/ft_strjoin.c libft/ft_strlcat.c libft/ft_strlcpy.c libft/ft_strlen.c libft/ft_strmapi.c libft/ft_strncmp.c libft/ft_strnstr.c libft/ft_strrchr.c libft/ft_strtrim.c libft/ft_substr.c libft/ft_tolower.c libft/ft_toupper.c
 #  Implicit rule search has not been done.
-#  File does not exist.
+#  Last modified 2022-07-14 20:09:22
 #  File has been updated.
- 
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/4=0%
@@ -463,10 +594,37 @@ parser/substitute_envp_1.o:
 #  File has not been updated.
 
 # Not a target:
+executer/builtins/export3.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-14 16:31:31
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+executer/env/get_env.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-14 16:31:31
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
 parser/read_lines_1.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+
+# Not a target:
+executer/pipe/redirect.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-14 20:03:58
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
 libft/ft_memcpy.c:
@@ -480,11 +638,17 @@ libft/ft_itoa.c:
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-executer/builtins/env.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+executer/builtins/env.o: executer/builtins/env.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `executer/builtins/env'
+#  Last modified 2022-07-14 19:57:23
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 75):
+	$(CC) -g $(FLAGS) -c $< -o $@
+	
 
 fclean: clean
 #  Phony target (prerequisite of .PHONY).
@@ -515,6 +679,15 @@ libft/ft_strlen.c:
 #  File has not been updated.
 
 # Not a target:
+executer/builtins/echo.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-14 19:48:42
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
 libft/ft_isascii.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -525,6 +698,15 @@ libft/ft_isdigit.c:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+
+# Not a target:
+executer/env/init_env.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-14 16:31:31
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
 libft/ft_strcmp.c:
@@ -538,11 +720,18 @@ libft/ft_memchr.c:
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-executer/pipe/free.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+executer/pipe/free.o: executer/pipe/free.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `executer/pipe/free'
+#  Last modified 2022-07-14 19:57:24
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+ 
+#  commands to execute (from `Makefile', line 75):
+	$(CC) -g $(FLAGS) -c $< -o $@
+	
 
 # Not a target:
 libft/ft_memset.c:
@@ -556,11 +745,17 @@ libft/ft_strlcat.c:
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-executer/env/set_env.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+executer/env/set_env.o: executer/env/set_env.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `executer/env/set_env'
+#  Last modified 2022-07-14 19:57:23
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 75):
+	$(CC) -g $(FLAGS) -c $< -o $@
+	
 
 # Not a target:
 libft/ft_tolower.c:
@@ -607,17 +802,29 @@ readline/rltypedefs.h:
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-# Not a target:
-executer/builtins/unset.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+executer/builtins/unset.o: executer/builtins/unset.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `executer/builtins/unset'
+#  Last modified 2022-07-14 19:57:23
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 75):
+	$(CC) -g $(FLAGS) -c $< -o $@
+	
 
-# Not a target:
-executer/builtins/export2.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+executer/builtins/export2.o: executer/builtins/export2.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `executer/builtins/export2'
+#  Last modified 2022-07-14 19:57:23
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 75):
+	$(CC) -g $(FLAGS) -c $< -o $@
+	
 
 re: fclean all
 #  Phony target (prerequisite of .PHONY).
@@ -641,11 +848,17 @@ libft/ft_bzero.c:
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-executer/env/get_env.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+executer/env/get_env.o: executer/env/get_env.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `executer/env/get_env'
+#  Last modified 2022-07-14 19:57:23
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 75):
+	$(CC) -g $(FLAGS) -c $< -o $@
+	
 
 # Not a target:
 libft/ft_isprint.c:
@@ -663,6 +876,15 @@ readline/rlstdc.h:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
+executer/pipe/pipex.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-14 19:55:04
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
 parser/check.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -674,39 +896,56 @@ libft/ft_striteri.c:
 #  Modification time never checked.
 #  File has not been updated.
 
+# Not a target:
+executer/builtins/builtins.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-14 19:47:27
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+executer/builtins/export.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-14 19:49:02
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
 main.o: main.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `main'
-#  File does not exist.
+#  Last modified 2022-07-14 20:09:22
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# automatic
-# @ := main.o
-# automatic
-# % := 
-# automatic
-# * := main
-# automatic
-# + := main.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
-# automatic
-# | := 
-# automatic
-# < := main.c
-# automatic
-# ^ := main.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
-# automatic
-# ? := main.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
+#  Successfully updated.
 # variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=1/14=7%
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 #  commands to execute (from `Makefile', line 75):
 	$(CC) -g $(FLAGS) -c $< -o $@
 	
 
 # Not a target:
-executer/pipe/create_pipe.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+executer/builtins/env.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-14 16:31:31
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+executer/pipe/create_pipe.o: executer/pipe/create_pipe.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `executer/pipe/create_pipe'
+#  Last modified 2022-07-14 19:57:23
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 75):
+	$(CC) -g $(FLAGS) -c $< -o $@
+	
 
 # Not a target:
 libft/libft.h:
@@ -732,27 +971,79 @@ libft/ft_putnbr_fd.c:
 #  Modification time never checked.
 #  File has not been updated.
 
-# Not a target:
-executer/env/del_env.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+executer/env/del_env.o: executer/env/del_env.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `executer/env/del_env'
+#  Last modified 2022-07-14 19:57:23
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+ 
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 75):
+	$(CC) -g $(FLAGS) -c $< -o $@
+	
+
+parser/parse_heredocs.o: parser/parse_heredocs.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `parser/parse_heredocs'
+#  Last modified 2022-07-14 19:57:24
+#  File has been updated.
+#  Needs to be updated (-q is set).
+# automatic
+# @ := parser/parse_heredocs.o
+# automatic
+# % := 
+# automatic
+# * := parser/parse_heredocs
+# automatic
+# + := parser/parse_heredocs.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
+# automatic
+# | := 
+# automatic
+# < := parser/parse_heredocs.c
+# automatic
+# ^ := parser/parse_heredocs.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
+# automatic
+# ? := parser/parse_heredocs.c
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=1/14=7%
+#  commands to execute (from `Makefile', line 75):
+	$(CC) -g $(FLAGS) -c $< -o $@
+	
+
+executer/pipe/heredoc.o: executer/pipe/heredoc.c libft/libft.h readline/chardefs.h readline/history.h readline/keymaps.h readline/readline.h readline/rlconf.h readline/rlstdc.h readline/rltypedefs.h readline/tilde.h minishell.h
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: `executer/pipe/heredoc'
+#  Last modified 2022-07-14 19:57:24
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+#  commands to execute (from `Makefile', line 75):
+	$(CC) -g $(FLAGS) -c $< -o $@
+	
 
 # Not a target:
-parser/parse_heredocs.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+executer/signal/signal.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-14 16:31:31
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
-executer/pipe/heredoc.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+executer/env/set_env.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-14 16:31:31
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
 libft/ft_calloc.c:
- 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -766,7 +1057,7 @@ utils/utils.o:
 # Not a target:
 minishell.h:
 #  Implicit rule search has been done.
-#  Last modified 2022-07-14 16:31:31
+#  Last modified 2022-07-14 19:46:06
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -790,8 +1081,26 @@ parser/to_tree.o:
 #  Modification time never checked.
 #  File has not been updated.
 
+# Not a target:
+executer/builtins/unset.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-14 19:49:28
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
+# Not a target:
+executer/builtins/export2.c:
+#  Implicit rule search has been done.
+#  Last modified 2022-07-14 16:31:31
+#  File has been updated.
+#  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
+
 # files hash-table stats:
-# Load=87/1024=8%, Rehash=0, Collisions=6/198=3%
+# Load=107/1024=10%, Rehash=0, Collisions=18/678=3%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -803,6 +1112,6 @@ parser/to_tree.o:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Thu Jul 14 16:31:51 2022
+# Finished Make data base on Thu Jul 14 20:11:35 2022
 
  

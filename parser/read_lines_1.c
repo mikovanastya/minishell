@@ -103,8 +103,6 @@ int	check_input(char **rez, char **inpt, int *may_continue)
 		{
 			if (parse_heredoc(*inpt + j + 2) == -1)
 				return (-1);
-			else
-				return (0);
 		}
 		j++;
 	}

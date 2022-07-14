@@ -14,18 +14,14 @@
 
 int	create_pipe()
 {
-	// printf("rere1 %s\n", (*(g_shell.cmd_start))->argv[0]);
-	if (g_shell.cmd_start->prev || g_shell.cmd_start->next)
-	{
+	// if (g_shell.cmd_start->prev || g_shell.cmd_start->next)
+	// {
 		if (pipe(g_shell.cmd_start->fd) == -1)
 			printf("error");
-	}
-	// if (make_heredocs(*(g_shell.cmd_start)) == 1 || ft_builtin(*(g_shell.cmd_start)) == 1)
-	// 	return (0);
-	// if (make_heredocs(*(g_shell.cmd_start)) == 1)
-	// 	return (0);
+		g_shell.cmd_start->pid = fork();
+	// }
 
-	g_shell.cmd_start->pid = fork();
+	// g_shell.cmd_start->pid = fork();
 
 	// if ((*(g_shell.cmd_start))->pid)
 	// 	sig_sig_signal();
@@ -55,8 +51,17 @@ int	create_pipe()
 		if (builtins())
 			return (0);
 		execute_execve();
+		// close(g_shell.cmd_start->fd[0]);
+		// close(g_shell.cmd_start->fd[1]);
 		// free(g_shell.cmd_start);
 		// exit(0);///////
 	}
+	// else
+	// {
+	// 	check_redirection(0);
+	// 	// if (builtins())
+	// 	// 	return (0);
+	// 	// execute_execve();
+	// }
 	return (0);
 }

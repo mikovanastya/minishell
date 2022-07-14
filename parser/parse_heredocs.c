@@ -21,10 +21,10 @@ int	parse_heredoc(char *delim)
 	inpt = NULL;
 	if (!delim)
 	{
-		printf("minishell: syntax error near unexpected token `newline'\n");
+		printf("minishell: syntax error near unexpected token1 `newline'\n");
 		return (-1);
 	}
-	file = open(".heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	file = open(".heredoc", O_RDWR | O_CREAT | O_TRUNC, 0777);
 	if (file == -1)
 	{
 		printf("minishell: no space left on device\n");
