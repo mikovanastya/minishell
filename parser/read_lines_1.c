@@ -74,7 +74,6 @@ int	init_rez(char **rez, char **inpt)
 
 int	in_cycle(char **rez, char **inpt, int *may_continue)
 {
-	int		resize;
 	int		j;
 
 	if (!*rez || !**rez)
@@ -84,9 +83,9 @@ int	in_cycle(char **rez, char **inpt, int *may_continue)
 	}
 	else
 	{
-		resize = resize_rez(rez, inpt);
-		if (!resize)
-			return (resize);
+		j = resize_rez(rez, inpt);
+		if (!j)
+			return (j);
 	}
 	j = 0;
 	while (*(*inpt + j + 1))

@@ -180,6 +180,8 @@ int     arrow_action(char **str, t_cmd  **cmd);
 int	separate_str(char ***arr, char **str, t_cmd	*cmd);
 int	go_to_word(char **a, int *j, char **str);
 int	print_token_err(char c);
+int	parse_heredoc(char *delim);
+int	add_filename(t_cmd	*cmd, char **str, char **a);
 /*
 ** STUFF:
 */

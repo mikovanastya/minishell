@@ -32,6 +32,8 @@ SRCS = 	main.c\
 		executer/pipe/heredoc.c\
 		executer/pipe/redirect.c\
 		executer/pipe/free.c\
+		\
+		parser/parse_heredocs.c\
 		parser/read_lines.c\
 		parser/read_lines_1.c\
 		parser/substitute_envp.c\
@@ -41,6 +43,7 @@ SRCS = 	main.c\
 		parser/to_tree_1.c\
 		parser/to_tree_2.c\
 		parser/check.c\
+		parser/add_filenames.c\
 		\
 		utils/utils.c\
 		
