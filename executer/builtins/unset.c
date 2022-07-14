@@ -12,25 +12,25 @@
 
 #include "../../minishell.h"
 
-int	builtin_unset(char **args)
+int	builtin_unset()
 {
 	int	i;
 
 	i = 0;
-	if (!args || !args[0])
+	if (!(*(g_shell.cmd_start))->argv || !(*(g_shell.cmd_start))->argv[0])
 	{
 		printf ("unset: not enough arguments");
 		return (1);
 	}
-	while (args[i])
+	while ((*(g_shell.cmd_start))->argv[i])
 	{
-		if (check_name(args[i]))
+		if (check_name((*(g_shell.cmd_start))->argv[i]))
 		{
 			printf ("unset: invalid parameter name");
 			return (1);
 		}
-		if (env_prmtrs_exist(args[i]))
-			del_env(args[i]);
+		if (env_prmtrs_exist((*(g_shell.cmd_start))->argv[i]))
+			del_env((*(g_shell.cmd_start))->argv[i]);
 		i++;
 	}
 	return (0);

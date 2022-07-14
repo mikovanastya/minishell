@@ -63,14 +63,14 @@ int	add_more(char **str, t_cmd *cmd, int i)
 		return (print_token_err(**str));
 	if (is_a(*str))
 	{
-		(*(cmd->redir))[0] = **str;
+		(cmd->redir)[0] = **str;
 		(*str)++;
-		(*(cmd->redir))[1] = '\0';
+		(cmd->redir)[1] = '\0';
 		if (is_a(*str))
 		{
-			(*(cmd->redir))[1] = **str;
+			(cmd->redir)[1] = **str;
 			(*str)++;
-			(*(cmd->redir))[2] = '\0';
+			(cmd->redir)[2] = '\0';
 		}
 	}
 	len = filename_len(*str);
@@ -125,6 +125,6 @@ int	add_filename(t_cmd	*cmd, char **str, char **a)
 			i++;
 		}
 	}
-	cmd->file_name[i] = "\0";
+	cmd->file_name[i] = NULL;
 	return (0);
 }

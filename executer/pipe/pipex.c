@@ -22,7 +22,7 @@ int	get_count_cmd(char ***cmd)
 	return (count);
 }
 
-int	execute_execve_without_path(char **env, char **path_arr)
+int	execute_execve_without_path(char **path_arr)
 {
 	char	*tmp;
 	char	*final;
@@ -42,9 +42,7 @@ int	execute_execve_without_path(char **env, char **path_arr)
 		// not found
 	}
 	else
-	{
-		execve(final, (*(g_shell.cmd_start))->argv, env);
-	}
+		execve(final, (*(g_shell.cmd_start))->argv, g_shell.envp);
 	return (0);
 }
 
@@ -53,17 +51,16 @@ int execute_execve()// выполняет команды из bin///
 	char	*paths;
 	char	**path_arr;
 
+	// printf("haha %s\n", (*(g_shell.cmd_start))->argv[0]); 
+	// write(1, "haha \n", 7);
+	printf("rere2 %s\n", (*(g_shell.cmd_start))->argv[0]);
 	paths = get_env_value("PATH");
 	path_arr = ft_split(paths, ':');
 	if ((ft_strlen((*(g_shell.cmd_start))->argv[0]) > 2)
 		&& ((*(g_shell.cmd_start))->argv[0][0] == '/' || (*(g_shell.cmd_start))->argv[0][0] == '.'))
-	{
 		execve((*(g_shell.cmd_start))->argv[0], (*(g_shell.cmd_start))->argv, g_shell.envp);//весь путь
-	}
 	else
-	{
-		execute_execve_without_path(g_shell.envp, path_arr);// без пути
-	}
+		execute_execve_without_path(path_arr);// без пути
 	// ft_free_str(&paths);
 	// ft_free_str_arr(&(g_shell.envp));
 	// ft_free_str_arr(&path_arr);
@@ -94,11 +91,11 @@ int	start_cmd_nofork()// выполнение некоторых команд
 		return (1);
 	status = 0;
 	if (ft_strncmp(*((*(g_shell.cmd_start))->argv), "cd", ft_strlen("cd")) == 0)
-		status = builtin_cd((*(g_shell.cmd_start))->argv );
+		status = builtin_cd();
 	else if (ft_strncmp(*(*(g_shell.cmd_start))->argv, "unset", ft_strlen("unset")) == 0)
-		status = builtin_unset((*(g_shell.cmd_start))->argv);
+		status = builtin_unset();
 	else if (ft_strncmp(*(*(g_shell.cmd_start))->argv, "export", ft_strlen("export")) == 0)
-		status = builtin_export((*(g_shell.cmd_start))->argv);//
+		status = builtin_export();//
 	set_env("_", *(*(g_shell.cmd_start))->argv);// я пока хз, но так нужно;
 	set_env( "?", ft_itoa(status));// статус выхода самого последнего пайпа, вроде так, хз
 	return (status);
@@ -129,9 +126,9 @@ int	ft_builtin(t_cmd *cmd)
 	{
 		if ((*(g_shell.cmd_start))->argv && check_builtins((*(g_shell.cmd_start))->argv) == 1)
 			return (0);
-		if (check_redirection( 1) == 1)
+		if (check_redirection(1) == 1)
 			return (1);
-		if (builtins((*(g_shell.cmd_start))->argv) == 0)
+		if (builtins() == 0)
 		{
 			dup2(saved_stdin, 0);
 			close(saved_stdin);
@@ -154,7 +151,8 @@ void	pipex(void)
 	{
 		while ((*(g_shell.cmd_start)))
 		{
-			create_pipe((*(g_shell.cmd_start)));
+			printf("rere %s\n", (*(g_shell.cmd_start))->argv[0]);
+			create_pipe();
 			waitpid((*(g_shell.cmd_start))->pid, &(*(g_shell.cmd_start))->exit_status, 0);
 			set_last_status((*(g_shell.cmd_start))->exit_status);
 			if ((*(g_shell.cmd_start))->prev || (*(g_shell.cmd_start))->next)

@@ -79,16 +79,16 @@ int	word_len(char *str)
 
 int	arrow_action(char **str, t_cmd	**cmd)
 {
-	((*cmd)->redir) = (char **)malloc(sizeof(char *));
-	*((*cmd)->redir) = (char *)malloc(sizeof(char) * 3);
+	//((*cmd)->redir) = (char **)malloc(sizeof(char *));
+	(*cmd)->redir = (char *)malloc(sizeof(char) * 3);
 	if (is_a(*str) % 2)
 	{
-		ft_strlcpy(*((*cmd)->redir), *str, 2);
+		ft_strlcpy((*cmd)->redir, *str, 2);
 		(*str)++;
 	}
 	else
 	{
-		ft_strlcpy(*((*cmd)->redir), *str, 3);
+		ft_strlcpy((*cmd)->redir, *str, 3);
 		*str = (*str) + 2;
 	}
 	return (0);

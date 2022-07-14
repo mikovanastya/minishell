@@ -68,7 +68,7 @@ struct	s_cmd
 	int			fd[2];
 	char		**file_name;
 	int			exit_status;
-	char		**redir;//
+	char		*redir;//
 	char		**argv;//аргументы, которые нам подаются команды
 	struct s_cmd *prev;
 	struct s_cmd *next;
@@ -101,17 +101,17 @@ int		del_env(char *prmtrs);
 **	BUILTINS:
 */
 
-int		builtin_echo(char **argv, int fd);
+int		builtin_echo(int fd);
 int		check_n_flag(char *argv, int *flag);
 int		builtin_env(void);
-int		builtin_cd(char **args);
+int		builtin_cd();
 int		builtin_pwd(void);
 int		check_name(char *name);
 int		size_mass(char **envp);
 int		max(int a, int b);
-int		builtin_export(char **args);
+int		builtin_export();
 int		export_prmtrs(char *str);
-int		builtin_unset(char **args);
+int		builtin_unset();
 int		ft_sym_export(char *str);
 
 void	ft_free(char **mass);
@@ -123,7 +123,7 @@ char	**after_quotes(char **tmpmass );
 char	**before_quotes(char **tmpmass);
 
 
-int		builtins(char **argv);
+int		builtins();
 int		create_pipe();
 int		nofork(char *cmd);
 void	pipex();

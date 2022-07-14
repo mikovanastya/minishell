@@ -31,19 +31,19 @@ int	check_n_flag(char *argv, int *flag)
 	return (false);
 }
 
-int	builtin_echo(char **argv, int fd)
+int	builtin_echo(int fd)
 {
 	int	i;
 	int	flag;
 
 	flag = 0;
 	i = 1;
-	while (argv[i] != NULL && check_n_flag(argv[i], &flag) == true)
+	while ((*(g_shell.cmd_start))->argv[i] != NULL && check_n_flag((*(g_shell.cmd_start))->argv[i], &flag) == true)
 		i++;
-	while (argv[i] != NULL)
+	while ((*(g_shell.cmd_start))->argv[i] != NULL)
 	{
-		ft_putstr_fd(argv[i], fd);
-		if (argv[++i] != NULL)
+		ft_putstr_fd((*(g_shell.cmd_start))->argv[i], fd);
+		if ((*(g_shell.cmd_start))->argv[++i] != NULL)
 			ft_putstr_fd(" ", fd);
 	}
 	if (flag != 1)

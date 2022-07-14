@@ -94,21 +94,21 @@ int	export_prmtrs(char *str)
 	return (set_env(par, val));
 }
 
-int	builtin_export(char **args)
+int	builtin_export()
 {
 	int		i;
 
-	if (!args[1])
+	if (!(*(g_shell.cmd_start))->argv[1])
 		no_args();
 	i = 1;
-	while (args[i])
+	while ((*(g_shell.cmd_start))->argv[i])
 	{
-		if (check_name(args[i]))//// !!! Проверка на валидность аргумента ("name=value")
+		if (check_name((*(g_shell.cmd_start))->argv[i]))//// !!! Проверка на валидность аргумента ("name=value")
 		{
 			printf("export: not a valid identifier\n");
 			return (1);
 		}
-		export_prmtrs(args[i]);
+		export_prmtrs((*(g_shell.cmd_start))->argv[i]);
 		i++;
 	}
 	return (0);

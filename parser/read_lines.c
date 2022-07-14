@@ -113,9 +113,7 @@ int	read_str(char **str)
 	{
 		inpt = readline(g_shell.console_name);
 		if (inpt == NULL)
-		{
 			exit(1);
-		}
 		add_history(inpt);
 		cycle_rez = check_input(str, &inpt, &may_continue);
 		free(inpt);

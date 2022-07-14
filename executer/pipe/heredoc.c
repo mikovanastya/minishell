@@ -34,7 +34,7 @@ int	check_heredoc()
 	// 	return (0);
 	while ((*(g_shell.cmd_start))->redir && (*(g_shell.cmd_start))->redir[i])
 	{
-		if (ft_strcmp(*(*(g_shell.cmd_start))->redir, "<<") == 0)
+		if (ft_strcmp((*(g_shell.cmd_start))->redir, "<<") == 0)
 		{
 			if (redir_heredoc())
 				return (1);
