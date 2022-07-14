@@ -34,7 +34,7 @@ int	count_until_spaces(char	*str)
 	return (i + 1);
 }
 
-char	*get_str(char **envp)
+char	*get_str(void)
 {
 	char	*input;
 	int		i;
@@ -44,27 +44,25 @@ char	*get_str(char **envp)
 	i = 0;
 	input = NULL;
 	g_shell.console_name = "minishell> ";
-	// g_shell.len = 0; 
 	g_shell.pid = getpid();
 	g_shell.pipe = 0;
 	g_shell.arrow = '\0';
 	g_shell.quote = 0;
 	if (read_str(&input) == 0)
-	{
-		substitute_envp(input, envp);
-		double_check_inpt(input);
-	}
+		substitute_envp(input);
 	else
-		printf("\n");
+		return (0);
 	return (input);
 }
 
-void	fill_list(char	*str)
+int	fill_list(char	*str)
 {
 	g_shell.cmd_start = (t_cmd **)malloc(sizeof(t_cmd *));
 	*(g_shell.cmd_start) = NULL;
 	while (*str)
-		add_elem(g_shell.cmd_start, &str);
+		if (add_elem(g_shell.cmd_start, &str) == -1)
+			return (-1);
+	return (0);
 }
 
 int	go_to_word(char **a, int *j, char **str)

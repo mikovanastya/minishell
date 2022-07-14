@@ -154,9 +154,9 @@ int		resize_rez(char **inpt, char **rez);
 int		init_rez(char **rez, char **inpt);
 void	init_redir(t_cmd **redir_cmd, t_list *tokens,
 		char **argv, char **file_name);
-int		in_cycle(char **rez, char **inpt, int *may_continue);
+int		check_input(char **rez, char **inpt, int *may_continue);
 int		go_on(char *str);
-int		substitute_envp(char *input, char **envp);
+int		substitute_envp(char *input);
 int		sp(char c);
 int		replace(char **to_change, int i);
 char	*find_var(char *what_to_find);
@@ -167,19 +167,21 @@ int		delete_var(char **to_change, int i, int a);
 int		repl_less(char **to_change, char *repl, int i, int a);
 int		sub_envp(char **to_change, char **repl, int i, int a);
 char	**put_str_to_tree(char **str);
-int		double_check_inpt(char *inpt);
 int		is_a(char *str);
 int		delete_quote(char **inpt);
 int		n_a(char c);
-char	*get_str(char **envp);
+char	*get_str(void);
 void	free_array(char **arr);
 void	skip_quotes(char *input, int *i);
-void	fill_list(char	*str);
+int	fill_list(char	*str);
 int		add_elem(t_cmd **cmd, char **str);
 int		word_len(char *str);
 int     arrow_action(char **str, t_cmd  **cmd);
 int	separate_str(char ***arr, char **str, t_cmd	*cmd);
 int	go_to_word(char **a, int *j, char **str);
+int	print_token_err(char c);
+int	parse_heredoc(char *delim);
+int	add_filename(t_cmd	*cmd, char **str, char **a);
 /*
 ** STUFF:
 */

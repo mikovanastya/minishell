@@ -19,34 +19,6 @@ int	n_a(char c)
 	return (0);
 }
 
-//проверка < << > >>
-int	double_check_inpt(char *inpt)
-{
-	while (*inpt)
-	{
-		if (is_a(inpt))
-		{
-			if (is_a(inpt) % 2)
-				inpt += 2;
-			else
-				inpt++;
-			while (sp(*inpt))
-				inpt++;
-			if (!*inpt || (is_a(inpt) && !((*(g_shell.cmd_start))->file_name))
-				|| n_a(*inpt))
-			{
-				if (!*inpt)
-					printf("parse error near `\\n'\n");
-				else
-					printf("parse error near `%c'\n", *inpt);
-				return (-1);
-			}
-		}
-		inpt++;
-	}
-	return (1);
-}
-
 int	delete_quote(char **inpt)
 {
 	int	i;

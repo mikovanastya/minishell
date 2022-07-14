@@ -72,55 +72,9 @@ int	init_rez(char **rez, char **inpt)
 	return (1);
 }
 
-int	parse_heredoc(char *delim)
+int	init_and_resize_rez(char **rez, char **inpt)
 {
-	char *inpt;
-	int	file;
-
-	file = 0;
-	inpt = NULL;
-	if (!delim)
-	{
-		printf("minishell: syntax error near unexpected token `newline'\n");
-		return (-1);
-	}
-	file = open(".heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	if (file == -1)
-	{
-		printf("minishell: no space left on device\n");
-		return (-1);
-	}
-	inpt = readline(">");
-	if (inpt == NULL)
-		exit(1);
-	add_history(inpt);
-	if (!*inpt)
-		inpt = ft_strdup("\n");
-	if (ft_strncmp(inpt, delim, ft_strlen(inpt)) != 0)
-		write(file, inpt, ft_strlen(inpt));
-	while (ft_strncmp(inpt, delim, ft_strlen(inpt)) != 0)
-	{
-		if (inpt)
-			free(inpt);
-		inpt = readline(">");
-		if (ft_strncmp(inpt, delim, ft_strlen(inpt)) != 0)
-			write(file, "\n", 1);
-		add_history(inpt);
-		if (!*inpt)
-			inpt = ft_strdup("\n");
-		if (ft_strncmp(inpt, delim, ft_strlen(inpt)) != 0)
-			write(file, inpt, ft_strlen(inpt));
-	}
-	if (inpt)
-		free(inpt);
-	close(file);
-	return (0);
-}
-
-int	in_cycle(char **rez, char **inpt, int *may_continue)
-{
-	int		resize;
-	int		j;
+	int	resize;
 
 	if (!*rez || !**rez)
 	{
@@ -133,19 +87,30 @@ int	in_cycle(char **rez, char **inpt, int *may_continue)
 		if (!resize)
 			return (resize);
 	}
-	j = 0;
+	return (0);
+}
+
+int	check_input(char **rez, char **inpt, int *may_continue)
+{
+	int		j;
+
+	j = init_and_resize_rez(rez, inpt);
+	if (j != 0)
+		return (j);
 	while (*(*inpt + j + 1))
 	{
 		if (is_a(*inpt + j) == 4)
 		{
 			if (parse_heredoc(*inpt + j + 2) == -1)
 				return (-1);
-			else 
+			else
 				return (0);
 		}
 		j++;
 	}
 	*may_continue = go_on(*inpt);
+	if (*may_continue == -2)
+		return (-2);
 	if (ft_strlcat(*rez, *inpt, ft_strlen(*inpt) + ft_strlen(*rez) + 1) < 0)
 	{
 		free_memory(*inpt, *inpt, *rez);

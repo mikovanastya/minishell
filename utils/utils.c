@@ -42,3 +42,13 @@ int	is_a(char *str)
 		return (3);
 	return (0);
 }
+
+int	print_token_err(char c)
+{
+	printf("minishell: syntax error near unexpected token ");
+	if (c)
+		printf("`%c'\n", c);
+	else
+		printf("`newline'\n");
+	return (-1);
+}

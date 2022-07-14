@@ -43,9 +43,15 @@ int	main(int argc, char **argv, char **env)
 	{
 		// signal(SIGQUIT, SIG_IGN);//command c игнор приходит сигнал
 		// signal(SIGINT, handler);//флаг который хотим
-		rez = get_str(env); // !! parser
-		fill_list(rez); // !! parser
-		cmd = (*(g_shell.cmd_start)); // это вообще очень важеая хреня не дуалять
+		rez = get_str(); // !! parser
+		if (rez)
+		{
+			if (fill_list(rez) == -1) // !! parser
+				cmd = NULL; // !! parser
+			else
+				cmd = (*(g_shell.cmd_start)); // это вообще очень важеая хреня не дуалять
+		}
+		
 		// signal(SIGINT, handler_signal);
 		// signal(SIGQUIT, handler_signal);	
 		// int i  = 0;

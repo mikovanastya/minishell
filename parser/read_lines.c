@@ -36,30 +36,47 @@ int	quote_actions(char c)
 	return (1);
 }
 
+void	resume_input_if_pipe_or_slash(char **str, int *go_to_next_str)
+{
+	if (g_shell.quote == '|' && **str != '|'
+		&&!sp(**str) && **str && **str != '\n')
+		g_shell.pipe = 0;
+	if (**str == '\\')
+	{
+		if (!*(*str + 1))
+			*go_to_next_str = 1;
+		while (*(*str + 1))
+		{
+			**str = *(*str + 1);
+			(*str)++;
+		}
+		**str = '\0';
+	}
+	(*str)++;
+}
+
 int	decision_about_quotes(char **str, int *go_to_next_str)
 {
 	while (**str)
 	{
-		if (is_a(*str))
+		if (is_a(*str) && !g_shell.quote)
 			g_shell.arrow = is_a(*str);
 		if ((**str == '\'' || **str == '\"' || **str == '|'))
+		{
+			if (**str == '|' && g_shell.arrow)
+			{
+				(*str)--;
+				while (!is_a(*str) && sp(**str))
+					(*str)--;
+				if (is_a(*str))
+					return (2 * print_token_err('|'));
+				while (**str && **str != '|')
+					(*str)++;
+			}
 			if (quote_actions(**str) == -1)
 				return (-1);
-		if (g_shell.quote == '|' && **str != '|'
-			&&!sp(**str) && **str && **str != '\n')
-			g_shell.pipe = 0;
-		if (**str == '\\')
-		{
-			if (!*(*str + 1))
-				*go_to_next_str = 1;
-			while (*(*str + 1))
-			{
-				**str = *(*str + 1);
-				(*str)++;
-			}
-			**str = '\0';
 		}
-		(*str)++;
+		resume_input_if_pipe_or_slash(str, go_to_next_str);
 	}
 	return (0);
 }
@@ -67,10 +84,12 @@ int	decision_about_quotes(char **str, int *go_to_next_str)
 int	go_on(char *str)
 {
 	int	go_to_next_str;
+	int	decision;
 
 	go_to_next_str = 0;
-	if (decision_about_quotes(&str, &go_to_next_str) == -1)
-		return (-1);
+	decision = decision_about_quotes(&str, &go_to_next_str);
+	if (decision < 0)
+		return (decision);
 	if (g_shell.quote == '|' && go_to_next_str == 0 && g_shell.pipe == 0)
 	{
 		g_shell.quote = '\0';
@@ -98,7 +117,7 @@ int	read_str(char **str)
 			exit(1);
 		}
 		add_history(inpt);
-		cycle_rez = in_cycle(str, &inpt, &may_continue);
+		cycle_rez = check_input(str, &inpt, &may_continue);
 		free(inpt);
 	}
 	return (may_continue);

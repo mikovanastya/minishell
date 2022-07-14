@@ -79,7 +79,7 @@ int	word_len(char *str)
 
 int	arrow_action(char **str, t_cmd	**cmd)
 {
-	((*cmd)->redir) = (char **)malloc(sizeof(char *));// проверка
+	((*cmd)->redir) = (char **)malloc(sizeof(char *));
 	*((*cmd)->redir) = (char *)malloc(sizeof(char) * 3);
 	if (is_a(*str) % 2)
 	{
@@ -102,7 +102,8 @@ int	add_elem(t_cmd **cmd, char **str)
 	new = (t_cmd *)malloc(sizeof(t_cmd));
 	last = *cmd;
 	new->argv = (char **)malloc(sizeof(char *) * len_to_pipe(*str));
-	separate_str(&(new->argv), str, new);
+	if (separate_str(&(new->argv), str, new) == -1)
+		return (-1);
 	new->next = NULL;
 	if (*cmd == NULL)
 	{

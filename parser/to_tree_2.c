@@ -12,20 +12,6 @@
 
 #include "../minishell.h"
 
-void	add_filename(t_cmd	*cmd, char **str, char **a)
-{
-	cmd->file_name = (char **)malloc(sizeof(char *));
-	*(cmd->file_name) = ft_strdup(*a);
-	free(*a);
-	*a = NULL;
-	if (**str)
-		while (**str && sp(**str))
-	(*str)++;
-	if (**str)
-		while (**str && **str != '|' && !n_a(**str))
-			(*str)++;
-}
-
 void	skip_quotes_in_separation(char **str, char *a, int *j)
 {
 	g_shell.quote = **str;
@@ -52,7 +38,7 @@ int	new_elem(char **str, char ***arr, int *i, int *j)
 	return (0);
 }
 
-void	create_element(t_for_array	*pos, char **str, char ***arr,
+void	create_argv(t_for_array	*pos, char **str, char ***arr,
 	t_cmd	*cmd)
 {
 	if (is_a(*str) != 0)
@@ -70,43 +56,51 @@ void	create_element(t_for_array	*pos, char **str, char ***arr,
 	}
 }
 
+int	create_element(t_for_array	*pos, char **str, char ***arr,
+	t_cmd	*cmd)
+{
+	go_to_word(&((*arr)[pos->i]), &(pos->j), str);
+	while (**str && !n_a(**str) && !sp(**str))
+		create_argv(pos, str, arr, cmd);
+	(*arr)[pos->i][pos->j] = '\0';
+	if ((cmd->redir))
+	{
+		while (*((*arr)[pos->i]) && sp(*((*arr)[pos->i])))
+			((*arr)[pos->i])++;
+		if (is_a(((*arr)[pos->i])))
+			return (print_token_err(*((*arr)[pos->i])));
+		if (add_filename(cmd, str, &((*arr)[pos->i])) == -1)
+			return (-1);
+		pos->i--;
+	}
+	else
+		cmd->file_name = NULL;
+	if (**str)
+		while (**str && sp(**str))
+			(*str)++;
+	pos->i++;
+	return (0);
+}
+
 int	separate_str(char ***arr, char **str, t_cmd	*cmd)
 {
 	t_for_array	pos;
+	int			creation_rez;
 
 	((cmd)->redir) = NULL;
 	pos.i = 0;
 	g_shell.quote = 0;
 	while (**str && sp(**str))
 				(*str)++;
-	while (**str && **str != '|' && !n_a(**str))
+	while (**str && !n_a(**str))
 	{
-		go_to_word(&((*arr)[pos.i]), &(pos.j), str);
-		while (**str && **str != '|' && !n_a(**str) && !sp(**str))
-			create_element(&pos, str, arr, cmd);
-		(*arr)[pos.i][pos.j] = '\0';
-		if ((cmd->redir))
-		{
-			add_filename(cmd, str, &((*arr)[pos.i]));
-			pos.i--;
-		}
-		else
-			cmd->file_name = NULL;
-		if (**str)
-			while (**str && sp(**str))
-				(*str)++;
-		pos.i++;
+		creation_rez = create_element(&pos, str, arr, cmd);
+		if (creation_rez != 0)
+			return (creation_rez);
 	}
 	if (**str)
 		if (**str == '|')
 			(*str)++;
 	(*arr)[pos.i] = NULL;
-	//
-	// pos.i = 0;
-	// while ((*arr)[pos.i] != NULL)
-	// {
-	// 	printf("in sep %s\n", (*arr)[pos.i]);
-	// 	pos.i++;
-	// }
 	return (0);
 }
