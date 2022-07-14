@@ -53,7 +53,7 @@ int execute_execve()// выполняет команды из bin///
 
 	// printf("haha %s\n", (*(g_shell.cmd_start))->argv[0]); 
 	// write(1, "haha \n", 7);
-	printf("rere2 %s\n", g_shell.cmd_start->argv[0]);
+	// printf("rere2 %s\n", g_shell.cmd_start->argv[0]);
 	paths = get_env_value("PATH");
 	path_arr = ft_split(paths, ':');
 	if ((ft_strlen(g_shell.cmd_start->argv[0]) > 2)
