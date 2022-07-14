@@ -167,7 +167,6 @@ int		delete_var(char **to_change, int i, int a);
 int		repl_less(char **to_change, char *repl, int i, int a);
 int		sub_envp(char **to_change, char **repl, int i, int a);
 char	**put_str_to_tree(char **str);
-int		double_check_inpt(char *inpt);
 int		is_a(char *str);
 int		delete_quote(char **inpt);
 int		n_a(char c);
@@ -180,6 +179,7 @@ int		word_len(char *str);
 int     arrow_action(char **str, t_cmd  **cmd);
 int	separate_str(char ***arr, char **str, t_cmd	*cmd);
 int	go_to_word(char **a, int *j, char **str);
+int	print_token_err(char c);
 /*
 ** STUFF:
 */

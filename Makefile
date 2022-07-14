@@ -41,7 +41,6 @@ SRCS = 	main.c\
 		parser/to_tree_1.c\
 		parser/to_tree_2.c\
 		parser/check.c\
-		parser/free_memory.c\
 		\
 		utils/utils.c\
 		

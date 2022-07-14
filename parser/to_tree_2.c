@@ -60,17 +60,28 @@ int	filename_len(char *str)
 	return (len);
 }
 
-int	add_more(char **str, t_cmd *cmd)
+int	add_more(char **str, t_cmd *cmd, int i)
 {
 	int	len;
- 
-	(void)cmd;
+	int	j;
+
+	j = 0;
 	while (**str && sp(**str))
 		(*str)++;
 	if (!*str || n_a(**str))
 		return(print_token_err(**str));
 	if (is_a(*str))
+	{
+		(*(cmd->redir))[0] = **str;
 		(*str)++;
+		(*(cmd->redir))[1] = '\0';
+		if (is_a(*str))
+		{
+			(*(cmd->redir))[1] = **str;
+			(*str)++;
+			(*(cmd->redir))[2] = '\0';
+		}
+	}
 	len = filename_len(*str);
 	printf("filename len %d\n", len);
 	if (len == 0)
@@ -79,8 +90,18 @@ int	add_more(char **str, t_cmd *cmd)
 			(*str)++;
 		return (print_token_err(**str));
 	}
+	cmd->file_name[i] = (char *)malloc(sizeof(char) * (len + 1));
+	while (**str && sp(**str))
+		(*str)++;
+	while (**str && !sp(**str) && !n_a(**str) && !is_a(*str))
+	{
+		cmd->file_name[i][j] = **str;
+		(*str)++;
+		j++;
+	}
+	cmd->file_name[i][j] = '\0';
 	if (**str)
-		while (**str && !n_a(**str))
+		while (**str && !n_a(**str) && !is_a(*str))
 			(*str)++;
 	return (0);
 }
@@ -88,18 +109,31 @@ int	add_more(char **str, t_cmd *cmd)
 int	add_filename(t_cmd	*cmd, char **str, char **a)
 {
 	int	len;
+	int	i;
 
+	if (!**a)
+	{
+		if (**str)
+			while (**str && sp(**str))
+				(**str)++;
+		return (print_token_err(**str));
+	}
 	len = count_filenames(*str, *a);
-	printf("count_filename(*str)= %d\n", len);
 	if (len == -1)
 		return (-1);
 	cmd->file_name = (char **)malloc(sizeof(char *) * (len + 1));
 	*(cmd->file_name) = ft_strdup(*a);
 	free(*a);
 	*a = NULL;
+	i = 1;
 	if (**str)
-		if (add_more(str, cmd) == -1)
-			return (-1);
+		while (**str)
+		{
+			if (add_more(str, cmd, i) == -1)
+				return (-1);
+			i++;
+		}
+	cmd->file_name[i] = "\0";
 	return (0);
 }
 
@@ -164,6 +198,10 @@ int	separate_str(char ***arr, char **str, t_cmd	*cmd)
 		(*arr)[pos.i][pos.j] = '\0';
 		if ((cmd->redir))
 		{
+			while (*((*arr)[pos.i]) && sp(*((*arr)[pos.i])))
+				((*arr)[pos.i])++;
+			if (is_a(((*arr)[pos.i])))
+				return(print_token_err(*((*arr)[pos.i])));
 			if (add_filename(cmd, str, &((*arr)[pos.i])) == -1)
 				return (-1);
 			pos.i--;
@@ -179,12 +217,5 @@ int	separate_str(char ***arr, char **str, t_cmd	*cmd)
 		if (**str == '|')
 			(*str)++;
 	(*arr)[pos.i] = NULL;
-	//
-	// pos.i = 0;
-	// while ((*arr)[pos.i] != NULL)
-	// {
-	// 	printf("in sep %s\n", (*arr)[pos.i]);
-	// 	pos.i++;
-	// }
 	return (0);
 }

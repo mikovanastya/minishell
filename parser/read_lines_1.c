@@ -74,8 +74,8 @@ int	init_rez(char **rez, char **inpt)
 
 int	parse_heredoc(char *delim)
 {
-	char *inpt;
-	int	file;
+	char	*inpt;
+	int		file;
 
 	file = 0;
 	inpt = NULL;
@@ -140,12 +140,14 @@ int	in_cycle(char **rez, char **inpt, int *may_continue)
 		{
 			if (parse_heredoc(*inpt + j + 2) == -1)
 				return (-1);
-			else 
+			else
 				return (0);
 		}
 		j++;
 	}
 	*may_continue = go_on(*inpt);
+	if (*may_continue == -2)
+		return (-2);
 	if (ft_strlcat(*rez, *inpt, ft_strlen(*inpt) + ft_strlen(*rez) + 1) < 0)
 	{
 		free_memory(*inpt, *inpt, *rez);

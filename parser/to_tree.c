@@ -50,12 +50,9 @@ char	*get_str(char **envp)
 	g_shell.arrow = '\0';
 	g_shell.quote = 0;
 	if (read_str(&input) == 0)
-	{
 		substitute_envp(input, envp);
-		//double_check_inpt(input);
-	}
 	else
-		printf("\n");
+		return (0);
 	return (input);
 }
 
