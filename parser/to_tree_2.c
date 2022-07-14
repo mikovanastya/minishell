@@ -48,14 +48,41 @@ int count_filenames(char *str, char *first)
 	return (print_token_err(*str));
 }
 
-void	add_more(char **str, t_cmd *cmd)
+int	filename_len(char *str)
 {
+	int	len;
+
+	len = 0;
+	while (*str && sp(*str))
+		(str)++;
+	while (*(str + len) && !sp(*(str + len)) && !n_a(*(str + len)) && !is_a((str + len)))
+		len++;
+	return (len);
+}
+
+int	add_more(char **str, t_cmd *cmd)
+{
+	int	len;
+ 
+	(void)cmd;
 	while (**str && sp(**str))
 		(*str)++;
-	
+	if (!*str || n_a(**str))
+		return(print_token_err(**str));
+	if (is_a(*str))
+		(*str)++;
+	len = filename_len(*str);
+	printf("filename len %d\n", len);
+	if (len == 0)
+	{
+		while (**str && sp(**str))
+			(*str)++;
+		return (print_token_err(**str));
+	}
 	if (**str)
 		while (**str && !n_a(**str))
 			(*str)++;
+	return (0);
 }
 
 int	add_filename(t_cmd	*cmd, char **str, char **a)
@@ -71,7 +98,8 @@ int	add_filename(t_cmd	*cmd, char **str, char **a)
 	free(*a);
 	*a = NULL;
 	if (**str)
-		add_more(str, cmd);
+		if (add_more(str, cmd) == -1)
+			return (-1);
 	return (0);
 }
 
