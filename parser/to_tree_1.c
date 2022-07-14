@@ -79,7 +79,7 @@ int	word_len(char *str)
 
 int	arrow_action(char **str, t_cmd	**cmd)
 {
-	((*cmd)->redir) = (char **)malloc(sizeof(char *));// проверка
+	((*cmd)->redir) = (char **)malloc(sizeof(char *));
 	*((*cmd)->redir) = (char *)malloc(sizeof(char) * 3);
 	if (is_a(*str) % 2)
 	{

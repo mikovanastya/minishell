@@ -43,7 +43,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		// signal(SIGQUIT, SIG_IGN);//command c игнор приходит сигнал
 		// signal(SIGINT, handler);//флаг который хотим
-		rez = get_str(env); // !! parser
+		rez = get_str(); // !! parser
 		if (rez)
 		{
 			if (fill_list(rez) == -1) // !! parser

@@ -71,19 +71,10 @@ char	*find_var(char *what_to_find)
 	return (0);
 }
 
-int	substitute_envp(char *input, char **envp)
+int	substitute_envp(char *input)
 {
 	int		i;
 
-	//i = 0;
-	(void)envp;
-	// if (!set_envp(envp))
-	// 	return (-1);
-	// while (g_shell.envp[i])
-	// {
-	// 	printf("envp[%d] = %s\n", i, g_shell.envp[i]);
-	// 	i++;
-	// }
 	i = 0;
 	while (*(input + i))
 	{

@@ -34,7 +34,7 @@ int	count_until_spaces(char	*str)
 	return (i + 1);
 }
 
-char	*get_str(char **envp)
+char	*get_str(void)
 {
 	char	*input;
 	int		i;
@@ -44,13 +44,12 @@ char	*get_str(char **envp)
 	i = 0;
 	input = NULL;
 	g_shell.console_name = "minishell> ";
-	// g_shell.len = 0; 
 	g_shell.pid = getpid();
 	g_shell.pipe = 0;
 	g_shell.arrow = '\0';
 	g_shell.quote = 0;
 	if (read_str(&input) == 0)
-		substitute_envp(input, envp);
+		substitute_envp(input);
 	else
 		return (0);
 	return (input);

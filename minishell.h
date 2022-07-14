@@ -156,7 +156,7 @@ void	init_redir(t_cmd **redir_cmd, t_list *tokens,
 		char **argv, char **file_name);
 int		in_cycle(char **rez, char **inpt, int *may_continue);
 int		go_on(char *str);
-int		substitute_envp(char *input, char **envp);
+int		substitute_envp(char *input);
 int		sp(char c);
 int		replace(char **to_change, int i);
 char	*find_var(char *what_to_find);
@@ -170,7 +170,7 @@ char	**put_str_to_tree(char **str);
 int		is_a(char *str);
 int		delete_quote(char **inpt);
 int		n_a(char c);
-char	*get_str(char **envp);
+char	*get_str(void);
 void	free_array(char **arr);
 void	skip_quotes(char *input, int *i);
 int	fill_list(char	*str);

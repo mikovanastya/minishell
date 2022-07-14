@@ -22,14 +22,14 @@ int	print_token_err(char c)
 	return (-1);
 }
 
-int count_filenames(char *str, char *first)
+int	count_filenames(char *str, char *first)
 {
 	int	rez;
 
 	rez = 1;
 	if (*first && !*str)
 		return (1);
-	while(*str && !n_a(*str))
+	while (*str && !n_a(*str))
 	{
 		while (*str && !n_a(*str) && !is_a(str))
 			str++;
@@ -55,7 +55,8 @@ int	filename_len(char *str)
 	len = 0;
 	while (*str && sp(*str))
 		(str)++;
-	while (*(str + len) && !sp(*(str + len)) && !n_a(*(str + len)) && !is_a((str + len)))
+	while (*(str + len) && !sp(*(str + len))
+		&& !n_a(*(str + len)) && !is_a((str + len)))
 		len++;
 	return (len);
 }
@@ -69,7 +70,7 @@ int	add_more(char **str, t_cmd *cmd, int i)
 	while (**str && sp(**str))
 		(*str)++;
 	if (!*str || n_a(**str))
-		return(print_token_err(**str));
+		return (print_token_err(**str));
 	if (is_a(*str))
 	{
 		(*(cmd->redir))[0] = **str;
@@ -127,12 +128,14 @@ int	add_filename(t_cmd	*cmd, char **str, char **a)
 	*a = NULL;
 	i = 1;
 	if (**str)
+	{
 		while (**str)
 		{
 			if (add_more(str, cmd, i) == -1)
 				return (-1);
 			i++;
 		}
+	}
 	cmd->file_name[i] = "\0";
 	return (0);
 }
