@@ -52,19 +52,21 @@ char	*get_str(char **envp)
 	if (read_str(&input) == 0)
 	{
 		substitute_envp(input, envp);
-		double_check_inpt(input);
+		//double_check_inpt(input);
 	}
 	else
 		printf("\n");
 	return (input);
 }
 
-void	fill_list(char	*str)
+int	fill_list(char	*str)
 {
 	g_shell.cmd_start = (t_cmd **)malloc(sizeof(t_cmd *));
 	*(g_shell.cmd_start) = NULL;
 	while (*str)
-		add_elem(g_shell.cmd_start, &str);
+		if (add_elem(g_shell.cmd_start, &str) == -1)
+			return (-1);
+	return (0);
 }
 
 int	go_to_word(char **a, int *j, char **str)

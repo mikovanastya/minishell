@@ -102,7 +102,8 @@ int	add_elem(t_cmd **cmd, char **str)
 	new = (t_cmd *)malloc(sizeof(t_cmd));
 	last = *cmd;
 	new->argv = (char **)malloc(sizeof(char *) * len_to_pipe(*str));
-	separate_str(&(new->argv), str, new);
+	if (separate_str(&(new->argv), str, new) == -1)
+		return (-1);
 	new->next = NULL;
 	if (*cmd == NULL)
 	{

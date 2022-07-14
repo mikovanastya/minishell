@@ -12,18 +12,67 @@
 
 #include "../minishell.h"
 
-void	add_filename(t_cmd	*cmd, char **str, char **a)
+int	print_token_err(char c)
 {
-	cmd->file_name = (char **)malloc(sizeof(char *));
+	printf("minishell: syntax error near unexpected token ");
+	if (c)
+		printf("`%c'\n", c);
+	else
+		printf("`newline'\n");
+	return (-1);
+}
+
+int count_filenames(char *str, char *first)
+{
+	int	rez;
+
+	rez = 1;
+	if (*first && !*str)
+		return (1);
+	while(*str && !n_a(*str))
+	{
+		while (*str && !n_a(*str) && !is_a(str))
+			str++;
+		if (!*str)
+			return (rez);
+		if (is_a(str))
+			str++;
+		while (*str && sp(*str))
+			str++;
+		if (*str == '&' || !*str)
+			return (print_token_err(*str));
+		else if (n_a(*str))
+			return (rez);
+		rez++;
+	}
+	return (print_token_err(*str));
+}
+
+void	add_more(char **str, t_cmd *cmd)
+{
+	while (**str && sp(**str))
+		(*str)++;
+	
+	if (**str)
+		while (**str && !n_a(**str))
+			(*str)++;
+}
+
+int	add_filename(t_cmd	*cmd, char **str, char **a)
+{
+	int	len;
+
+	len = count_filenames(*str, *a);
+	printf("count_filename(*str)= %d\n", len);
+	if (len == -1)
+		return (-1);
+	cmd->file_name = (char **)malloc(sizeof(char *) * (len + 1));
 	*(cmd->file_name) = ft_strdup(*a);
 	free(*a);
 	*a = NULL;
 	if (**str)
-		while (**str && sp(**str))
-	(*str)++;
-	if (**str)
-		while (**str && **str != '|' && !n_a(**str))
-			(*str)++;
+		add_more(str, cmd);
+	return (0);
 }
 
 void	skip_quotes_in_separation(char **str, char *a, int *j)
@@ -79,15 +128,16 @@ int	separate_str(char ***arr, char **str, t_cmd	*cmd)
 	g_shell.quote = 0;
 	while (**str && sp(**str))
 				(*str)++;
-	while (**str && **str != '|' && !n_a(**str))
+	while (**str && !n_a(**str))
 	{
 		go_to_word(&((*arr)[pos.i]), &(pos.j), str);
-		while (**str && **str != '|' && !n_a(**str) && !sp(**str))
+		while (**str && !n_a(**str) && !sp(**str))
 			create_element(&pos, str, arr, cmd);
 		(*arr)[pos.i][pos.j] = '\0';
 		if ((cmd->redir))
 		{
-			add_filename(cmd, str, &((*arr)[pos.i]));
+			if (add_filename(cmd, str, &((*arr)[pos.i])) == -1)
+				return (-1);
 			pos.i--;
 		}
 		else

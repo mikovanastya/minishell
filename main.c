@@ -44,8 +44,10 @@ int	main(int argc, char **argv, char **env)
 		// signal(SIGQUIT, SIG_IGN);//command c игнор приходит сигнал
 		// signal(SIGINT, handler);//флаг который хотим
 		rez = get_str(env); // !! parser
-		fill_list(rez); // !! parser
-		cmd = (*(g_shell.cmd_start)); // это вообще очень важеая хреня не дуалять
+		if (fill_list(rez) == -1) // !! parser
+			cmd = NULL; // !! parser
+		else
+			cmd = (*(g_shell.cmd_start)); // это вообще очень важеая хреня не дуалять
 		// signal(SIGINT, handler_signal);
 		// signal(SIGQUIT, handler_signal);	
 		// int i  = 0;
@@ -54,8 +56,8 @@ int	main(int argc, char **argv, char **env)
 		// 	printf("argv %s \n", cmd->argv[i]);
 		// 	i++;
 		// }
-		if (cmd)
-			pipex(cmd);
+		// if (cmd)
+		// 	pipex(cmd);
 		free(rez);
 		//free struct!!!!!
 	}
