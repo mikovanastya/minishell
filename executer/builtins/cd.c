@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:08:53 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/07 14:49:18 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/15 21:01:53 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	builtin_cd()
 			home = get_env_value("HOME");
 	}
 	getcwd(cwd, sizeof(cwd));//копируем то что в HOME путь в строку куда указывает cwd
-	if (chdir(*g_shell.cmd_start->argv) == -1)
+	if (chdir(g_shell.cmd_start->argv[1]) == -1)
 	{
 		if (g_shell.cmd_start->argv[0] == '\0')
 			return (1);

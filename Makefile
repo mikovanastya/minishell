@@ -6,7 +6,7 @@
 #    By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/16 14:07:19 by rtwitch           #+#    #+#              #
-#    Updated: 2022/07/01 17:25:59 by rtwitch          ###   ########.fr        #
+#    Updated: 2022/07/15 18:02:53 by rtwitch          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRCS = 	main.c\
 		executer/builtins/builtins.c\
 		executer/pipe/create_pipe.c\
 		executer/pipe/pipex.c\
-		executer/signal/signal.c\
+		executer/signal/ft_signal.c\
 		executer/pipe/heredoc.c\
 		executer/pipe/redirect.c\
 		executer/pipe/free.c\
@@ -55,7 +55,7 @@ HEADER = minishell.h
 #RL_LIB      =   ~/.brew/opt/readline/lib
 
 CC		=	cc
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -g -Wall -Werror -Wextra -I$(HEADER) -I/Users/$(USER)/.brew/Cellar/readline/8.1.2/include
 # FLAGS = -fsanitize=address -g 
 
 RM			=	rm -f
@@ -69,7 +69,8 @@ all : $(NAME)
 
 $(NAME) : $(OBJ) ./libft/*.c
 	make -C ./libft
-	$(CC) -g -lreadline $(FLAGS) $(OBJ) -L libft ./libft/libft.a  -o $(NAME)
+	# $(CC) -g -lreadline $(FLAGS) $(OBJ) -L libft ./libft/libft.a  -o $(NAME)
+	$(CC) -g -lreadline $(FLAGS) $(OBJ) -o $(NAME) -L/Users/$(USER)/.brew/Cellar/readline/8.1.2/lib/ -lreadline -L./libft -lft
 
 %.o: %.c  */*.h $(HEADER)
 	$(CC) -g $(FLAGS) -c $< -o $@

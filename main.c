@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:01:07 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/13 19:53:58 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/15 20:02:10 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,47 +24,32 @@
 int	main(int argc, char **argv, char **env)
 {
 	char	*rez;
-	// t_shell	shell;
 	t_cmd	*cmd;
-	int		i;
 	t_list	*tokens;
 	t_cmd **ex_cmd;
 
 	tokens = NULL;
 	ex_cmd = NULL;
-
-	(void)i;
 	//g_shell = (t_shell)malloc(sizeof(t_shell));
 	if (argc != 1)
-	 	ft_error(argv[0], EINVAL);
+		ft_error(argv[0], EINVAL);
 	cmd = NULL;
 	init_env(env);
 	while (1)
 	{
-		// signal(SIGQUIT, SIG_IGN);//command c игнор приходит сигнал
-		// signal(SIGINT, handler);//флаг который хотим
-		rez = get_str(); // !! parser
+		rez = get_str();
 		if (rez)
 		{
-			if (fill_list(rez) == -1) // !! parser
-				cmd = NULL; // !! parser
+			if (fill_list(rez) == -1)
+				cmd = NULL;
 			else
-				cmd = g_shell.cmd_start; // это вообще очень важеая хреня не дуалять
+				cmd = g_shell.cmd_start;
 		}
-		
-		// signal(SIGINT, handler_signal);
-		// signal(SIGQUIT, handler_signal);	
-		// int i  = 0;
-		// // // cmd = cmd->next;
-		// while (cmd->argv[i])
-		// {
-		// 	printf("argv %s %s %s\n", cmd->argv[i], cmd->file_name[0], cmd->redir);
-		// 	i++;
-		// }
+		signal(SIGINT, handler_signal);
+		signal(SIGQUIT, handler_signal);
 		if (cmd)
 			pipex();
 		free(rez);
-		//free struct!!!!!
 	}
 	return (0);
 }

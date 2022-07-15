@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:02:04 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/13 20:39:06 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/15 21:24:40 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,13 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
-// # include "readline/tilde.h"
-// # include "readline/rlconf.h"
-// # include "readline/rlstdc.h"
-# include "readline/history.h"
-// # include "readline/keymaps.h"
-# include "readline/readline.h"
-// # include "readline/chardefs.h"
-// # include "readline/rltypedefs.h"
-#include <fcntl.h>
-
+# include <signal.h>
+# include <sys/signal.h>
+// # include "readline/history.h"
+// # include "readline/readline.h"
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <fcntl.h>
 
 typedef struct s_cmd	t_cmd;
 
@@ -130,10 +127,6 @@ void	pipex();
 int execute_execve();
 void	handler_signal(int signal);
 int		start_cmd_fork();
-int		redir_heredoc();
-void	heredoc();
-int		check_heredoc();
-int		make_heredocs();
 void	set_last_status(int status);
 int		open_file(char *argv, int i, int quit);
 int		check_redirection(int quit);
@@ -142,7 +135,7 @@ void	*ft_free_str_arr(char ***arr);
 int	ft_builtin(t_cmd *cmd);
 void	sig_sig_signal(void);
 void	r_in();
-// void	handler(int signum);
+void	ft_handler(int signum);
 /*
 ** PARSER:
 */
@@ -199,5 +192,8 @@ void	ft_copy_argv(char **argv, char *tokens, int type);
 void	ex_cmd_add_back(t_cmd **ex_cmd, t_cmd *new);
 t_cmd	*new_ex_cmd(char **argv, char **file);
 void	copy_end(char **argv, char **file, t_cmd **ex_cmd);
+void ft_exit2();
+void	ft_exit();
+int	ms_check_exit_arg(char *arg);
 
 #endif

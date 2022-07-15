@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 19:17:01 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/13 20:49:16 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/15 21:22:19 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ int	ft_builtin(t_cmd *cmd)
 
 void	pipex(void)
 {
+	int	status;
 	if (nofork(g_shell.cmd_start->argv[0]))
 	{
 		start_cmd_nofork();
@@ -151,7 +152,6 @@ void	pipex(void)
 	{
 		while (g_shell.cmd_start)
 		{
-			// printf("rere %s\n", (*(g_shell.cmd_start))->argv[0]);
 			create_pipe();
 			waitpid(g_shell.cmd_start->pid, &g_shell.cmd_start->exit_status, 0);
 			set_last_status(g_shell.cmd_start->exit_status);
@@ -170,7 +170,6 @@ void	pipex(void)
 
 void	set_last_status(int status)
 {
-	// (void)status;
 	if (WIFEXITED(status))
 		set_env("?", ft_itoa(WEXITSTATUS(status)));
 	else if (WIFSIGNALED(status))

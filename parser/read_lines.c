@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:45:31 by eward             #+#    #+#             */
-/*   Updated: 2022/06/30 17:28:19 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/15 20:50:45 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,11 @@ int	read_str(char **str)
 	may_continue = 1;
 	while (may_continue == 1)
 	{
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, ft_handler);
 		inpt = readline(g_shell.console_name);
+		if (!inpt)
+			ft_exit2();
 		if (inpt == NULL)
 			exit(1);
 		add_history(inpt);
