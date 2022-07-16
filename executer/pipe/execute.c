@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/27 18:34:52 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/16 17:14:18 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/16 18:47:05 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ int	execute_execve_without_path(char **path_arr)
 		path_arr++;
 		if (*tmp)
 			free(tmp);
-		if (*final)
-			free(final);
 	}
 	if (*path_arr == NULL)
 		return (0);
 	else
 		execve(final, g_shell.cmd_start->argv, g_shell.envp);
+	if (*final)
+			free(final);
 	return (0);
 }
 
@@ -77,7 +77,7 @@ void	set_last_status(int status)
 	else if (WIFSIGNALED(status))
 		stat = ft_itoa(WTERMSIG(status) + 128);
 	set_env("?", stat);
-	if (*stat)
-		free(stat);
-	set_env("_", g_shell.cmd_start->argv[0]);
+	// if (*stat)
+	// 	free(stat);
+	// set_env("_", g_shell.cmd_start->argv[0]);
 }

@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/14 14:14:15 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/16 16:15:49 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/16 19:03:12 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ int	env_prmtrs_exist(char *prmtrs)
 		free(tmp);
 		i++;
 	}
-	if (*prmtrs)
-		free(prmtrs);
 	return (0);
 }
 
@@ -40,15 +38,14 @@ int	new_env(char *str)
 	char	**tmp;
 
 	i = 0;
-	if (*str)
-		free(str);
-	tmp = malloc(sizeof(char *) * (g_shell.len + 2));
+	tmp = (char **)malloc(sizeof(char *) * (g_shell.len + 2));
 	while (i < g_shell.len)
 	{
 		tmp[i] = g_shell.envp[i];
 		i++;
 	}
 	tmp[i] = str;
+	tmp[i + 1] = NULL;
 	g_shell.envp = tmp;
 	return (0);
 }
@@ -67,9 +64,8 @@ void	rewrite_env_prmtrs(char *prmtrs, char *join)
 		{
 			tmp = ft_substr(g_shell.envp[i], 0, \
 				ft_strchr(g_shell.envp[i], '=') - g_shell.envp[i] + 1);
-			if (ft_strncmp(tmp, \
-				prmtrs, ft_strlen(prmtrs)) == 0)
-					g_shell.envp[i] = join;
+			if (ft_strncmp(tmp, prmtrs, ft_strlen(prmtrs)) == 0)
+				g_shell.envp[i] = join;
 			free(tmp);
 		}
 		i++;
