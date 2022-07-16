@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:13:19 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/13 20:38:31 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/16 14:55:27 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,11 @@ int	check_name(char *args)
 {
 	int	i;
 
-	//args[0] буква или _
 	if ((!ft_isalpha(args[0])) && args[0] != '_' )
 		return (1);
 	i = 1;
 	while (args[i])
 	{
-		//args[i] буква цифра _ =
 		if ((!ft_isalnum(args[i])) && args[i] != '_' && args[i] != '=')
 			return (1);
 		i++;
@@ -38,6 +36,7 @@ char	**new_envp(void)
 	i = 0;
 	while (g_shell.envp[i])
 		i++;
+	ft_free(g_shell.envp);
 	new_envp = malloc(sizeof(char *) * (i + 1));
 	if (!new_envp)
 		return (NULL);
@@ -61,8 +60,8 @@ void	no_args(void)
 	i = 0;
 	tmp = new_envp();
 	sort_tmp_env(tmp);
-	before = before_quotes(tmp);//до =""
-	after = after_quotes(tmp);//после =""
+	before = before_quotes(tmp);
+	after = after_quotes(tmp);
 	while (tmp[i])
 	{
 		if (!ft_strchr(tmp[i], '='))
@@ -71,9 +70,8 @@ void	no_args(void)
 			printf("declare -x %s=\"%s\"\n", before[i], after[i]);
 		i++;
 	}
-	// ft_free(tmp);
-	// ft_free(before);
-	// ft_free(after);
+	ft_free(before);
+	ft_free(after);
 }
 
 int	export_prmtrs(char *str)
@@ -94,7 +92,7 @@ int	export_prmtrs(char *str)
 	return (set_env(par, val));
 }
 
-int	builtin_export()
+int	builtin_export(void)
 {
 	int		i;
 
@@ -103,7 +101,7 @@ int	builtin_export()
 	i = 1;
 	while (g_shell.cmd_start->argv[i])
 	{
-		if (check_name(g_shell.cmd_start->argv[i]))//// !!! Проверка на валидность аргумента ("name=value")
+		if (check_name(g_shell.cmd_start->argv[i]))
 		{
 			printf("export: not a valid identifier\n");
 			return (1);

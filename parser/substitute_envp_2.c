@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 13:59:38 by eward             #+#    #+#             */
-/*   Updated: 2022/07/12 20:48:28 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/16 16:49:10 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	replace(char **to_change, int i)
 	if (*(*to_change + i + 1) == '$')
 		return (repl_less(to_change, ft_itoa(g_shell.pid), i, 2));
 	while (ft_isalpha(*(*to_change + i + a)) || *(*to_change + i + a) == '_'
-		|| (ft_isdigit(*(*to_change + i + a)) && *(*to_change + i + a) != 1))
+		|| (ft_isdigit(*(*to_change + i + a)) && *(*to_change + i + a) != 1)
+		|| *(*to_change + i + a) == '?')
 		a++;
 	var_name = (char *)malloc(sizeof(char) * (a + 1));
 	ft_memmove(var_name, *to_change + i + 1, a - 1);

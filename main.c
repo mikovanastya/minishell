@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:01:07 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/15 20:02:10 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/16 17:51:17 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,31 @@
 **	всё вместе:
 */
 
+void	free_cmd(t_cmd *cmd)
+{
+	t_cmd	*t;
+
+	if (cmd)
+		t = cmd->next;
+	while (cmd)
+	{
+		ft_free(cmd->argv);
+		ft_free(cmd->file_name);
+		if (cmd->redir)
+			free(cmd->redir);
+		if (cmd)
+			free(cmd);
+		cmd = t;
+		if (cmd)
+			t = cmd->next;
+	}
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	char	*rez;
 	t_cmd	*cmd;
-	t_list	*tokens;
-	t_cmd **ex_cmd;
 
-	tokens = NULL;
-	ex_cmd = NULL;
-	//g_shell = (t_shell)malloc(sizeof(t_shell));
 	if (argc != 1)
 		ft_error(argv[0], EINVAL);
 	cmd = NULL;
@@ -49,6 +64,7 @@ int	main(int argc, char **argv, char **env)
 		signal(SIGQUIT, handler_signal);
 		if (cmd)
 			pipex();
+		free_cmd(cmd);
 		free(rez);
 	}
 	return (0);

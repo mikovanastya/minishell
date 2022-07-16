@@ -6,13 +6,13 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 15:56:12 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/15 21:06:10 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/16 16:12:09 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	ft_exit()
+void	ft_exit(void)
 {
 	int	i;
 
@@ -39,42 +39,23 @@ void	ft_exit()
 	}
 }
 
-int	builtins()
+int	builtins(void)
 {
 	int	i;
 
 	i = 1;
-	// if (ft_strncmp(g_shell.cmd_start->argv[0], "exit", ft_strlen(g_shell.cmd_start->argv[0])))
-	// 	ft_exit();
-	if (!ft_strncmp(g_shell.cmd_start->argv[0], "echo", ft_strlen(g_shell.cmd_start->argv[0])))
-	{
-		builtin_echo(1);
-		exit(0);
-	}
-	else if (!ft_strncmp(g_shell.cmd_start->argv[0], "pwd", ft_strlen(g_shell.cmd_start->argv[0]))){
-		builtin_pwd();
-		exit(0);
-	}
-	else if (!ft_strncmp(g_shell.cmd_start->argv[0], "env", ft_strlen(g_shell.cmd_start->argv[0])))
-	{
-		builtin_env();
-		exit(0);
-	}
-	else if (!ft_strncmp(g_shell.cmd_start->argv[0], "export", ft_strlen(g_shell.cmd_start->argv[0])))
-	{
-		builtin_export();
-		exit(0);
-	}
-	else if (!ft_strncmp(g_shell.cmd_start->argv[0], "unset", ft_strlen(g_shell.cmd_start->argv[0])))
-	{
-		builtin_unset();
-		exit(0);
-	}
-	else if (!ft_strncmp(g_shell.cmd_start->argv[0], "cd", ft_strlen(g_shell.cmd_start->argv[0])))
-	{
-		builtin_cd();
-		exit(0);
-	}
+	if (!ft_strncmp(g_shell.cmd_start->argv[0], "echo", 4))
+		exit(builtin_echo(1));
+	else if (!ft_strncmp(g_shell.cmd_start->argv[0], "pwd", 3))
+		exit(builtin_pwd());
+	else if (!ft_strncmp(g_shell.cmd_start->argv[0], "env", 3))
+		exit(builtin_env());
+	else if (!ft_strncmp(g_shell.cmd_start->argv[0], "export", 6))
+		exit(builtin_export());
+	else if (!ft_strncmp(g_shell.cmd_start->argv[0], "unset", 5))
+		exit(builtin_unset());
+	else if (!ft_strncmp(g_shell.cmd_start->argv[0], "cd", 2))
+		exit(builtin_cd());
 	else
 		i = 0;
 	return (i);

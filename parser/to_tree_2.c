@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 21:10:38 by eward             #+#    #+#             */
-/*   Updated: 2022/07/12 15:50:15 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/16 17:50:29 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,13 @@ void	create_argv(t_for_array	*pos, char **str, char ***arr,
 	}
 }
 
+void	skip_spaces(char **str)
+{
+	if (**str)
+		while (**str && sp(**str))
+			(*str)++;
+}
+
 int	create_element(t_for_array	*pos, char **str, char ***arr,
 	t_cmd	*cmd)
 {
@@ -68,7 +75,6 @@ int	create_element(t_for_array	*pos, char **str, char ***arr,
 		while (*((*arr)[pos->i]) && sp(*((*arr)[pos->i])))
 			((*arr)[pos->i])++;
 		if (is_a(((*arr)[pos->i])))
-			// return (print_token_err(*((*arr)[pos->i])));
 			return (print_token_err('7'));
 		if (add_filename(cmd, str, &((*arr)[pos->i])) == -1)
 			return (-1);
@@ -81,32 +87,7 @@ int	create_element(t_for_array	*pos, char **str, char ***arr,
 	}
 	else
 		cmd->file_name = NULL;
-	if (**str)
-		while (**str && sp(**str))
-			(*str)++;
+	skip_spaces(str);
 	pos->i++;
-	return (0);
-}
-
-int	separate_str(char ***arr, char **str, t_cmd	*cmd)
-{
-	t_for_array	pos;
-	int			creation_rez;
-
-	((cmd)->redir) = NULL;
-	pos.i = 0;
-	g_shell.quote = 0;
-	while (**str && sp(**str))
-				(*str)++;
-	while (**str && !n_a(**str))
-	{
-		creation_rez = create_element(&pos, str, arr, cmd);
-		if (creation_rez != 0)
-			return (creation_rez);
-	}
-	if (**str)
-		if (**str == '|')
-			(*str)++;
-	(*arr)[pos.i] = NULL;
 	return (0);
 }

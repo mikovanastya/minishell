@@ -6,7 +6,7 @@
 #    By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/16 14:07:19 by rtwitch           #+#    #+#              #
-#    Updated: 2022/07/15 18:02:53 by rtwitch          ###   ########.fr        #
+#    Updated: 2022/07/16 16:56:02 by rtwitch          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,12 +26,10 @@ SRCS = 	main.c\
 		executer/builtins/pwd.c\
 		executer/builtins/unset.c\
 		executer/builtins/builtins.c\
-		executer/pipe/create_pipe.c\
+		executer/pipe/execute.c\
 		executer/pipe/pipex.c\
 		executer/signal/ft_signal.c\
-		executer/pipe/heredoc.c\
 		executer/pipe/redirect.c\
-		executer/pipe/free.c\
 		\
 		parser/parse_heredocs.c\
 		parser/read_lines.c\
@@ -42,8 +40,10 @@ SRCS = 	main.c\
 		parser/to_tree.c\
 		parser/to_tree_1.c\
 		parser/to_tree_2.c\
+		parser/to_tree_3.c\
 		parser/check.c\
 		parser/add_filenames.c\
+		parser/add_filenames_1.c\
 		\
 		utils/utils.c\
 		
@@ -51,12 +51,8 @@ SRCS = 	main.c\
 
 HEADER = minishell.h
 
-#RL_INCLUDE  =   ~/.brew/opt/readline/include
-#RL_LIB      =   ~/.brew/opt/readline/lib
-
 CC		=	cc
-FLAGS = -g -Wall -Werror -Wextra -I$(HEADER) -I/Users/$(USER)/.brew/Cellar/readline/8.1.2/include
-# FLAGS = -fsanitize=address -g 
+FLAGS = -g -Wall -Werror -Wextra -I $(HEADER) -I/Users/$(USER)/.brew/Cellar/readline/8.1.2/include
 
 RM			=	rm -f
 
@@ -69,11 +65,10 @@ all : $(NAME)
 
 $(NAME) : $(OBJ) ./libft/*.c
 	make -C ./libft
-	# $(CC) -g -lreadline $(FLAGS) $(OBJ) -L libft ./libft/libft.a  -o $(NAME)
-	$(CC) -g -lreadline $(FLAGS) $(OBJ) -o $(NAME) -L/Users/$(USER)/.brew/Cellar/readline/8.1.2/lib/ -lreadline -L./libft -lft
+	$(CC) $(FLAGS) $(OBJ) -o $(NAME) -L/Users/$(USER)/.brew/Cellar/readline/8.1.2/lib/ -lreadline -L./libft -lft
 
 %.o: %.c  */*.h $(HEADER)
-	$(CC) -g $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 clean :
 	$(RM) $(OBJ)

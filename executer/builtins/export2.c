@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 14:20:53 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/12 18:09:39 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/16 16:06:31 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	max(int a, int b)
 		return (b);
 }
 
-int	ft_sym_export(char *str)//символы, идем и пока не дойдем до конца или до =
+int	ft_sym_export(char *str)
 {
 	int	j;
 
@@ -45,12 +45,16 @@ void	ft_free(char **mass)
 	int	sizemass;
 
 	sizemass = 0;
+	if (!mass)
+		return ;
 	while (mass[sizemass])
 	{
-		free(mass[sizemass]);
+		if (*mass[sizemass])
+			free(mass[sizemass]);
 		sizemass++;
 	}
-	free(mass);
+	if (*mass)
+		free(mass);
 }
 
 void	sort_tmp_env(char **envp)

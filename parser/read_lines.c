@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:45:31 by eward             #+#    #+#             */
-/*   Updated: 2022/07/15 20:50:45 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/16 16:47:12 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int	decision_about_quotes(char **str, int *go_to_next_str)
 				while (!is_a(*str) && sp(**str))
 					(*str)--;
 				if (is_a(*str))
-					// return (2 * print_token_err('|'));
 					return (2 * print_token_err('6'));
 				while (**str && **str != '|')
 					(*str)++;

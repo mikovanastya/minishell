@@ -6,29 +6,35 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:08:53 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/15 21:01:53 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/16 17:44:45 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	builtin_cd()
+int	check_cd(void)
 {
-	char	cwd[PATH_MAX];
 	char	*home;
 
 	home = NULL;
-	if (!g_shell.cmd_start->argv[1])// параметр помле cd
+	if (!env_prmtrs_exist(home))
 	{
-		if (!env_prmtrs_exist(home))
-		{
-			ft_putstr_fd("cd: HOME not set\n", 2);
-			return (1);
-		}
-		else
-			home = get_env_value("HOME");
+		ft_putstr_fd("cd: HOME not set\n", 2);
+		return (1);
 	}
-	getcwd(cwd, sizeof(cwd));//копируем то что в HOME путь в строку куда указывает cwd
+	else
+		home = get_env_value("HOME");
+	return (0);
+}
+
+int	builtin_cd(void)
+{
+	char	cwd[PATH_MAX];
+
+	if (!g_shell.cmd_start->argv[1])
+		if (check_cd() == 1)
+			return (1);
+	getcwd(cwd, sizeof(cwd));
 	if (chdir(g_shell.cmd_start->argv[1]) == -1)
 	{
 		if (g_shell.cmd_start->argv[0] == '\0')
@@ -38,8 +44,8 @@ int	builtin_cd()
 		ft_putendl_fd(": No such file or directory", 2);
 		return (1);
 	}
-	set_env("OLDPWD", cwd);//предыдущий каталог
+	set_env("OLDPWD", cwd);
 	getcwd(cwd, sizeof(cwd));
-	set_env("PWD", cwd);//текущий
+	set_env("PWD", cwd);
 	return (0);
 }

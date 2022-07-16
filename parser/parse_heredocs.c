@@ -3,33 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   parse_heredocs.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eward <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 12:23:35 by eward             #+#    #+#             */
-/*   Updated: 2022/07/14 12:23:38 by eward            ###   ########.fr       */
+/*   Updated: 2022/07/16 16:46:18 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	parse_heredoc(char *delim)
+void	read_to_heredoc(char *delim, int file)
 {
 	char	*inpt;
-	int		file;
 
-	file = 0;
-	inpt = NULL;
-	if (!delim)
-	{
-		printf("minishell: syntax error near unexpected token1 `newline'\n");
-		return (-1);
-	}
-	file = open(".heredoc", O_RDWR | O_CREAT | O_TRUNC, 0777);
-	if (file == -1)
-	{
-		printf("minishell: no space left on device\n");
-		return (-1);
-	}
 	inpt = readline(">");
 	if (inpt == NULL)
 		exit(1);
@@ -53,6 +39,25 @@ int	parse_heredoc(char *delim)
 	}
 	if (inpt)
 		free(inpt);
+}
+
+int	parse_heredoc(char *delim)
+{
+	int		file;
+
+	file = 0;
+	if (!delim)
+	{
+		printf("minishell: syntax error near unexpected token1 `newline'\n");
+		return (-1);
+	}
+	file = open(".heredoc", O_RDWR | O_CREAT | O_TRUNC, 0777);
+	if (file == -1)
+	{
+		printf("minishell: no space left on device\n");
+		return (-1);
+	}
+	read_to_heredoc(delim, file);
 	close(file);
 	return (0);
 }

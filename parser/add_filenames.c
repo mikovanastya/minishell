@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   add_filenames.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eward <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 12:26:46 by eward             #+#    #+#             */
-/*   Updated: 2022/07/14 12:26:48 by eward            ###   ########.fr       */
+/*   Updated: 2022/07/16 17:21:42 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,11 @@ int	count_filenames(char *str, char *first)
 		while (*str && sp(*str))
 			str++;
 		if (*str == '&' || !*str)
-			// return (print_token_err(*str));
 			return (print_token_err('1'));
 		else if (n_a(*str))
 			return (rez);
 		rez++;
 	}
-	// return (print_token_err(*str));
 	return (print_token_err('2'));
 }
 
@@ -53,17 +51,8 @@ int	filename_len(char *str)
 	return (len);
 }
 
-int	add_more(char **str, t_cmd *cmd, int i)
+void	choose_redir(char **str, t_cmd *cmd, int *len)
 {
-	int	len;
-	int	j;
-
-	j = 0;
-	while (**str && sp(**str))
-		(*str)++;
-	if (!*str || n_a(**str))
-		// return (print_token_err(**str));
-		return (print_token_err('3'));
 	if (is_a(*str))
 	{
 		(cmd->redir)[0] = **str;
@@ -76,60 +65,45 @@ int	add_more(char **str, t_cmd *cmd, int i)
 			(cmd->redir)[2] = '\0';
 		}
 	}
-	len = filename_len(*str);
-	if (len == 0)
-	{
-		while (**str && sp(**str))
-			(*str)++;
-		// return (print_token_err(**str));
-		return (print_token_err('4'));
-	}
-	cmd->file_name[i] = (char *)malloc(sizeof(char) * (len + 1));
+	*len = filename_len(*str);
+}
+
+void	create_filename(char **str, t_cmd *cmd, int *i, int *j)
+{
 	while (**str && sp(**str))
 		(*str)++;
 	while (**str && !sp(**str) && !n_a(**str) && !is_a(*str))
 	{
-		cmd->file_name[i][j] = **str;
+		cmd->file_name[*i][*j] = **str;
 		(*str)++;
-		j++;
+		(*j)++;
 	}
-	cmd->file_name[i][j] = '\0';
+	cmd->file_name[*i][*j] = '\0';
 	if (**str)
 		while (**str && !n_a(**str) && !is_a(*str))
 			(*str)++;
-	return (0);
 }
 
-int	add_filename(t_cmd	*cmd, char **str, char **a)
+int	add_more(char **str, t_cmd *cmd, int i)
 {
 	int	len;
-	int	i;
+	int	j;
 
-	if (!**a)
+	j = 0;
+	while (**str && sp(**str))
+		(*str)++;
+	if (!*str || n_a(**str))
+		return (print_token_err('3'));
+	if (!**str)
+		return (0);
+	choose_redir(str, cmd, &len);
+	if (len == 0)
 	{
-		if (**str)
-			while (**str && sp(**str))
-				(**str)++;
-		// return (print_token_err(**str));
-		return (print_token_err('5'));
+		while (**str && sp(**str))
+			(*str)++;
+		return (print_token_err('4'));
 	}
-	len = count_filenames(*str, *a);
-	if (len == -1)
-		return (-1);
-	cmd->file_name = (char **)malloc(sizeof(char *) * (len + 1));
-	*(cmd->file_name) = ft_strdup(*a);
-	free(*a);
-	*a = NULL;
-	i = 1;
-	if (**str)
-	{
-		while (**str)
-		{
-			if (add_more(str, cmd, i) == -1)
-				return (-1);
-			i++;
-		}
-	}
-	cmd->file_name[i] = NULL;
+	cmd->file_name[i] = (char *)malloc(sizeof(char) * (len + 1));
+	create_filename(str, cmd, &i, &j);
 	return (0);
 }

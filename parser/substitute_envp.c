@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/02 12:49:33 by eward             #+#    #+#             */
-/*   Updated: 2022/07/12 20:48:35 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/16 14:59:12 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,6 @@ int	arr_len(char **arr)
 	while (*(arr + rez))
 		rez++;
 	return (rez);
-}
-
-int	set_envp(char **envp)
-{
-	int	i;
-
-	i = 0;
-	g_shell.envp = (char **)malloc(sizeof(char *) * (arr_len(envp) + 1));
-	if (!g_shell.envp)
-		return (-1);
-	while (envp[i])
-	{
-		g_shell.envp[i] = ft_strdup(envp[i]);
-		i++;
-	}
-	g_shell.envp[i] = NULL;
-	return (1);
 }
 
 char	*find_var(char *what_to_find)

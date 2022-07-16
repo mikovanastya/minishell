@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:45:35 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/01 17:48:33 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/16 12:11:57 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ char	**after_quotes(char **tmpmass)
 					- ft_sym_export(tmpmass[i]) + 1));
 		if (!after[i])
 			return (NULL);
-		j = ft_sym_export(tmpmass[i]);//записываем сколько симыволов кол-во символов 
-		while (tmpmass[i][++j] != '\0')// перешагиваем равно ++j
+		j = ft_sym_export(tmpmass[i]);
+		while (tmpmass[i][++j] != '\0')
 			after[i][k++] = tmpmass[i][j];
 		after[i][k] = '\0';
 	}

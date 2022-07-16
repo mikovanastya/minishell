@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 17:10:29 by eward             #+#    #+#             */
-/*   Updated: 2022/07/05 17:17:15 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/16 17:51:36 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_error(char *argv, int exit_code)
 {
 	printf("%s: ", strerror(exit_code));
 	printf("%s\n", argv);
-    (void)(exit_code);
+	(void)(exit_code);
 	exit(EXIT_FAILURE);
 }
 

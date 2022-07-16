@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:24:43 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/15 21:13:58 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/16 16:12:50 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,8 @@ int	builtin_echo(int fd)
 
 	flag = 0;
 	i = 1;
-	if (ft_strcmp("$?", g_shell.cmd_start->argv[i]))
-		printf("%d\n", g_shell.cmd_start->exit_status);
-	while (g_shell.cmd_start->argv[i] != NULL && check_n_flag(g_shell.cmd_start->argv[i], &flag) == true)
+	while (g_shell.cmd_start->argv[i] != NULL
+		&& check_n_flag(g_shell.cmd_start->argv[i], &flag) == true)
 		i++;
 	while (g_shell.cmd_start->argv[i] != NULL)
 	{

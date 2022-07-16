@@ -6,13 +6,13 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:10:37 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/13 20:38:14 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/16 17:50:05 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	builtin_unset()
+int	builtin_unset(void)
 {
 	int	i;
 
