@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 17:13:19 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/16 18:45:16 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/16 19:22:26 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ void	no_args(void)
 			printf("declare -x %s=\"%s\"\n", before[i], after[i]);
 		i++;
 	}
-	// ft_free(before);
-	// ft_free(after);
 }
 
 int	export_prmtrs(char *str)

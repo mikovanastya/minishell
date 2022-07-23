@@ -6,7 +6,7 @@
 /*   By: rtwitch <rtwitch@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 15:01:07 by rtwitch           #+#    #+#             */
-/*   Updated: 2022/07/16 19:17:19 by rtwitch          ###   ########.fr       */
+/*   Updated: 2022/07/16 19:22:12 by rtwitch          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@
 #include <readline/readline.h> 
 #include <readline/history.h>
 #include <readline/readline.h>
-
-/*
-**	всё вместе:
-*/
 
 void	free_cmd(t_cmd *cmd)
 {
@@ -31,7 +27,7 @@ void	free_cmd(t_cmd *cmd)
 	{
 		ft_free(cmd->argv);
 		ft_free(cmd->file_name);
-		if (cmd->redir)	
+		if (cmd->redir)
 			free(cmd->redir);
 		if (cmd)
 			free(cmd);
